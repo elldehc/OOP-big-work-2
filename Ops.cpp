@@ -1,7 +1,7 @@
 #include "stdops.h"
 
 float Add::calc(set<Node*>& calced) {
-    return getleft()->getvalue() + getright()->eval(calced)->getvalue();
+    return getleft()->getvalue() + getright()/*->eval(calced)*/->getvalue();
 }
 void Add::getgrad()
 {

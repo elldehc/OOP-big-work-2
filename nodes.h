@@ -25,7 +25,7 @@ class Placeholder: public Node {
     string name;
     
   public:
-    Placeholder(string myname);
+    Placeholder(string myname="");
     void getgrad();
     float calc(set<Node*>& calced);
     Node* eval(set<Node*>& calced);

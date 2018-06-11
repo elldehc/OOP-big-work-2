@@ -1,9 +1,9 @@
-#ifndef Ops_h
-#define Ops_h
+#ifndef Ex_ops_h
+#define Ex_ops_h
 
 #include "Operator.h"
 
-class Add: public Operator {
+class Less: public Operator {
   private:
     float calc(set<Node*>& calced) override;
 
@@ -12,7 +12,7 @@ class Add: public Operator {
     void getgrad();
 };
 
-class Multiply: public Operator {
+class Greater: public Operator {
   private:
     float calc(set<Node*>& calced) override;
 
@@ -21,7 +21,7 @@ class Multiply: public Operator {
     void getgrad();
 };
 
-class Minus: public Operator {
+class Leq: public Operator {
   private:
     float calc(set<Node*>& calced) override;
 
@@ -30,7 +30,7 @@ class Minus: public Operator {
     void getgrad();
 };
 
-class Divide: public Operator {
+class Geq: public Operator {
   private:
     float calc(set<Node*>& calced) override;
 
@@ -39,15 +39,40 @@ class Divide: public Operator {
     void getgrad();
 };
 
-class Power: public Operator {
+class Equal: public Operator {
+  private:
+    float calc(set<Node*>& calced) override;
+
+  public:
+    using Operator::Operator;
+    void getgrad();
+};
+
+class Ineq: public Operator {
+  private:
+    float calc(set<Node*>& calced) override;
+
+  public:
+    using Operator::Operator;
+    void getgrad();
+};
+
+class Assert: public Operator_1 {
   private:
     float calc(set<Node*>& calced) override;
   
   public:
-    using Operator::Operator;
+    using Operator_1::Operator_1;
     Node* eval(set<Node*>& calced) override;
     void getgrad();
 };
 
+class Bind: public Operator {
+  private:
+    float calc(set<Node*>& calced) override;
 
-#endif /* Ops_h */
+  public:
+    using Operator::Operator;
+    void getgrad();
+};
+#endif /* Ex_ops_h */

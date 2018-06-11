@@ -6,11 +6,11 @@ int main()
 {
     //样例1
     
-     Node* x = new Placeholder("hhh");
+     /*Node* x = new Placeholder("hhh");
      Node* y = new Placeholder("hahaha");
      Node* z= new Constant(3);
-     Node* t = new Add(x, y);
-     Node* res =new Multiply(t,z);
+     Node* t = new Minus(x,y);
+     Node* res =new Less(z,t);
      //map<Node*, float> initmap;
      //initmap[x] = 1;
      //initmap[y] = 2;
@@ -18,14 +18,14 @@ int main()
      cout << Run({{x,1},{y,3}}, *(res->grad(x))) << endl;
      cout << Run({{x,1},{y,3}}, *(res->grad(y))) << endl;
      cout << Run({{x,1},{y,3}}, *(res->grad(z))) << endl;
-     cout << Run({{x,1},{y,3}}, *(res->grad(t))) << endl;
+     cout << Run({}, *(res->grad(t))) << endl;
      //initmap[x] = 1;
      //cout << Run({{x,1}}, *res) << endl;
      delete x;
      delete y;
      delete z;
      delete t;
-     delete res;
+     delete res;*/
     
     //样例2
     
@@ -99,5 +99,18 @@ int main()
      delete t2;
      delete t3;
     */
+    
+    //样例6:Assert and Bind
+    auto x = new Placeholder();
+	auto y = new Placeholder();
+	auto t = new Add(x,y);
+	auto t1 = new Bind(t, new Assert(new Greater(y,x)));
+	auto res = new Bind(t, new Assert(new Less(y,new Add(x,new Constant(2)))));//这么长！！！需要想办法精简
+	cout << Run({{x,1},{y,2}}, *res) << endl;//0
+	cout << Run({{x,1},{y,4}}, *res) << endl;//fail
+	cout << Run({{x,1},{y,-1}}, *t1) << endl;//fail
+	delete x;delete y;delete t;delete t1;delete res;
+
+
     return 0;
 }

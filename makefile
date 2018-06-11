@@ -11,9 +11,11 @@ Operator.o:Operator.cpp stdops.h
 	g++ $(FLAG) -c Operator.cpp -o Operator.o
 Ops.o:Ops.cpp stdops.h
 	g++ $(FLAG) -c Ops.cpp -o Ops.o
+Ex_ops.o:Ex_ops.cpp Ex_ops.h
+	g++ $(FLAG) -c Ex_ops.cpp -o Ex_ops.o
 main.o:main.cpp stdops.h
 	g++ $(FLAG) -c main.cpp -o main.o
-main:Node.o nodes.o func.o Operator.o Ops.o main.o
-	g++ $(FLAG) Node.o func.o Operator.o Ops.o main.o nodes.o -o main
+main:Node.o nodes.o func.o Operator.o Ops.o main.o Ex_ops.o
+	g++ $(FLAG) Node.o func.o Operator.o Ops.o main.o nodes.o Ex_ops.o -o main
 clean:
 	rm *.o main
