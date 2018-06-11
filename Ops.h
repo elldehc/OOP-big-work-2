@@ -9,7 +9,7 @@ class Add: public Operator {
 
   public:
     using Operator::Operator;
-    
+    void getgrad();
 };
 
 class Multiply: public Operator {
@@ -18,7 +18,7 @@ class Multiply: public Operator {
 
   public:
     using Operator::Operator;
-    
+    void getgrad();
 };
 
 class Minus: public Operator {
@@ -27,6 +27,7 @@ class Minus: public Operator {
 
   public:
     using Operator::Operator;
+    void getgrad();
 };
 
 class Divide: public Operator {
@@ -35,6 +36,7 @@ class Divide: public Operator {
 
   public:
     using Operator::Operator;
+    void getgrad();
 };
 
 class Power: public Operator {
@@ -44,6 +46,7 @@ class Power: public Operator {
   public:
     using Operator::Operator;
     Node* eval(set<Node*>& calced) override;
+    void getgrad();
 };
 
 #endif /* Ops_h */

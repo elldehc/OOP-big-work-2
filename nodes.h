@@ -10,10 +10,15 @@ class Constant: public Node {
     
   public:
     Constant(float number);
-    
+    void getgrad();
     float calc(set<Node*>& calced);
     Node* eval(set<Node*>& calced);
 };
+
+extern Constant* const Zero;
+extern Constant* const One;
+extern Constant* const MinusOne;
+
 
 class Placeholder: public Node {
   private:
@@ -21,7 +26,7 @@ class Placeholder: public Node {
     
   public:
     Placeholder(string myname);
-    
+    void getgrad();
     float calc(set<Node*>& calced);
     Node* eval(set<Node*>& calced);
 };
@@ -32,7 +37,7 @@ class Print: public Node {
     
   public:
     Print(Node* node);
-    
+    void getgrad();
     float calc(set<Node*>& calced) override;
     Node* eval(set<Node*>& calced) override;
 };
@@ -43,7 +48,7 @@ class Parameter: public Node {
     
   public:
     Parameter(float number);
-    
+    void getgrad();
     void set(float number);
     void add(float number);
     void multiply(float number);

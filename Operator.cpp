@@ -1,4 +1,4 @@
-#include "Operator.h"
+#include "stdops.h"
 
 Operator::Operator(Node* node1, Node* node2): left(node1), right(node2) { }
 

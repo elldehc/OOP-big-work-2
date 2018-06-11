@@ -1,14 +1,4 @@
-#include <string>
-#include <iostream>
-#include <map>
-#include <set>
-#include <math.h>
-
-#include "Node.h"
-#include "nodes.h"
-#include "Operator.h"
-#include "Ops.h"
-#include "func.h"
+#include "stdops.h"
 
 using namespace std;
 
@@ -20,13 +10,17 @@ int main()
      Node* y = new Placeholder("hahaha");
      Node* z= new Constant(3);
      Node* t = new Add(x, y);
-     Node* res =new Multiply(new Add(x,y),z);
-     map<Node*, float> initmap;
-     initmap[x] = 1;
-     initmap[y] = 2;
+     Node* res =new Multiply(t,z);
+     //map<Node*, float> initmap;
+     //initmap[x] = 1;
+     //initmap[y] = 2;
      cout << Run({{x,1},{y,2}}, *res) << endl;
-     initmap[x] = 1;
-     cout << Run({{x,1}}, *res) << endl;
+     cout << Run({{x,1},{y,3}}, *(res->grad(x))) << endl;
+     cout << Run({{x,1},{y,3}}, *(res->grad(y))) << endl;
+     cout << Run({{x,1},{y,3}}, *(res->grad(z))) << endl;
+     cout << Run({{x,1},{y,3}}, *(res->grad(t))) << endl;
+     //initmap[x] = 1;
+     //cout << Run({{x,1}}, *res) << endl;
      delete x;
      delete y;
      delete z;

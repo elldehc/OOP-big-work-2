@@ -1,4 +1,4 @@
-#include "nodes.h"
+#include "stdops.h"
 
 //Constant
 Constant::Constant(float number) {
@@ -13,6 +13,14 @@ Node* Constant::eval(set<Node*>& calced) {
     return this;
 }
 
+void Constant::getgrad()
+{
+	grads[this]=One;
+}
+
+extern Constant* const Zero=new Constant(0);
+extern Constant* const One=new Constant(1);
+extern Constant* const MinusOne=new Constant(-1);
 
 //Placeholder
 Placeholder::Placeholder(string myname): name(myname) { }
@@ -28,6 +36,11 @@ Node* Placeholder::eval(set<Node*>& calced) {
         cout << "Error: Placeholder " << name << " not found\n";
         return nullptr;
     }
+}
+
+void Placeholder::getgrad()
+{
+	grads[this]=One;
 }
 
 
@@ -51,6 +64,11 @@ Node* Print::eval(set<Node*>& calced) {
         return this;
 }
 
+void Print::getgrad()
+{
+	grads=dest->grad();
+	grads[this]=One;
+}
 
 //Parameter
 float Parameter::calc(::set<Node*>& calced) {
@@ -83,3 +101,8 @@ void Parameter::divide(float number) {
 Node* Parameter::eval(::set<Node*>& calced) {
     return this;
 }
+void Parameter::getgrad()
+{
+	grads[this]=One;
+}
+

@@ -2,9 +2,10 @@
 #define Operator_h
 
 #include "Node.h"
+#include "nodes.h"
 
 class Operator: public Node {
-  private:
+  protected:
     Node* left;
     Node* right;
   public:
