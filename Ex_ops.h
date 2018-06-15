@@ -73,6 +73,27 @@ class Bind: public Operator {
 
   public:
     using Operator::Operator;
+    Node* eval(set<Node*>& calced) override;
     void getgrad();
 };
+
+class Cond: public Node {
+  protected:
+  	float calc(set<Node*>& calced) override;
+    Node *co,*ans1,*ans2;
+  public:
+    Cond(Node* node1, Node* node2,Node* node3);
+    Node* eval(set<Node*>& calced) override;
+    void getgrad();
+};
+Less* less(Node *a,Node *b);
+Greater* greater(Node *a,Node *b);
+Leq* leq(Node *a,Node *b);
+Geq* geq(Node *a,Node *b);
+Equal* equal(Node *a,Node *b);
+Ineq* ineq(Node *a,Node *b);
+Assert* assert(Node *a);
+Bind* bind(Node *a,Node *b);
+Cond* cond(Node *a,Node *b,Node *c);
+
 #endif /* Ex_ops_h */

@@ -58,4 +58,8 @@ class Parameter: public Node {
     Node* eval(::set<Node*>& calced) override;
 };
 
+Constant* constant(float a);
+Placeholder* placeholder(string name="");
+Print* print(Node *a);
+Parameter* parameter(float a);
 #endif /* numbers_h */

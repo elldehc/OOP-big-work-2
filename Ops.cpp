@@ -87,3 +87,9 @@ void Power::getgrad()
 	grads[this]=One;
 }
 
+Add* add(Node *a,Node *b){return new Add(a,b);}
+Minus* sub(Node *a,Node *b){return new Minus(a,b);}
+Minus* minus(Node *a,Node *b){return new Minus(a,b);}
+Multiply* mul(Node *a,Node *b){return new Multiply(a,b);}
+Divide* div(Node *a,Node *b){return new Divide(a,b);}
+Power* power(Node *a,Node *b){return new Power(a,b);}

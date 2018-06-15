@@ -6,7 +6,12 @@
 #include <map>
 
 
-using namespace std;
+using std::map;
+using std::set;
+using std::cout;
+using std::string;
+using std::ostream;
+using std::endl;
 
 class Node {
   protected:

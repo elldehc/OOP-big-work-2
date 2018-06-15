@@ -57,7 +57,7 @@ Node* Print::eval(set<Node*>& calced) {
         return nullptr;
     else if (calced.insert(this).second) {
         setvalue(dest->eval(calced)->getvalue());
-        cout << "Print Operator: " << dest->getvalue() << endl;
+        cout << "Print Operator: " << dest->getvalue() << '\n';
         return this;
     }
     else
@@ -105,4 +105,9 @@ void Parameter::getgrad()
 {
 	grads[this]=One;
 }
+
+Constant* constant(float a){return new Constant(a);}
+Placeholder* placeholder(string name){return new Placeholder(name);}
+Print* print(Node *a){return new Print(a);}
+Parameter* parameter(float a){return new Parameter(a);}
 

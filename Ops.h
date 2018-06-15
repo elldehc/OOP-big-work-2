@@ -49,5 +49,10 @@ class Power: public Operator {
     void getgrad();
 };
 
-
+Add* add(Node *a,Node *b);
+Minus* sub(Node *a,Node *b);
+Minus* minus(Node *a,Node *b);
+Multiply* mul(Node *a,Node *b);
+Divide* div(Node *a,Node *b);
+Power* power(Node *a,Node *b);
 #endif /* Ops_h */
