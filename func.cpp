@@ -26,3 +26,24 @@ ostream& operator<< (ostream& out, Node* const nodeptr) {
         return out;
     }
 }
+
+float solve(Node *y,Node *x,float x0,float eps)
+{
+	//Doesn't guarantee to stop in finite time if there is no solution.
+	if(Run({{x,x0}},*y)==nullptr){std::cout<<"solve error: input "<<x0<<" is invalid for f(x).\n";return 0.0/0.0;}
+	float y0=y->getvalue();
+	while(fabs(y0)>eps)
+	{
+		std::cout<<"now:x="<<x0<<" f(x)="<<y0<<'\n';
+		if(Run({{x,x0}},*(y->grad(x)))==nullptr){std::cout<<"solve error: input "<<x0<<" is invalid for df(x)/dx.\n";return 0.0/0.0;}
+		float t=y->grad(x)->getvalue();
+		std::cout<<"f'(x)="<<t<<'\n';
+		if(fabs(t)<eps){std::cout<<"solve error: arriving at minimum/maximum point "<<x0<<" without finding a solution.\n";return 0.0/0.0;}
+		x0-=y0/t;
+		if(Run({{x,x0}},*y)==nullptr){std::cout<<"solve error: input "<<x0<<" is invalid for f(x).\n";return 0.0/0.0;}
+		y0=y->getvalue();
+	}
+	return x0;
+}
+	
+		

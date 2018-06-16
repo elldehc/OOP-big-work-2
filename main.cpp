@@ -142,14 +142,30 @@ int main()
 	delete x;delete y;delete t;delete t1;delete res;*/
 	
 	//样例7:Relu
-    auto x = new Placeholder();
+    /*auto x = new Placeholder();
 	auto y=relu(x);
 	cout<<Run({{x,2}},*y)<<'\n';
 	cout<<Run({{x,-2}},*y)<<'\n';
 	cout<<Run({{x,2}},*(y->grad(x)))<<'\n';
 	cout<<Run({{x,-2}},*(y->grad(x)))<<'\n';
 	
-	delete x;delete y;
+	delete x;delete y;*/
+	
+	//样例8:Newton solve
+	/*int n;
+	int a[101];
+	int i,j,k;
+	std::cin>>n;
+	auto x = placeholder();
+	Node *y=Zero;
+	for(i=0;i<=n;i++)std::cin>>a[i];
+	for(i=n;i>=0;i--)y=add(mul(y,x),constant(a[i]));
+	float ans=solve(y,x,-1);
+	cout<<ans<<'\n';
+    
+	delete x;delete y;*/
+	
+	
 
 
     return 0;
