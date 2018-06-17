@@ -16,13 +16,4 @@ class Operator: public Node {
     Node* eval(set<Node*>& calced) override;
 };
 
-class Operator_1: public Node
-{
-protected:
-	Node *op;
-public:
-	Operator_1(Node* _op);
-	Node* getop();
-	Node* eval(set<Node*>& calced) override;
-};
 #endif /* Operator_h */

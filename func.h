@@ -4,15 +4,13 @@
 #include <iostream>
 #include <map>
 #include <set>
-
+#include <vector> //
 #include "Node.h"
 
-
 Node* Run(Node& des);
-Node* Run(const map <Node*, float>& initmap,  Node& des);
-
+Node* Run(const map <Node*,pair<initializer_list<float>, initializer_list<int>>>& initmap,  Node& des);
+Node* Run(const map <Node*,float>& initmap, Node& des);
+ostream &operator<< (ostream& output , const Tensor& tensor);
 ostream& operator<< (ostream& out, Node* const nodeptr);
-
-float solve(Node *y,Node *x,float x0=0,float eps=1e-12);
-
+  
 #endif /* finc_h */

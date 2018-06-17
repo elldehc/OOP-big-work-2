@@ -1,11 +1,12 @@
 #include "stdops.h"
 
 
-void Node::setvalue(float v) {
+void Node::setvalue(const Tensor& v) {
     value = v;
 }
 
-float Node::getvalue() {
+
+Tensor Node::getvalue() {
     return value;
 }
 

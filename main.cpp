@@ -1,61 +1,31 @@
 #include "stdops.h"
 
-//using namespace std;
+using namespace std;
 
 int main()
 {
     //样例1
     
-     /*Node* x = new Placeholder("hhh");
+     Node* x = new Placeholder("hhh");
      Node* y = new Placeholder("hahaha");
-     Node* z= new Constant(3);
-     Node* t = sub(x,y);
-     Node* res =less(z,t);
+     Node* z= new Constant({1,2,3,4},{2,2});//待定
+     Node* t = new Add(x, y);
+     Node* res =new Multiply(t,z);
      //map<Node*, float> initmap;
      //initmap[x] = 1;
      //initmap[y] = 2;
-     cout << Run({{x,1},{y,2}}, *res) << endl;
-     cout << Run({{x,1},{y,3}}, *(res->grad(x))) << endl;
+	 cout << Run({{x,{{1,1,1,1},{2,2}}},{y,{{2,2,2,2},{2,2}}}}, *res) << endl;
+    /* cout << Run({{x,1},{y,3}}, *(res->grad(x))) << endl;
      cout << Run({{x,1},{y,3}}, *(res->grad(y))) << endl;
      cout << Run({{x,1},{y,3}}, *(res->grad(z))) << endl;
-     cout << Run({}, *(res->grad(t))) << endl;
+     cout << Run({{x,1},{y,3}}, *(res->grad(t))) << endl;*/
      //initmap[x] = 1;
      //cout << Run({{x,1}}, *res) << endl;
      delete x;
      delete y;
      delete z;
      delete t;
-     delete res;*/
-     
-     //Sample 1.5
-     
-     
-     /*Node* x = placeholder("hhh");
-     Node* y = placeholder("hahaha");
-     Node* z= constant(3);
-     Node* t = add(x, mul(y,constant(0.5)));
-     Node* res =cond(sin(x),tan(mul(t,z)),cos(mul(t,z)));
-     cout << Run({{x,pi/2},{y,pi}}, *res) << endl;
-     cout << Run({{x,pi/2},{y,pi}}, *(res->grad(x))) << endl;
-     cout << Run({{x,pi/2},{y,pi}}, *(res->grad(y))) << endl;
-     cout << Run({{x,pi/2},{y,pi}}, *(res->grad(x)->grad(x))) << endl;
-     cout << Run({{x,pi/2},{y,pi}}, *(res->grad(x)->grad(y))) << endl;
-     cout << Run({{x,pi/2},{y,pi}}, *(res->grad(y)->grad(x))) << endl;
-     cout << Run({{x,pi/2},{y,pi}}, *(res->grad(y)->grad(y))) << endl;
-     cout << Run({{x,-pi/2},{y,pi}}, *res) << endl;
-     cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(x))) << endl;
-     cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(y))) << endl;
-     cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(x)->grad(x))) << endl;
-     cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(x)->grad(y))) << endl;
-     cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(y)->grad(x))) << endl;
-     cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(y)->grad(y))) << endl;
-     //initmap[x] = 1;
-     //cout << Run({{x,1}}, *res) << endl;
-     delete x;
-     delete y;
-     delete z;
-     delete t;
-     delete res;*/
+     delete res;
     
     //样例2
     
@@ -129,58 +99,7 @@ int main()
      delete t2;
      delete t3;
     */
-    
-    //样例6:Assert and Bind
-    /*auto x = new Placeholder();
-	auto y = new Placeholder();
-	auto t = add(x,y);
-	auto t1 = new Bind(t, new Assert(new Greater(y,x)));
-	auto res = new Bind(t, new Assert(new Less(y,add(x,new Constant(2)))));//这么长！！！需要想办法精简
-	cout << Run({{x,1},{y,2}}, *res) << endl;//0
-	cout << Run({{x,1},{y,4}}, *res) << endl;//fail
-	cout << Run({{x,1},{y,-1}}, *t1) << endl;//fail
-	delete x;delete y;delete t;delete t1;delete res;*/
-	
-	//样例7:Relu
-    /*auto x = new Placeholder();
-	auto y=relu(x);
-	cout<<Run({{x,2}},*y)<<'\n';
-	cout<<Run({{x,-2}},*y)<<'\n';
-	cout<<Run({{x,2}},*(y->grad(x)))<<'\n';
-	cout<<Run({{x,-2}},*(y->grad(x)))<<'\n';
-	
-	delete x;delete y;*/
-	
-	//样例8:Newton solve
-	/*int n;
-	int a[101];
-	int i,j,k;
-	std::cin>>n;
-	auto x = placeholder();
-	Node *y=Zero;
-	for(i=0;i<=n;i++)std::cin>>a[i];
-	for(i=n;i>=0;i--)y=add(mul(y,x),constant(a[i]));
-	float ans=solve(y,x,-1);
-	cout<<ans<<'\n';
-    
-	delete x;delete y;*/
-	
-	//样例9:Assign
-	/*auto x = parameter(1);
-	auto y = parameter(2);
-	auto t1 = assign(x, y);
-	auto t2 = assign(y, mul(t1,y));
-	auto res = mul(mul(t2,x),y);
-	cout<<Run(*res)<<'\n';
-	//<< 8
-	cout<<Run(*x)<<'\n';
-	//<< 2
-	cout<<Run(*y)<<'\n';
-	//<< 4*/
-
-	
-	
-
-
+     cout<<"testover"<<endl;
+     system("pause");
     return 0;
 }
