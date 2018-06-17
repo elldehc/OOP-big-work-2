@@ -1,7 +1,7 @@
 #include "stdops.h"
 
-/*calc*/Tensor Add::calc(set<Node*>& calced) {
-    return getleft()->getvalue() + getright()->eval(calced)->getvalue();
+float Add::calc(set<Node*>& calced) {
+    return getleft()->getvalue() + getright()/*->eval(calced)*/->getvalue();
 }
 void Add::getgrad()
 {
@@ -13,7 +13,7 @@ void Add::getgrad()
 	}
 	grads[this]=One;
 }
-Tensor Multiply::calc(set<Node*>& calced) { 
+float Multiply::calc(set<Node*>& calced) {
     return getleft()->getvalue() * getright()->eval(calced)->getvalue();
 }
 void Multiply::getgrad()
@@ -26,7 +26,7 @@ void Multiply::getgrad()
 	}
 	grads[this]=One;
 }
-Tensor Minus::calc(set<Node*>& calced) {
+float Minus::calc(set<Node*>& calced) {
     return getleft()->getvalue() - getright()->eval(calced)->getvalue();
 }
 void Minus::getgrad()
@@ -39,7 +39,7 @@ void Minus::getgrad()
 	}
 	grads[this]=One;
 }
-Tensor Divide::calc(set<Node*>& calced) {
+float Divide::calc(set<Node*>& calced) {
     return getleft()->getvalue() / getright()->eval(calced)->getvalue();
 }
 void Divide::getgrad()
@@ -53,22 +53,28 @@ void Divide::getgrad()
 	}
 	grads[this]=One;
 }
-/*
 float Power::calc(set<Node*>& calced) {
-    return pow(getleft()->getvalue(), getright()->eval(calced)->getvalue());
-
+	if(getleft()->getvalue()>0)return exp(getright()->eval(calced)->getvalue()*log(getleft()->getvalue()));
+	else if(getleft()->getvalue()==0)return 0;
+	else{
+		int t=getright()->eval(calced)->getvalue()+0.5;
+		float ans=exp(getright()->eval(calced)->getvalue()*log(-getleft()->getvalue()));
+		if(t&1)return -ans;else return ans;
+	}
+    //return pow(getleft()->getvalue(), getright()->eval(calced)->getvalue());
+}
 
 Node* Power::eval(set<Node*>& calced) {
     if (getleft()->eval(calced) == nullptr || getright()->eval(calced) == nullptr)
         return nullptr;
     else {
-        float l=getleft()->getvalue(), r=getright()->getvalue(); //gai
+        float l=getleft()->getvalue(), r=getright()->getvalue();
         //possible errors
         if (l<0 && (int)r!=r) {
             cout << "Error: cannot calculate " << l << "^" << r << ", since base is negative and exp is non-interger\n";
             return nullptr;
         }
-        else if (l==0 && r<0) {
+        else if (l==0 && r<=0) {
             cout << "Error: cannot calculate " << l << "^" << r << ", since base is zero and exp is negative\n";
             return nullptr;
         }
@@ -84,7 +90,18 @@ Node* Power::eval(set<Node*>& calced) {
 }
 void Power::getgrad()
 {
-	//Anyway I'm going to rewrite Power.
+	for(auto it:left->grad())grads[it.first]=nullptr;
+	for(auto it:right->grad())grads[it.first]=nullptr;
+	for(auto &it:grads)
+	{
+		it.second=mul(this,add(mul(right->grad(it.first),log(left)),div(mul(left->grad(it.first),right),left)));
+	}
 	grads[this]=One;
 }
-*/
+
+Add* add(Node *a,Node *b){return new Add(a,b);}
+Minus* sub(Node *a,Node *b){return new Minus(a,b);}
+Minus* minus(Node *a,Node *b){return new Minus(a,b);}
+Multiply* mul(Node *a,Node *b){return new Multiply(a,b);}
+Divide* div(Node *a,Node *b){return new Divide(a,b);}
+Power* power(Node *a,Node *b){return new Power(a,b);}

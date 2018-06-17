@@ -1,15 +1,11 @@
 #include "stdops.h"
 
 //Constant
-Constant::Constant(const initializer_list<float>& list, const initializer_list<int>& dims) {
-    setvalue(Tensor(list,dims));
+Constant::Constant(float number) {
+    setvalue(number);
 }
 
-Constant::Constant(const float& value) {
-	setvalue(Tensor(value));
-}
-
-Tensor Constant::calc(set<Node*>& calced) {
+float Constant::calc(set<Node*>& calced) {
     return getvalue();
 }
 
@@ -22,14 +18,14 @@ void Constant::getgrad()
 	grads[this]=One;
 }
 
-extern Constant* const Zero=new Constant(0);
-extern Constant* const One=new Constant(1);
-extern Constant* const MinusOne=new Constant(-1);
+Constant* const Zero=new Constant(0);
+Constant* const One=new Constant(1);
+Constant* const MinusOne=new Constant(-1);
 
 //Placeholder
 Placeholder::Placeholder(string myname): name(myname) { }
 
-Tensor Placeholder::calc(set<Node*>& calced) {
+float Placeholder::calc(set<Node*>& calced) {
     return getvalue();
 }
 
@@ -38,7 +34,7 @@ Node* Placeholder::eval(set<Node*>& calced) {
         return this;
     else {
         cout << "Error: Placeholder " << name << " not found\n";
-        return nullptr; 
+        return nullptr;
     }
 }
 
@@ -51,7 +47,7 @@ void Placeholder::getgrad()
 //Print
 Print::Print(Node* node): dest(node) { }
 
-Tensor Print::calc(set<Node*>& calced) {
+float Print::calc(set<Node*>& calced) {
     setvalue(dest->eval(calced)->getvalue());
     return dest->getvalue();
 }
@@ -61,7 +57,7 @@ Node* Print::eval(set<Node*>& calced) {
         return nullptr;
     else if (calced.insert(this).second) {
         setvalue(dest->eval(calced)->getvalue());
-        cout << "Print Operator: " << dest->getvalue() << endl;
+        cout << "Print Operator: " << dest->getvalue() << '\n';
         return this;
     }
     else
@@ -75,30 +71,30 @@ void Print::getgrad()
 }
 
 //Parameter
-Tensor Parameter::calc(::set<Node*>& calced) {
+float Parameter::calc(::set<Node*>& calced) {
     return getvalue();
 }
-Parameter::Parameter(/*float*/const Tensor& number) {
+Parameter::Parameter(float number) {
     setvalue(number);
 }
 
-void Parameter::set(/*float*/const Tensor& number) {
+void Parameter::set(float number) {
     setvalue(number);
 }
 
-void Parameter::add(/*float*/const Tensor& number) {
+void Parameter::add(float number) {
     setvalue(getvalue() + number);
 }
 
-void Parameter::multiply(/*float*/const Tensor& number) {
+void Parameter::multiply(float number) {
     setvalue(getvalue() * number);
 }
 
-void Parameter::minus(/*float*/const Tensor& number) {
+void Parameter::minus(float number) {
     setvalue(getvalue() - number);
 }
 
-void Parameter::divide(/*float*/const Tensor& number) {
+void Parameter::divide(float number) {
     setvalue(getvalue() / number);
 }
 
@@ -109,4 +105,35 @@ void Parameter::getgrad()
 {
 	grads[this]=One;
 }
+
+Assign::Assign(Parameter* para,Node* node):src(node),tar(para){}
+void Assign::getgrad()
+{
+	grads=src->grad();
+	grads[this]=One;
+}
+float Assign::calc(set<Node*>& calced) {
+    assign_map[tar]=src->getvalue();
+    return src->getvalue();
+}
+	
+Node* Assign::eval(set<Node*>& calced) {
+    if (src->eval(calced) == nullptr)
+        return nullptr;
+    else if (calced.insert(this).second) {
+        setvalue(calc(calced));
+        
+        return this;
+    }
+    else
+        return this;
+}
+
+map<Parameter*,float> assign_map;
+    
+Constant* constant(float a){return new Constant(a);}
+Placeholder* placeholder(string name){return new Placeholder(name);}
+Print* print(Node *a){return new Print(a);}
+Parameter* parameter(float a){return new Parameter(a);}
+Assign* assign(Parameter *para,Node *node){return new Assign(para,node);}
 

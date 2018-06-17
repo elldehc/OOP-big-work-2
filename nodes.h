@@ -9,10 +9,9 @@ class Constant: public Node {
   private:
     
   public:
-    Constant(const initializer_list<float>& list, const initializer_list<int>& dims);
-    Constant(const float& value);
+    Constant(float number);
     void getgrad();
-    Tensor calc(set<Node*>& calced);
+    float calc(set<Node*>& calced);
     Node* eval(set<Node*>& calced);
 };
 
@@ -26,9 +25,9 @@ class Placeholder: public Node {
     string name;
     
   public:
-    Placeholder(string myname);
+    Placeholder(string myname="");
     void getgrad();
-    Tensor calc(set<Node*>& calced);
+    float calc(set<Node*>& calced);
     Node* eval(set<Node*>& calced);
 };
 
@@ -39,24 +38,42 @@ class Print: public Node {
   public:
     Print(Node* node);
     void getgrad();
-    Tensor calc(set<Node*>& calced) override;
+    float calc(set<Node*>& calced) override;
     Node* eval(set<Node*>& calced) override;
 };
 
 class Parameter: public Node {
   private:
-    Tensor calc(set<Node*>& calced) override;
+    float calc(set<Node*>& calced) override;
     
   public:
-    Parameter(const Tensor& number);
+    Parameter(float number);
     void getgrad();
-    void set(const Tensor& number);
-    void add(const Tensor& number);
-    void multiply(const Tensor& number);
-    void divide(const Tensor& number);
-    void minus(const Tensor& number);
+    void set(float number);
+    void add(float number);
+    void multiply(float number);
+    void divide(float number);
+    void minus(float number);
     
     Node* eval(::set<Node*>& calced) override;
 };
 
+extern map<Parameter*,float> assign_map;
+class Assign: public Node {
+  private:
+    Node* src;
+    Parameter *tar;
+  public:
+    Assign(Parameter* para,Node* node);
+    void getgrad();
+    float calc(set<Node*>& calced) override;
+    Node* eval(set<Node*>& calced) override;
+};
+
+
+Constant* constant(float a);
+Placeholder* placeholder(string name="");
+Print* print(Node *a);
+Parameter* parameter(float a);
+Assign* assign(Parameter *para,Node *node);
 #endif /* numbers_h */
