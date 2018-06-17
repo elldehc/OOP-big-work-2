@@ -58,8 +58,22 @@ class Parameter: public Node {
     Node* eval(::set<Node*>& calced) override;
 };
 
+extern map<Parameter*,float> assign_map;
+class Assign: public Node {
+  private:
+    Node* src;
+    Parameter *tar;
+  public:
+    Assign(Parameter* para,Node* node);
+    void getgrad();
+    float calc(set<Node*>& calced) override;
+    Node* eval(set<Node*>& calced) override;
+};
+
+
 Constant* constant(float a);
 Placeholder* placeholder(string name="");
 Print* print(Node *a);
 Parameter* parameter(float a);
+Assign* assign(Parameter *para,Node *node);
 #endif /* numbers_h */

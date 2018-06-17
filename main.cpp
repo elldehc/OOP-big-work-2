@@ -165,6 +165,20 @@ int main()
     
 	delete x;delete y;*/
 	
+	//样例9:Assign
+	/*auto x = parameter(1);
+	auto y = parameter(2);
+	auto t1 = assign(x, y);
+	auto t2 = assign(y, mul(t1,y));
+	auto res = mul(mul(t2,x),y);
+	cout<<Run(*res)<<'\n';
+	//<< 8
+	cout<<Run(*x)<<'\n';
+	//<< 2
+	cout<<Run(*y)<<'\n';
+	//<< 4*/
+
+	
 	
 
 

@@ -2,7 +2,10 @@
 
 Node* Run(Node& des) {
     set<Node*> calced;
-    return des.eval(calced);
+    Node *t=des.eval(calced);
+    for(auto it:assign_map)it.first->set(it.second);
+    assign_map.clear();
+    return t;
 }
 
 Node* Run(const map <Node*, float>& initmap,  Node& des) {
@@ -15,7 +18,10 @@ Node* Run(const map <Node*, float>& initmap,  Node& des) {
     }
     
     //initmap.clear(); //清除用于初始化的map，下次调用run前在主函数重新赋值
-    return des.eval(calced);
+    Node *t=des.eval(calced);
+    for(auto it:assign_map)it.first->set(it.second);
+    assign_map.clear();
+    return t;
 }
 
 ostream& operator<< (ostream& out, Node* const nodeptr) {
