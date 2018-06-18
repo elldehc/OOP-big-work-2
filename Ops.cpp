@@ -1,6 +1,6 @@
 #include "stdops.h"
 
-float Add::calc(set<Node*>& calced) {
+Tensor Add::calc(set<Node*>& calced) {
     return getleft()->getvalue() + getright()/*->eval(calced)*/->getvalue();
 }
 void Add::getgrad()
@@ -13,7 +13,7 @@ void Add::getgrad()
 	}
 	grads[this]=One;
 }
-float Multiply::calc(set<Node*>& calced) {
+Tensor Multiply::calc(set<Node*>& calced) {
     return getleft()->getvalue() * getright()->eval(calced)->getvalue();
 }
 void Multiply::getgrad()
@@ -26,7 +26,7 @@ void Multiply::getgrad()
 	}
 	grads[this]=One;
 }
-float Minus::calc(set<Node*>& calced) {
+Tensor Minus::calc(set<Node*>& calced) {
     return getleft()->getvalue() - getright()->eval(calced)->getvalue();
 }
 void Minus::getgrad()
@@ -39,7 +39,7 @@ void Minus::getgrad()
 	}
 	grads[this]=One;
 }
-float Divide::calc(set<Node*>& calced) {
+Tensor Divide::calc(set<Node*>& calced) {
     return getleft()->getvalue() / getright()->eval(calced)->getvalue();
 }
 void Divide::getgrad()
@@ -53,13 +53,13 @@ void Divide::getgrad()
 	}
 	grads[this]=One;
 }
-float Power::calc(set<Node*>& calced) {
-	if(getleft()->getvalue()>0)return exp(getright()->eval(calced)->getvalue()*log(getleft()->getvalue()));
-	else if(getleft()->getvalue()==0)return 0;
+Tensor Power::calc(set<Node*>& calced) {
+	if(getleft()->getfloat()>0)return exp(getright()->eval(calced)->getfloat()*log(getleft()->getfloat()));
+	else if(getleft()->getfloat()==0)return 0;
 	else{
-		int t=getright()->eval(calced)->getvalue()+0.5;
-		float ans=exp(getright()->eval(calced)->getvalue()*log(-getleft()->getvalue()));
-		if(t&1)return -ans;else return ans;
+		int t=getright()->eval(calced)->getfloat()+0.5;
+		float ans=exp(getright()->eval(calced)->getfloat()*log(-getleft()->getfloat()));
+		if(t&1)return Tensor(-ans);else return Tensor(ans);
 	}
     //return pow(getleft()->getvalue(), getright()->eval(calced)->getvalue());
 }
@@ -68,7 +68,7 @@ Node* Power::eval(set<Node*>& calced) {
     if (getleft()->eval(calced) == nullptr || getright()->eval(calced) == nullptr)
         return nullptr;
     else {
-        float l=getleft()->getvalue(), r=getright()->getvalue();
+        float l=getleft()->getfloat(), r=getright()->getfloat();
         //possible errors
         if (l<0 && (int)r!=r) {
             cout << "Error: cannot calculate " << l << "^" << r << ", since base is negative and exp is non-interger\n";

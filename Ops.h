@@ -5,7 +5,7 @@
 
 class Add: public Operator {
   private:
-    float calc(set<Node*>& calced) override;
+    Tensor calc(set<Node*>& calced) override;
 
   public:
     using Operator::Operator;
@@ -14,7 +14,7 @@ class Add: public Operator {
 
 class Multiply: public Operator {
   private:
-    float calc(set<Node*>& calced) override;
+    Tensor calc(set<Node*>& calced) override;
 
   public:
     using Operator::Operator;
@@ -23,7 +23,7 @@ class Multiply: public Operator {
 
 class Minus: public Operator {
   private:
-    float calc(set<Node*>& calced) override;
+    Tensor calc(set<Node*>& calced) override;
 
   public:
     using Operator::Operator;
@@ -32,7 +32,7 @@ class Minus: public Operator {
 
 class Divide: public Operator {
   private:
-    float calc(set<Node*>& calced) override;
+    Tensor calc(set<Node*>& calced) override;
 
   public:
     using Operator::Operator;
@@ -41,7 +41,7 @@ class Divide: public Operator {
 
 class Power: public Operator {
   private:
-    float calc(set<Node*>& calced) override;
+    Tensor calc(set<Node*>& calced) override;
   
   public:
     using Operator::Operator;

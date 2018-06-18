@@ -5,7 +5,7 @@
 
 class Less: public Operator {
   private:
-    float calc(set<Node*>& calced) override;
+	  Tensor calc(set<Node*>& calced) override;
 
   public:
     using Operator::Operator;
@@ -14,7 +14,7 @@ class Less: public Operator {
 
 class Greater: public Operator {
   private:
-    float calc(set<Node*>& calced) override;
+	  Tensor calc(set<Node*>& calced) override;
 
   public:
     using Operator::Operator;
@@ -23,7 +23,7 @@ class Greater: public Operator {
 
 class Leq: public Operator {
   private:
-    float calc(set<Node*>& calced) override;
+	  Tensor calc(set<Node*>& calced) override;
 
   public:
     using Operator::Operator;
@@ -32,7 +32,7 @@ class Leq: public Operator {
 
 class Geq: public Operator {
   private:
-    float calc(set<Node*>& calced) override;
+	  Tensor calc(set<Node*>& calced) override;
 
   public:
     using Operator::Operator;
@@ -41,7 +41,7 @@ class Geq: public Operator {
 
 class Equal: public Operator {
   private:
-    float calc(set<Node*>& calced) override;
+	  Tensor calc(set<Node*>& calced) override;
 
   public:
     using Operator::Operator;
@@ -50,7 +50,7 @@ class Equal: public Operator {
 
 class Ineq: public Operator {
   private:
-    float calc(set<Node*>& calced) override;
+    Tensor calc(set<Node*>& calced) override;
 
   public:
     using Operator::Operator;
@@ -59,7 +59,7 @@ class Ineq: public Operator {
 
 class Assert: public Operator_1 {
   private:
-    float calc(set<Node*>& calced) override;
+	 Tensor calc(set<Node*>& calced) override;
   
   public:
     using Operator_1::Operator_1;
@@ -69,7 +69,7 @@ class Assert: public Operator_1 {
 
 class Bind: public Operator {
   private:
-    float calc(set<Node*>& calced) override;
+    Tensor calc(set<Node*>& calced) override;
 
   public:
     using Operator::Operator;
@@ -79,7 +79,7 @@ class Bind: public Operator {
 
 class Cond: public Node {
   protected:
-  	float calc(set<Node*>& calced) override;
+	 Tensor calc(set<Node*>& calced) override;
     Node *co,*ans1,*ans2;
   public:
     Cond(Node* node1, Node* node2,Node* node3);

@@ -3,6 +3,8 @@
 #include <map>
 #include <set>
 #include <cmath>
+#include <initializer_list>
+#include <vector>
 #include "Node.h"
 #include "nodes.h"
 #include "Operator.h"

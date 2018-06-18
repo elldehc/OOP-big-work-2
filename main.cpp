@@ -5,20 +5,19 @@
 int main()
 {
     //样例1
-    
-     /*Node* x = new Placeholder("hhh");
+
+   /*  Node* x = new Placeholder("hhh");
      Node* y = new Placeholder("hahaha");
      Node* z= new Constant(3);
      Node* t = sub(x,y);
      Node* res =less(z,t);
-     //map<Node*, float> initmap;
-     //initmap[x] = 1;
+     //map<No[x] = 1;
      //initmap[y] = 2;
      cout << Run({{x,1},{y,2}}, *res) << endl;
      cout << Run({{x,1},{y,3}}, *(res->grad(x))) << endl;
      cout << Run({{x,1},{y,3}}, *(res->grad(y))) << endl;
      cout << Run({{x,1},{y,3}}, *(res->grad(z))) << endl;
-     cout << Run({}, *(res->grad(t))) << endl;
+     cout << Run( *(res->grad(t))) << endl;
      //initmap[x] = 1;
      //cout << Run({{x,1}}, *res) << endl;
      delete x;
@@ -26,6 +25,16 @@ int main()
      delete z;
      delete t;
      delete res;*/
+
+	//sample for matrix    -dy
+/*	Node* x=new Placeholder("hhh");
+	Node* y =new Placeholder("hahaha");
+	Node* t=add(x,y);
+    cout << Run({{x,{{1,1,1,1},{2,2}}},{y,{{2,2,2,2},{2,2}}}}, *t) << endl; //每次输入张量就在大括号里改就行
+    delete x;
+    delete y;
+    delete t;*/
+
      
      //Sample 1.5
      
@@ -181,6 +190,6 @@ int main()
 	
 	
 
-
+	system("pause");
     return 0;
 }

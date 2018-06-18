@@ -1,61 +1,61 @@
 #include "stdops.h"
-float Less::calc(set<Node*>& calced) {
-    return getleft()->getvalue() < getright()->getvalue();
+Tensor Less::calc(set<Node*>& calced) {
+    return Tensor(getleft()->getfloat() < getright()->getfloat()); //暂定 以后还要改成适应Tensor的
 }
 void Less::getgrad()
 {
 	grads[this]=One;
 }
 
-float Greater::calc(set<Node*>& calced) {
-    return getleft()->getvalue() > getright()->getvalue();
+Tensor Greater::calc(set<Node*>& calced) {
+    return Tensor(getleft()->getfloat() > getright()->getfloat());
 }
 void Greater::getgrad()
 {
 	grads[this]=One;
 }
 
-float Leq::calc(set<Node*>& calced) {
-    return getleft()->getvalue() <= getright()->getvalue();
+Tensor Leq::calc(set<Node*>& calced) {
+    return Tensor(getleft()->getfloat() <= getright()->getfloat());
 }
 void Leq::getgrad()
 {
 	grads[this]=One;
 }
 
-float Geq::calc(set<Node*>& calced) {
-    return getleft()->getvalue() >= getright()->getvalue();
+Tensor Geq::calc(set<Node*>& calced) {
+    return Tensor(getleft()->getfloat() >= getright()->getfloat());
 }
 void Geq::getgrad()
 {
 	grads[this]=One;
 }
 
-float Equal::calc(set<Node*>& calced) {
-    return getleft()->getvalue() == getright()->getvalue();
+Tensor Equal::calc(set<Node*>& calced) {
+    return Tensor(getleft()->getfloat() == getright()->getfloat());
 }
 void Equal::getgrad()
 {
 	grads[this]=One;
 }
 
-float Ineq::calc(set<Node*>& calced) {
-    return getleft()->getvalue() < getright()->getvalue();
+Tensor Ineq::calc(set<Node*>& calced) {
+    return Tensor(getleft()->getfloat() < getright()->getfloat());
 }
 void Ineq::getgrad()
 {
 	grads[this]=One;
 }
 
-float Assert::calc(set<Node*>& calced) {
-    return 0;
+Tensor Assert::calc(set<Node*>& calced) {
+    return Tensor(0);
 }
 
 Node* Assert::eval(set<Node*>& calced) {
     if (getop()->eval(calced) == nullptr)
         return nullptr;
     else {
-        float x=getop()->getvalue();
+        float x=getop()->getfloat();
         //possible errors
         if (x<=0) {
             cout << "Assertion failed:"<<x<<"<=0";
@@ -87,7 +87,7 @@ Node* Bind::eval(set<Node*>& calced) {
         return this;
     }
 }
-float Bind::calc(set<Node*>& calced) {
+Tensor Bind::calc(set<Node*>& calced) {
     return getleft()->getvalue();
 }
 void Bind::getgrad()
@@ -99,7 +99,7 @@ void Bind::getgrad()
 Cond::Cond(Node* node1, Node* node2,Node* node3):co(node1),ans1(node2),ans2(node3){}
 Node* Cond::eval(set<Node*>& calced) {
 	
-    if (co->eval(calced) == nullptr||co->getvalue()<=0)
+    if (co->eval(calced) == nullptr||co->getfloat()<=0)
     {
     	if(ans2->eval(calced)==nullptr)return nullptr;
     	else if (calced.insert(this).second) {
@@ -122,9 +122,9 @@ Node* Cond::eval(set<Node*>& calced) {
 		}
 	}
 }
-float Cond::calc(set<Node*>& calced)
+Tensor Cond::calc(set<Node*>& calced)
 {
-	if (co->eval(calced) == nullptr||co->getvalue()<=0)return ans2->getvalue();else return ans1->getvalue();
+	if (co->eval(calced) == nullptr||co->getfloat()<=0)return ans2->getvalue();else return ans1->getvalue();
 }
 void Cond::getgrad()
 {
