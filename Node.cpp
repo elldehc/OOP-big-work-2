@@ -27,6 +27,36 @@ Tensor::~Tensor() {
 		shape.clear();
 		num.clear();
 }
+void Tensor::_reshape(const std::initializer_list<int>& list){
+	int req_vol=1;
+	for (auto it=list.begin();it!=list.end();it++){
+		req_vol*=(*it);
+	}
+	if (req_vol!=num[0]) {
+		std::cout<<"Request `Reshape` invalid"<<std::endl;
+		return;
+	}
+	shape.clear();
+	num.clear();
+	int vol=1;
+	  for (auto it=list.begin();it!=list.end();it++){
+      		shape.push_back(*it);
+      		vol*=*it;
+   		 }
+	  size=shape.size();
+      for (auto it=shape.begin();it!=shape.end();it++){
+      	num.push_back(vol);
+      	vol/=*it;
+   	     }
+}
+void Tensor::_concat(){
+	size=1;
+	shape.clear();
+	num.clear();
+	shape.push_back(data.size());
+	num.push_back(data.size());
+}
+
 float Node::getfloat(){
   if (value.size==0) return value.data[0];
   else {
@@ -36,6 +66,13 @@ float Node::getfloat(){
 }
 Tensor Node::getvalue(){
   return value;
+}
+
+void Node::reshape(const std::initializer_list<int>& list){
+  value._reshape(list);
+}
+void Node::concat() {
+   value._concat();	
 }
 
 Tensor Tensor::operator+(const Tensor& tr){

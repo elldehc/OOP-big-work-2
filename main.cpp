@@ -35,6 +35,16 @@ int main()
     delete y;
     delete t;*/
 
+	//sample for matrix for reshape&concat  -dy
+/* Node* x=new Constant({{1,1,1,1,1,1,1,1},{2,2,2}});
+	cout<<x<<endl;
+	x->reshape({2,4});
+	cout<<x<<endl;
+	x->concat();
+	cout<<x<<endl;
+	delete x;*/
+
+
      
      //Sample 1.5
      

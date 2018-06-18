@@ -25,13 +25,15 @@ public:
 	Tensor(const float& list);
     Tensor(const std::initializer_list<float>& list, const std::initializer_list<int>& dims);
 	~Tensor();
+	void _reshape(const std::initializer_list<int>& list);
+	void _concat();
 
     Tensor operator+(const Tensor& tr);
     Tensor operator-(const Tensor& tr);
     Tensor operator*(const Tensor& tr);
     Tensor operator/ (const Tensor& tr);
   friend ostream& operator<< (ostream& out, Node* const nodeptr);
-  friend ostream &operator<< (ostream& output , const Tensor& tensor);
+  friend ostream &operator<< (ostream& output, const Tensor& tensor);
 };
 
 class Node {
@@ -41,8 +43,13 @@ class Node {
   public:
     void setvalue(const Tensor& v); 
     void setvalue(const float& v);
-    Tensor getvalue();
+    
+	Tensor getvalue();
     float getfloat();
+
+	void reshape(const std::initializer_list<int>& list);
+	void concat();
+
     virtual Tensor calc(set<Node*>& calced) = 0;
     virtual Node* eval(set<Node*>& calced) = 0;
     virtual void getgrad()=0;
