@@ -56,6 +56,35 @@ void Tensor::_concat(){
 	shape.push_back(data.size());
 	num.push_back(data.size());
 }
+void Tensor::_transpose() {
+	int row=shape.size()-2; int line=row+1;
+	if (row<0) return;
+	
+	int mat=num[row];
+
+	row=shape[row]; line=shape[line]; //row and line
+	int it=0;
+	int* temp= new int [row*line+5];
+	while (it<data.size()) {
+		for (int i=it; i<it+mat; i++) {
+			temp[i-it]=data[i];
+		}
+		int x = 0;
+		int y = 1;
+		for (int i=it; i<it+mat; i++) {
+			data[i] = temp[x];
+			x = x + line;
+			if (x>=mat) {x=y; y++; }
+
+		}
+		it += mat;
+	}
+	num[num.size()-1] = row;
+
+	shape[shape.size()-2] = line;
+	shape[shape.size()-1] = row;
+	delete [] temp;
+}
 
 float Node::getfloat(){
   if (value.size==0) return value.data[0];
@@ -73,6 +102,9 @@ void Node::reshape(const std::initializer_list<int>& list){
 }
 void Node::concat() {
    value._concat();	
+}
+void Node::transpose() {
+	value._transpose();
 }
 
 Tensor Tensor::operator+(const Tensor& tr){

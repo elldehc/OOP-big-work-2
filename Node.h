@@ -27,7 +27,7 @@ public:
 	~Tensor();
 	void _reshape(const std::initializer_list<int>& list);
 	void _concat();
-
+	void _transpose();
     Tensor operator+(const Tensor& tr);
     Tensor operator-(const Tensor& tr);
     Tensor operator*(const Tensor& tr);

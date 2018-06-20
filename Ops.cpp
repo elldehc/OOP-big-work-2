@@ -98,6 +98,30 @@ void Power::getgrad()
 	}
 	grads[this]=One;
 }
+Tensor Transpose::calc(set<Node*>& calced) {
+	Tensor t=getop()->getvalue();
+    t._transpose();
+	return t;
+
+}
+void Transpose::getgrad()
+{
+	grads[this]=One;
+}
+
+/*Tensor Matmul::calc(set<Node*>& calced) {
+    return getleft()->getvalue() * getright()->eval(calced)->getvalue();//
+}
+void Matmul::getgrad()
+{
+	for(auto it:left->grad())grads[it.first]=nullptr;
+	for(auto it:right->grad())grads[it.first]=nullptr;
+	for(auto &it:grads)
+	{
+		it.second=new Add(new Multiply(left->grad(it.first),right),new Multiply(left,right->grad(it.first)));
+	}
+	grads[this]=One;
+}*/
 
 Add* add(Node *a,Node *b){return new Add(a,b);}
 Minus* sub(Node *a,Node *b){return new Minus(a,b);}

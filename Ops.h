@@ -49,6 +49,24 @@ class Power: public Operator {
     void getgrad();
 };
 
+class Transpose: public Operator_1 {
+   private:
+	 Tensor calc(set<Node*>& calced) override;
+   public:
+     using Operator_1::Operator_1;
+	 void getgrad();
+};
+
+
+/*class Matmul: public Operator {
+  private:
+    Tensor calc(set<Node*>& calced) override;
+
+  public:
+    using Operator::Operator;
+    void getgrad();
+};*/
+
 Add* add(Node *a,Node *b);
 Minus* sub(Node *a,Node *b);
 Minus* minus(Node *a,Node *b);
