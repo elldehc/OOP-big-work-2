@@ -12,14 +12,17 @@ using std::cout;
 using std::string;
 using std::ostream;
 using std::endl;
-
+class Maths;
 class Node;
+
+
 class Tensor{
 	std::vector<float> data;
 	std::vector<int> shape;
 	std::vector<int> num; //存储到达这一维度的张量分量的元素个数 num[0]=size
 	int size;
 	friend class Node;
+	friend Tensor tensor_calc(Tensor ts, const string& str);
 public:
     Tensor();
 	Tensor(const float& list);
@@ -28,6 +31,7 @@ public:
 	void _reshape(const std::initializer_list<int>& list);
 	Tensor _concat(const Tensor& r,int dim=0);
 	void _transpose();
+
     Tensor operator+(const Tensor& tr);
     Tensor operator-(const Tensor& tr);
     Tensor operator*(const Tensor& tr);
@@ -36,6 +40,7 @@ public:
   friend ostream &operator<< (ostream& output, const Tensor& tensor);
 };
 
+Tensor tensor_calc(Tensor ts, const string& str);
 class Node {
   protected:
     Tensor value;
@@ -45,8 +50,8 @@ class Node {
     void setvalue(const float& v);
     
 	Tensor getvalue();
-    float getfloat();
-
+    float getfloat(const int& seq=0);
+	int get_num();
 	void reshape(const std::initializer_list<int>& list);
 	void transpose();
     virtual Tensor calc(set<Node*>& calced) = 0;
@@ -59,6 +64,8 @@ class Node {
     friend ostream& operator>> (ostream& out, const Tensor& tensor);
     virtual ~Node();
 };
+
+
 class Constant;
 extern Constant* const Zero;
 extern Constant* const One;

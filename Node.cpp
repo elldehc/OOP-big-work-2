@@ -1,4 +1,6 @@
 #include "stdops.h"
+#include<cmath>
+
 Tensor::Tensor() {
 	size=0;
 }
@@ -110,14 +112,45 @@ void Tensor::_transpose() {
 	shape[shape.size()-1] = row;
 	delete [] temp;
 }
-
-float Node::getfloat(){
-  if (value.size==0) return value.data[0];
-  else {
-    std::cout<<"Warning: the dimension of tensor bigger than 1"<<std::endl;
-    return value.data[0];
-  }
+Tensor tensor_calc(Tensor ts, const string& str){
+	
+		if (str=="cos") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=cos(*it);} 
+		else if (str=="sin") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=sin(*it);} 
+		else if (str=="tan") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=tan(*it);} 
+		else if (str=="atan") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=atan(*it);} 
+		else if (str=="acos") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=acos(*it);}
+		else if (str=="asin") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=asin(*it);} 
+		else if (str=="cosh") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=cosh(*it);} 
+		else if (str=="sinh") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=sinh(*it);} 
+		else if (str=="tanh") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=tanh(*it);} 
+		else if (str=="acosh") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=acosh(*it);} 
+		else if (str=="asinh") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=asinh(*it);} 
+		else if (str=="atanh") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=atanh(*it);} 
+		else if (str=="exp") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=exp(*it);} 
+		else if (str=="log") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=log(*it);}
+		else if (str=="log10") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=log10(*it);} 
+		else if (str=="exp2") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=exp2(*it);} 
+		else if (str=="expm1") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=expm1(*it);} 
+		else if (str=="log1p") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=log1p(*it);}
+		else if (str=="log2") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=log2(*it);} 
+		else if (str=="sqrt") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=sqrt(*it);}
+		else if (str=="erf") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=erf(*it);} 
+		else if (str=="erfc") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=erfc(*it);} 
+		else if (str=="ceil") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=ceil(*it);} 
+		else if (str=="floor") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=floor(*it);} 
+		else if (str=="abs") for (auto it=ts.data.begin(); it!=ts.data.end();it++) {(*it)=abs(*it);}
+	
+	return ts;
 }
+int Node::get_num(){
+	return value.num[0];
+}
+
+float Node::getfloat(const int& seq){
+    if (seq>=value.num[0]) {std::cout<<"Error)  invalid input!"<<std::endl; return value.data[0];}
+    return value.data[seq];
+}
+
 Tensor Node::getvalue(){
   return value;
 }
@@ -143,7 +176,7 @@ Tensor Tensor::operator+(const Tensor& tr){
         return *this;
     }
       else {
-              std::cout<<"Warning: (Add) Mismatch"<<std::endl;
+              std::cout<<"Warning)  (Add) Mismatch"<<std::endl;
               return Tensor();
       }
 }
@@ -158,7 +191,7 @@ Tensor Tensor::operator-(const Tensor& tr){
         return *this;
     }
       else {
-              std::cout<<"Warning: (Minus) Mismatch"<<std::endl;
+              std::cout<<"Warning)  (Minus) Mismatch"<<std::endl;
               return Tensor();
       }
 }
@@ -173,7 +206,7 @@ Tensor Tensor::operator*(const Tensor& tr){ //假的乘法
         return *this;
     }
       else {
-                std::cout<<"Warning: (Multiply) Mismatch"<<std::endl;
+                std::cout<<"Warning)  (Multiply) Mismatch"<<std::endl;
                 return Tensor();
       }
 }
@@ -188,7 +221,7 @@ Tensor Tensor::operator/(const Tensor& tr){ //假的除法
         return *this;
     }
       else {
-              std::cout<<"Warning: (Divide) Mismatch"<<std::endl;
+              std::cout<<"Warning)  (Divide) Mismatch"<<std::endl;
               return Tensor();
       }
 }

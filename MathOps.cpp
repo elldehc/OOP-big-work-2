@@ -1,7 +1,10 @@
 #include "stdops.h"
 #include "MathOps.h"
+
 Tensor Cos::calc(set<Node*>& calced) {
-	return Tensor(cos(getop()->getfloat()));
+
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"cos");
 }
 void Cos::getgrad()
 {
@@ -11,7 +14,8 @@ void Cos::getgrad()
 Cos* cos(Node *a){return new Cos(a);}
 
 Tensor Sin::calc(set<Node*>& calced) {
-	return Tensor(sin(getop()->getfloat()));
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"sin");
 }
 void Sin::getgrad()
 {
@@ -24,15 +28,18 @@ Node* Tan::eval(set<Node*>& calced) {
     if (getop()->eval(calced) == nullptr)
         return nullptr;
     else {
-        float x=getop()->getfloat()/(pi/2);
+    	for (int i=0; i<getop()->get_num(); i++)
+    	{
+        float x=getop()->getfloat(i)/(pi/2);
         
         //possible errors
         if(fabs(floor(x+0.5)-x)<1e-9&&((int)(x+0.5)&1)){
             cout << "Error: cannot calculate tan(" << getop()->getfloat() << "), since it equals to ("<<(int)(x+0.5)<<"+0.5)pi\n";
             return nullptr;
         }
+    }
         //no errors
-        else if (calced.insert(this).second) {
+        if (calced.insert(this).second) {
             setvalue(calc(calced));
             return this;
         }
@@ -42,7 +49,8 @@ Node* Tan::eval(set<Node*>& calced) {
     }
 }
 Tensor Tan::calc(set<Node*>& calced) {
-	return tan(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"tan");
 }
 void Tan::getgrad()
 {
@@ -55,15 +63,18 @@ Node* Acos::eval(set<Node*>& calced) {
     if (getop()->eval(calced) == nullptr)
         return nullptr;
     else {
-        float x=getop()->getfloat();
+    	for (int i=0; i<getop()->get_num(); i++)
+    	{
+        float x=getop()->getfloat(i);
         
         //possible errors
         if(x>1||x<-1){
             cout << "Error: cannot calculate acos(" << getop()->getfloat() << "), since it's not in [-1,1]\n";
             return nullptr;
         }
+    }
         //no errors
-        else if (calced.insert(this).second) {
+       if (calced.insert(this).second) {
             setvalue(calc(calced));
             return this;
         }
@@ -73,7 +84,8 @@ Node* Acos::eval(set<Node*>& calced) {
     }
 }
 Tensor Acos::calc(set<Node*>& calced) {
-	return acos(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"acos");
 }
 void Acos::getgrad()
 {
@@ -86,15 +98,18 @@ Node* Asin::eval(set<Node*>& calced) {
     if (getop()->eval(calced) == nullptr)
         return nullptr;
     else {
-        float x=getop()->getfloat();
+    	    	for (int i=0; i<getop()->get_num(); i++)
+    	{
+        float x=getop()->getfloat(i);
         
         //possible errors
         if(x>1||x<-1){
             cout << "Error: cannot calculate asin(" << getop()->getfloat() << "), since it's not in [-1,1]\n";
             return nullptr;
         }
+    }
         //no errors
-        else if (calced.insert(this).second) {
+        if (calced.insert(this).second) {
             setvalue(calc(calced));
             return this;
         }
@@ -104,7 +119,8 @@ Node* Asin::eval(set<Node*>& calced) {
     }
 }
 Tensor Asin::calc(set<Node*>& calced) {
-	return asin(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"asin");
 }
 void Asin::getgrad()
 {
@@ -114,7 +130,8 @@ void Asin::getgrad()
 Asin* asin(Node *a){return new Asin(a);}
 
 Tensor Atan::calc(set<Node*>& calced) {
-	return atan(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"atan");
 }
 void Atan::getgrad()
 {
@@ -124,7 +141,8 @@ void Atan::getgrad()
 Atan* atan(Node *a){return new Atan(a);}
 
 Tensor Cosh::calc(set<Node*>& calced) {
-	return cosh(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"cosh");
 }
 void Cosh::getgrad()
 {
@@ -134,7 +152,8 @@ void Cosh::getgrad()
 Cosh* cosh(Node *a){return new Cosh(a);}
 
 Tensor Sinh::calc(set<Node*>& calced) {
-	return sinh(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"sinh");
 }
 void Sinh::getgrad()
 {
@@ -144,7 +163,8 @@ void Sinh::getgrad()
 Sinh* sinh(Node *a){return new Sinh(a);}
 
 Tensor Tanh::calc(set<Node*>& calced) {
-	return tanh(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"tanh");
 }
 void Tanh::getgrad()
 {
@@ -157,15 +177,18 @@ Node* Acosh::eval(set<Node*>& calced) {
     if (getop()->eval(calced) == nullptr)
         return nullptr;
     else {
-        float x=getop()->getfloat();
+    	 for (int i=0; i<getop()->get_num(); i++)
+    	{
+        float x=getop()->getfloat(i);
         
         //possible errors
         if(x<1){
             cout << "Error: cannot calculate acosh(" << getop()->getfloat() << "), since it's less than 1\n";
             return nullptr;
         }
+    }
         //no errors
-        else if (calced.insert(this).second) {
+       if (calced.insert(this).second) {
             setvalue(calc(calced));
             return this;
         }
@@ -175,7 +198,8 @@ Node* Acosh::eval(set<Node*>& calced) {
     }
 }
 Tensor Acosh::calc(set<Node*>& calced) {
-	return acosh(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"acosh");
 }
 void Acosh::getgrad()
 {
@@ -185,7 +209,8 @@ void Acosh::getgrad()
 Acosh* acosh(Node *a){return new Acosh(a);}
 
 Tensor Asinh::calc(set<Node*>& calced) {
-	return asinh(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"asinh");
 }
 void Asinh::getgrad()
 {
@@ -198,15 +223,18 @@ Node* Atanh::eval(set<Node*>& calced) {
     if (getop()->eval(calced) == nullptr)
         return nullptr;
     else {
-        float x=getop()->getfloat();
+    	    	for (int i=0; i<getop()->get_num(); i++)
+    	{
+        float x=getop()->getfloat(i);
         
         //possible errors
         if(x>=1||x<=-1){
             cout << "Error: cannot calculate atanh(" << getop()->getfloat() << "), since it's not in (-1,1)\n";
             return nullptr;
         }
+    }
         //no errors
-        else if (calced.insert(this).second) {
+        if (calced.insert(this).second) {
             setvalue(calc(calced));
             return this;
         }
@@ -216,7 +244,8 @@ Node* Atanh::eval(set<Node*>& calced) {
     }
 }
 Tensor Atanh::calc(set<Node*>& calced) {
-	return atanh(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"atanh");
 }
 void Atanh::getgrad()
 {
@@ -226,7 +255,8 @@ void Atanh::getgrad()
 Atanh* atanh(Node *a){return new Atanh(a);}
 
 Tensor Exp::calc(set<Node*>& calced) {
-	return exp(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"exp");
 }
 void Exp::getgrad()
 {
@@ -239,15 +269,18 @@ Node* Log::eval(set<Node*>& calced) {
     if (getop()->eval(calced) == nullptr)
         return nullptr;
     else {
-        float x=getop()->getfloat();
+    	for (int i=0; i<getop()->get_num(); i++)
+    	{
+        float x=getop()->getfloat(i);
         
         //possible errors
         if(x<=0){
             cout << "Error: cannot calculate log(" << getop()->getfloat() << "), since it's not greater than 0.\n";
             return nullptr;
         }
+    }
         //no errors
-        else if (calced.insert(this).second) {
+        if (calced.insert(this).second) {
             setvalue(calc(calced));
             return this;
         }
@@ -257,7 +290,8 @@ Node* Log::eval(set<Node*>& calced) {
     }
 }
 Tensor Log::calc(set<Node*>& calced) {
-	return log(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"log");
 }
 void Log::getgrad()
 {
@@ -270,15 +304,18 @@ Node* Log10::eval(set<Node*>& calced) {
     if (getop()->eval(calced) == nullptr)
         return nullptr;
     else {
-        float x=getop()->getfloat();
+    	    	for (int i=0; i<getop()->get_num(); i++)
+    	{
+        float x=getop()->getfloat(i);
         
         //possible errors
         if(x<=0){
             cout << "Error: cannot calculate log10(" << getop()->getfloat() << "), since it's not greater than 0.\n";
             return nullptr;
         }
+    }
         //no errors
-        else if (calced.insert(this).second) {
+        if (calced.insert(this).second) {
             setvalue(calc(calced));
             return this;
         }
@@ -288,7 +325,8 @@ Node* Log10::eval(set<Node*>& calced) {
     }
 }
 Tensor Log10::calc(set<Node*>& calced) {
-	return log10(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"log10");
 }
 void Log10::getgrad()
 {
@@ -298,7 +336,8 @@ void Log10::getgrad()
 Log10* log10(Node *a){return new Log10(a);}
 
 Tensor Exp2::calc(set<Node*>& calced) {
-	return exp2(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"exp2");
 }
 void Exp2::getgrad()
 {
@@ -308,7 +347,8 @@ void Exp2::getgrad()
 Exp2* exp2(Node *a){return new Exp2(a);}
 
 Tensor Expm1::calc(set<Node*>& calced) {
-	return expm1(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"expm1");
 }
 void Expm1::getgrad()
 {
@@ -321,15 +361,18 @@ Node* Log1p::eval(set<Node*>& calced) {
     if (getop()->eval(calced) == nullptr)
         return nullptr;
     else {
-        float x=getop()->getfloat();
+    	    	for (int i=0; i<getop()->get_num(); i++)
+    	{
+        float x=getop()->getfloat(i);
         
         //possible errors
         if(x<=1){
             cout << "Error: cannot calculate log1p(" << getop()->getfloat() << "), since it's not greater than -1.\n";
             return nullptr;
         }
+    }
         //no errors
-        else if (calced.insert(this).second) {
+        if (calced.insert(this).second) {
             setvalue(calc(calced));
             return this;
         }
@@ -339,7 +382,8 @@ Node* Log1p::eval(set<Node*>& calced) {
     }
 }
 Tensor Log1p::calc(set<Node*>& calced) {
-	return log1p(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"log1p");
 }
 void Log1p::getgrad()
 {
@@ -352,15 +396,18 @@ Node* Log2::eval(set<Node*>& calced) {
     if (getop()->eval(calced) == nullptr)
         return nullptr;
     else {
-        float x=getop()->getfloat();
+    	    	for (int i=0; i<getop()->get_num(); i++)
+    	{
+        float x=getop()->getfloat(i);
         
         //possible errors
         if(x<=0){
             cout << "Error: cannot calculate log2(" << getop()->getfloat() << "), since it's not greater than 0.\n";
             return nullptr;
         }
+    }
         //no errors
-        else if (calced.insert(this).second) {
+         if (calced.insert(this).second) {
             setvalue(calc(calced));
             return this;
         }
@@ -370,7 +417,8 @@ Node* Log2::eval(set<Node*>& calced) {
     }
 }
 Tensor Log2::calc(set<Node*>& calced) {
-	return log2(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"log2");
 }
 void Log2::getgrad()
 {
@@ -383,15 +431,18 @@ Node* Sqrt::eval(set<Node*>& calced) {
     if (getop()->eval(calced) == nullptr)
         return nullptr;
     else {
-        float x=getop()->getfloat();
+    	    	for (int i=0; i<getop()->get_num(); i++)
+    	{
+        float x=getop()->getfloat(i);
         
         //possible errors
         if(x<0){
             cout << "Error: cannot calculate sqrt(" << getop()->getfloat() << "), since it's less than 0.\n";
             return nullptr;
         }
+    }
         //no errors
-        else if (calced.insert(this).second) {
+       if (calced.insert(this).second) {
             setvalue(calc(calced));
             return this;
         }
@@ -401,7 +452,8 @@ Node* Sqrt::eval(set<Node*>& calced) {
     }
 }
 Tensor Sqrt::calc(set<Node*>& calced) {
-	return sqrt(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"sqrt");
 }
 void Sqrt::getgrad()
 {
@@ -411,7 +463,7 @@ void Sqrt::getgrad()
 Sqrt* sqrt(Node *a){return new Sqrt(a);}
 
 Tensor Sqr::calc(set<Node*>& calced) {
-	return getop()->getfloat()*getop()->getfloat();
+	return getop()->getvalue()*getop()->getvalue();
 }
 void Sqr::getgrad()
 {
@@ -421,7 +473,8 @@ void Sqr::getgrad()
 Sqr* sqr(Node *a){return new Sqr(a);}
 
 Tensor Erf::calc(set<Node*>& calced) {
-	return erf(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"erf");
 }
 void Erf::getgrad()
 {
@@ -431,7 +484,8 @@ void Erf::getgrad()
 Erf* erf(Node *a){return new Erf(a);}
 
 Tensor Erfc::calc(set<Node*>& calced) {
-	return erfc(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"erfc");
 }
 void Erfc::getgrad()
 {
@@ -441,7 +495,8 @@ void Erfc::getgrad()
 Erfc* erfc(Node *a){return new Erfc(a);}
 
 Tensor Ceil::calc(set<Node*>& calced) {
-	return ceil(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"ceil");
 }
 void Ceil::getgrad()
 {
@@ -450,7 +505,8 @@ void Ceil::getgrad()
 Ceil* ceil(Node *a){return new Ceil(a);}
 
 Tensor Floor::calc(set<Node*>& calced) {
-	return floor(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"floor");
 }
 void Floor::getgrad()
 {
@@ -459,7 +515,8 @@ void Floor::getgrad()
 Floor* floor(Node *a){return new Floor(a);}
 
 Tensor Abs::calc(set<Node*>& calced) {
-	return abs(getop()->getfloat());
+	Tensor t=getop()->getvalue();
+    return tensor_calc(t,"abs");
 }
 void Abs::getgrad()
 {
