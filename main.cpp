@@ -128,8 +128,8 @@ int main()
      delete res;
     */
     //样例5:Power
-    /*
-    Parameter* a = new Parameter(3);
+    
+  /*  Parameter* a = new Parameter(3);
     Node* b = new Constant(5);
     Node* c = new Minus(a,b);
     Node* d = new Divide(b,(Node*)(new Minus(b,a)));
@@ -149,7 +149,7 @@ int main()
      delete t3;
     */
     
-    //样例6:Assert and Bind
+    //样例6:assert and bind
     /*auto x = new Placeholder();
 	auto y = new Placeholder();
 	auto t = add(x,y);
@@ -197,9 +197,20 @@ int main()
 	cout<<Run(*y)<<'\n';
 	//<< 4*/
 
-	
-	
+	//sample 10:Transpose
+	/*Node* x=new Constant({{1,1,1,1,1,1,1,2},{2,4}});
+	Node* y=new Transpose(x);	
+	cout<<Run(*y)<<endl;*/
 
+	//sample 11:Concat
+/*	Node* x=new Constant({{1,1,1,1,1,1,1,1},{2,4}});
+	Node* y=new Constant({{2,2,2,2,2,2,2,2},{2,4}});
+	Node* z=new Concat(x,y,0);
+	cout<<Run(*z)<<endl;*/
+	//sample 12:Class Reshape
+	Node* x=new Constant({{1,1,1,1,1,1,1,1},{2,4}});
+	Node* y=new Reshape(x, {4,2});
+	cout<<Run(*y)<<endl;
 	system("pause");
     return 0;
 }

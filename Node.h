@@ -21,12 +21,12 @@ class Tensor{
 	int size;
 	friend class Node;
 public:
-    Tensor(){}
+    Tensor();
 	Tensor(const float& list);
     Tensor(const std::initializer_list<float>& list, const std::initializer_list<int>& dims);
 	~Tensor();
 	void _reshape(const std::initializer_list<int>& list);
-	void _concat();
+	Tensor _concat(const Tensor& r,int dim=0);
 	void _transpose();
     Tensor operator+(const Tensor& tr);
     Tensor operator-(const Tensor& tr);
@@ -48,8 +48,7 @@ class Node {
     float getfloat();
 
 	void reshape(const std::initializer_list<int>& list);
-	void concat();
-
+	void transpose();
     virtual Tensor calc(set<Node*>& calced) = 0;
     virtual Node* eval(set<Node*>& calced) = 0;
     virtual void getgrad()=0;

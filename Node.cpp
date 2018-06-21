@@ -1,5 +1,7 @@
 #include "stdops.h"
-
+Tensor::Tensor() {
+	size=0;
+}
 Tensor::Tensor(const float& list) { //0-dimension tensor
     	size=0;
     	data.push_back(list);
@@ -49,12 +51,35 @@ void Tensor::_reshape(const std::initializer_list<int>& list){
       	vol/=*it;
    	     }
 }
-void Tensor::_concat(){
-	size=1;
-	shape.clear();
-	num.clear();
-	shape.push_back(data.size());
-	num.push_back(data.size());
+Tensor Tensor::_concat(const Tensor& r, int dim){
+ 	if (dim>size||dim>r.size||size!=r.size) {std::cout<<"input invalid!"<<std::endl; return Tensor();}
+
+ 	for (int i=0; i<size; i++) {
+ 		if (dim!=i&&shape[i]!=r.shape[i]) {std::cout<<"(Concat) Mismatch!"<<std::endl; return Tensor();}
+ 	}
+
+ 	int vol1,vol2;
+ 	vol1=(dim<size)?num[dim]:1;
+ 	vol2=(dim<size)?r.num[dim]:1; 
+ 	Tensor t=Tensor();
+ 	int il=0,ir=0;
+ 	while (il<num[0]){
+ 		for (int j=il; j<il+vol1; j++)
+ 			t.data.push_back(data[j]);
+ 		for (int j=ir; j<ir+vol2; j++)
+ 			t.data.push_back(r.data[j]);
+ 		il+=vol1;
+ 		ir+=vol2;
+ 	}
+ 	t.size=size;
+ 	for (int i=0; i<size; i++){
+ 		if (i==dim) t.shape.push_back(shape[i]+r.shape[i]);
+ 			else t.shape.push_back(shape[i]);
+ 		if (i<=dim) t.num.push_back(num[i]+r.num[i]);
+ 			else t.num.push_back(num[i]);
+ 	}
+ 	if (dim==size) {t.shape.push_back(2); t.num.push_back(2); t.size++; }
+ 	return t;
 }
 void Tensor::_transpose() {
 	int row=shape.size()-2; int line=row+1;
@@ -100,9 +125,8 @@ Tensor Node::getvalue(){
 void Node::reshape(const std::initializer_list<int>& list){
   value._reshape(list);
 }
-void Node::concat() {
-   value._concat();	
-}
+
+
 void Node::transpose() {
 	value._transpose();
 }

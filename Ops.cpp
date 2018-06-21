@@ -106,10 +106,45 @@ Tensor Transpose::calc(set<Node*>& calced) {
 }
 void Transpose::getgrad()
 {
+	for(auto it:op->grad())grads[it.first]=nullptr;
+	for(auto &it:grads)
+	{
+		it.second=new Transpose(op->grad(it.first));
+	}
 	grads[this]=One;
 }
 
-/*Tensor Matmul::calc(set<Node*>& calced) {
+Tensor Concat::calc(set<Node*>& calced) {
+    return getleft()->getvalue()._concat(getright()->getvalue());
+}
+void Concat::getgrad()
+{
+	for(auto it:left->grad())grads[it.first]=nullptr;
+	for(auto it:right->grad())grads[it.first]=nullptr;
+	for(auto &it:grads)
+	{
+		it.second=new Concat(left->grad(it.first),right->grad(it.first),dim);
+	}
+	grads[this]=One;
+}
+
+Tensor Reshape::calc(set<Node*>& calced) {
+    Tensor t=getop()->getvalue();
+    t._reshape(list);
+    return t;
+}
+
+void Reshape::getgrad()
+{
+	for(auto it:op->grad())grads[it.first]=nullptr;
+	for(auto &it:grads)
+	{
+		it.second=new Reshape(op->grad(it.first),list);
+	}
+	grads[this]=One;
+}
+/*
+Tensor Matmul::calc(set<Node*>& calced) {
     return getleft()->getvalue() * getright()->eval(calced)->getvalue();//
 }
 void Matmul::getgrad()
@@ -121,8 +156,8 @@ void Matmul::getgrad()
 		it.second=new Add(new Multiply(left->grad(it.first),right),new Multiply(left,right->grad(it.first)));
 	}
 	grads[this]=One;
-}*/
-
+}
+*/
 Add* add(Node *a,Node *b){return new Add(a,b);}
 Minus* sub(Node *a,Node *b){return new Minus(a,b);}
 Minus* minus(Node *a,Node *b){return new Minus(a,b);}
