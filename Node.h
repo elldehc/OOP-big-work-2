@@ -26,8 +26,8 @@ class Tensor{
 	friend class Relu;
 	friend Tensor tensor_calc(Tensor ts, const string& str);
 public:
-    //Tensor();
-	Tensor(const float& list=0);
+    Tensor();
+	Tensor(const float& list);
     Tensor(const std::initializer_list<float>& list, const std::initializer_list<int>& dims);
 	~Tensor();
 	void _reshape(const std::initializer_list<int>& list);

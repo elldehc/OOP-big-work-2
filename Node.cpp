@@ -1,9 +1,9 @@
 #include "stdops.h"
 #include<cmath>
 
-/*Tensor::Tensor() {
+Tensor::Tensor() {
 	size=0;
-}*/
+}
 Tensor::Tensor(const float& list) { //0-dimension tensor
     	size=0;
     	data.push_back(list);
@@ -67,6 +67,7 @@ Tensor Tensor::_matmul(const Tensor& r){
 		int h=r.shape[1]; //m*n n*h;
 
 		Tensor t=Tensor();
+		t.data.clear();
 		t.size=2;
 		t.shape.push_back(m);t.shape.push_back(h); 
 		t.num.push_back(m*h); t.num.push_back(h);t.num.push_back(1);
@@ -130,6 +131,7 @@ Tensor Tensor::_concat(const Tensor& r, int dim){
  	vol2=(dim<size)?r.num[dim]:1; 
  	Tensor t=Tensor();
  	if(size==0)return Tensor({data[0],r.data[0]},{2});
+ 	t.data.clear();
  	int il=0,ir=0;
  	while (il<num[0]){
  		for (int j=il; j<il+vol1; j++)

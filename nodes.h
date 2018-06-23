@@ -9,8 +9,8 @@ class Constant: public Node {
   private:
     
   public:
-    Constant(const std::initializer_list<float>& list, const std::initializer_list<int>& dims);
-    Constant(const float& value);
+    //Constant(const std::initializer_list<float>& list, const std::initializer_list<int>& dims);
+    //Constant(const float& value);
     Constant(const Tensor& value);
     void getgrad();
     Tensor calc(set<Node*>& calced);

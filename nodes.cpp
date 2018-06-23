@@ -1,13 +1,13 @@
 #include "stdops.h"
 
 //Constant
-Constant::Constant(const std::initializer_list<float>& list, const std::initializer_list<int>& dims) {
+/*Constant::Constant(const std::initializer_list<float>& list, const std::initializer_list<int>& dims) {
     setvalue(Tensor(list,dims));
 }
 
 Constant::Constant(const float& value) {
     setvalue(Tensor(value));
-}
+}*/
 
 Constant::Constant(const Tensor& value) {
     setvalue(value);
