@@ -79,14 +79,14 @@ class Reshape: public Operator_1 {
    void getgrad();
 };
 
-/*class Matmul: public Operator {
+class Matmul: public Operator {
   private:
     Tensor calc(set<Node*>& calced) override;
 
   public:
     using Operator::Operator;
     void getgrad();
-};*/
+};
 
 Add* add(Node *a,Node *b);
 Minus* sub(Node *a,Node *b);

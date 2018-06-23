@@ -53,6 +53,29 @@ void Tensor::_reshape(const std::initializer_list<int>& list){
       	vol/=*it;
    	     }
 }
+
+Tensor Tensor::_matmul(const Tensor& r){
+	if (size!=2||r.size!=2||shape[1]!=r.shape[0]) { std::cout<<"input invalid!"<<std::endl; return Tensor(); }
+	int m=shape[0];
+	int n=shape[1];
+	int h=r.shape[1]; //m*n n*h;
+
+	Tensor t=Tensor();
+	t.size=2;
+	t.shape.push_back(m);t.shape.push_back(h); 
+	t.num.push_back(m*h); t.num.push_back(h);
+	int num;
+	for (int i=0;i<m;i++){
+		for (int j=0;j<h;j++){
+			num=0;
+			for (int k=0;k<n;k++){
+				num+=data[i*n+k]*r.data[k*h+j];
+			}
+			t.data.push_back(num);
+		}
+	}
+	return t;
+}
 Tensor Tensor::_concat(const Tensor& r, int dim){
  	if (dim>size||dim>r.size||size!=r.size) {std::cout<<"input invalid!"<<std::endl; return Tensor();}
 

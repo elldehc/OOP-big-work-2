@@ -30,6 +30,7 @@ public:
 	~Tensor();
 	void _reshape(const std::initializer_list<int>& list);
 	Tensor _concat(const Tensor& r,int dim=0);
+	Tensor _matmul(const Tensor& r);
 	void _transpose();
 
     Tensor operator+(const Tensor& tr);

@@ -208,9 +208,14 @@ int main()
 	Node* z=new Concat(x,y,0);
 	cout<<Run(*z)<<endl;*/
 	//sample 12:Class Reshape
-	Node* x=new Constant({{1,1,1,1,1,1,1,1},{2,4}});
+/*	Node* x=new Constant({{1,1,1,1,1,1,1,1},{2,4}});
 	Node* y=new Reshape(x, {4,2});
-	cout<<Run(*y)<<endl;
+	cout<<Run(*y)<<endl;*/
+    //sample 13:Class Matmul
+   Node* x=new Constant({{1,1,1,1,1,1,1,1},{2,4}});
+   Node* y=new Constant({{1,1,1,1,1,1,1,1},{4,2}});
+   Node* z=new Matmul(x,y);
+   cout<<Run(*z)<<endl;
 	system("pause");
     return 0;
 }
