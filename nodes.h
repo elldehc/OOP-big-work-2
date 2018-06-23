@@ -11,6 +11,7 @@ class Constant: public Node {
   public:
     Constant(const std::initializer_list<float>& list, const std::initializer_list<int>& dims);
     Constant(const float& value);
+    Constant(const Tensor& value);
     void getgrad();
     Tensor calc(set<Node*>& calced);
     Node* eval(set<Node*>& calced);
@@ -73,7 +74,8 @@ class Assign: public Node {
 };
 
 
-Constant* constant(float a);
+Constant* constant(const Tensor &a);
+//Constant* constant(const std::initializer_list<float>& list, const std::initializer_list<int>& dims);
 Placeholder* placeholder(string name="");
 Print* print(Node *a);
 Parameter* parameter(float a);

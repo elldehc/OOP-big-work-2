@@ -115,7 +115,7 @@ void Transpose::getgrad()
 }
 
 Tensor Concat::calc(set<Node*>& calced) {
-    return getleft()->getvalue()._concat(getright()->getvalue());
+    return getleft()->getvalue()._concat(getright()->getvalue(),dim);
 }
 void Concat::getgrad()
 {
@@ -153,7 +153,7 @@ void Matmul::getgrad()
 	for(auto it:right->grad())grads[it.first]=nullptr;
 	for(auto &it:grads)
 	{
-		it.second=new Add(new Matmul(new Transpose(left->grad(it.first)),right),new Matmul(left,new Transpose(right->grad(it.first))));
+		it.second=new Add(new Matmul(left->grad(it.first),right),new Matmul(left,right->grad(it.first)));
 	}
 	grads[this]=One;
 }
@@ -164,3 +164,7 @@ Minus* minus(Node *a,Node *b){return new Minus(a,b);}
 Multiply* mul(Node *a,Node *b){return new Multiply(a,b);}
 Divide* div(Node *a,Node *b){return new Divide(a,b);}
 Power* power(Node *a,Node *b){return new Power(a,b);}
+Transpose* transpose(Node *a){return new Transpose(a);}
+Concat* concat(Node *a,Node *b,int c){return new Concat(a,b,c);}
+Reshape* reshape(Node *a,const std::initializer_list<int>& b){return new Reshape(a,b);}
+Matmul* matmul(Node *a,Node *b){return new Matmul(a,b);}

@@ -536,7 +536,7 @@ void Sgn::getgrad()
 Sgn* sgn(Node *a){return new Sgn(a);}
 
 Tensor Sigmoid::calc(set<Node*>& calced) {
-	return 1/(1+exp(-getop()->getfloat()));
+	return 1/(1+exp(-getop()->getvalue()));
 }
 void Sigmoid::getgrad()
 {
@@ -555,4 +555,15 @@ void Relu::getgrad()
 	grads[this]=One;
 }
 Relu* relu(Node *a){return new Relu(a);}
+
+/*Tensor Length::calc(set<Node*>& calced) {
+	float t=getop()->getfloat();
+	return t>0?t:0;
+}
+void Length::getgrad()
+{
+	for(auto it:getop()->grad()){grads[it.first]=cond(greater(getop(),Zero),it.second,Zero);}
+	grads[this]=One;
+}
+Length* length(Node *a){return new Length(a);}*/
 

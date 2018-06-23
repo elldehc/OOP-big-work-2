@@ -203,19 +203,44 @@ int main()
 	cout<<Run(*y)<<endl;*/
 
 	//sample 11:Concat
-/*	Node* x=new Constant({{1,1,1,1,1,1,1,1},{2,4}});
+	/*Node* x=new Constant({{1,1,1,1,1,1,1,1},{2,4}});
 	Node* y=new Constant({{2,2,2,2,2,2,2,2},{2,4}});
+	Node* z=new Concat(x,y,2);
+	cout<<Run(*z)<<endl;*/
+	//sample 11.5:Concat
+	/*Node* x=new Constant(1);
+	Node* y=new Constant(2);
 	Node* z=new Concat(x,y,0);
 	cout<<Run(*z)<<endl;*/
+	
 	//sample 12:Class Reshape
-/*	Node* x=new Constant({{1,1,1,1,1,1,1,1},{2,4}});
-	Node* y=new Reshape(x, {4,2});
+	/*Node* x=new Constant({{1,1,1,1,1,1,1,1},{2,4}});
+	Node* y=new Reshape(x, {1,2,1,1,2,1,1,2});
 	cout<<Run(*y)<<endl;*/
     //sample 13:Class Matmul
-   Node* x=new Constant({{1,1,1,1,1,1,1,1},{2,4}});
-   Node* y=new Constant({{1,1,1,1,1,1,1,1},{4,2}});
-   Node* z=new Matmul(x,y);
-   cout<<Run(*z)<<endl;
-	system("pause");
+	/*Node* x=new Constant({{1,1,1,1,1,1,1,1},{2,4}});
+	Node* y=new Constant({{1,1,1,1,1,1,1,1},{4,2}});
+	Node* z=new Matmul(x,y);
+	cout<<Run(*z)<<endl;*/
+	//sample 14:modifying Tensor
+	/*Tensor a({},{3,3,3});
+	int i,j,k,l=0;
+	for(i=0;i<3;i++)
+	for(j=0;j<3;j++)
+	for(k=0;k<3;k++)
+	{
+	   a.at({i,j,k})=++l;
+	   cout<<a<<'\n';
+	}
+	a._reshape({2,4,4});
+	cout<<a<<'\n';*/
+	//sample 15:gradients on Tensor
+	auto x=placeholder();
+	Node *a11=sin(x),*a12=cos(x),*a21=exp(x),*a22=log(x);
+	auto a=concat(concat(a11,a12,0),concat(a21,a22,0),1);
+	auto b=constant({{1,1,-1,1},{2,2}});
+	auto ans=matmul(a,b);
+	cout<<Run({{x,1}},*ans->grad(x))<<'\n';
+	//system("pause");
     return 0;
 }

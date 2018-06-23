@@ -53,7 +53,7 @@ ostream &operator<< (ostream& out, const Tensor& tensor) {
 		cout << *iter;
 		count++;
 		if (count%tensor.num[stack] != 0) cout << ',';
-		while (count%tensor.num[stack] == 0) {
+		while (stack>=0&&count%tensor.num[stack] == 0) {
 			cout << '}';
 			stack--;
 		}

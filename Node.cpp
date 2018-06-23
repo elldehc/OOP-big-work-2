@@ -8,7 +8,7 @@ Tensor::Tensor(const float& list) { //0-dimension tensor
     	size=0;
     	data.push_back(list);
     	shape.push_back(0);
-    	num.push_back(0);
+    	num.push_back(1);
 }
 Tensor::Tensor(const std::initializer_list<float>& list, const std::initializer_list<int>& dims) { //size-dimension tensor
   	  for (auto it=list.begin();it!=list.end();it++){
@@ -19,11 +19,13 @@ Tensor::Tensor(const std::initializer_list<float>& list, const std::initializer_
       		shape.push_back(*it);
       		vol*=*it;
    		 }
+   		data.resize(vol);
 	  size=shape.size();
       for (auto it=shape.begin();it!=shape.end();it++){
       	num.push_back(vol);
       	vol/=*it;
    	     }
+   	  num.push_back(1);
     
 }
 Tensor::~Tensor() {
@@ -37,8 +39,9 @@ void Tensor::_reshape(const std::initializer_list<int>& list){
 		req_vol*=(*it);
 	}
 	if (req_vol!=num[0]) {
-		std::cout<<"Request `Reshape` invalid"<<std::endl;
-		return;
+		data.resize(req_vol);
+		//std::cout<<"Request `Reshape` invalid"<<std::endl;
+		//return;
 	}
 	shape.clear();
 	num.clear();
@@ -52,10 +55,11 @@ void Tensor::_reshape(const std::initializer_list<int>& list){
       	num.push_back(vol);
       	vol/=*it;
    	     }
+   	  num.push_back(1);
 }
 
 Tensor Tensor::_matmul(const Tensor& r){
-	if (size!=2||r.size!=2||shape[1]!=r.shape[0]) { std::cout<<"input invalid!"<<std::endl; return Tensor(); }
+	if (size!=2||r.size!=2||shape[1]!=r.shape[0]) { std::cout<<"matmul:input invalid!"<<std::endl; return Tensor(); }
 	int m=shape[0];
 	int n=shape[1];
 	int h=r.shape[1]; //m*n n*h;
@@ -63,7 +67,7 @@ Tensor Tensor::_matmul(const Tensor& r){
 	Tensor t=Tensor();
 	t.size=2;
 	t.shape.push_back(m);t.shape.push_back(h); 
-	t.num.push_back(m*h); t.num.push_back(h);
+	t.num.push_back(m*h); t.num.push_back(h);t.num.push_back(1);
 	float num;
 	for (int i=0;i<m;i++){
 		for (int j=0;j<h;j++){
@@ -77,7 +81,7 @@ Tensor Tensor::_matmul(const Tensor& r){
 	return t;
 }
 Tensor Tensor::_concat(const Tensor& r, int dim){
- 	if (dim>size||dim>r.size||size!=r.size) {std::cout<<"input invalid!"<<std::endl; return Tensor();}
+ 	if (dim>size||dim>r.size||size!=r.size) {std::cout<<"concat:input invalid!"<<std::endl; return Tensor();}
 
  	for (int i=0; i<size; i++) {
  		if (dim!=i&&shape[i]!=r.shape[i]) {std::cout<<"(Concat) Mismatch!"<<std::endl; return Tensor();}
@@ -87,6 +91,7 @@ Tensor Tensor::_concat(const Tensor& r, int dim){
  	vol1=(dim<size)?num[dim]:1;
  	vol2=(dim<size)?r.num[dim]:1; 
  	Tensor t=Tensor();
+ 	if(size==0)return Tensor({data[0],r.data[0]},{2});
  	int il=0,ir=0;
  	while (il<num[0]){
  		for (int j=il; j<il+vol1; j++)
@@ -104,6 +109,7 @@ Tensor Tensor::_concat(const Tensor& r, int dim){
  			else t.num.push_back(num[i]);
  	}
  	if (dim==size) {t.shape.push_back(2); t.num.push_back(2); t.size++; }
+ 	num.push_back(1);
  	return t;
 }
 void Tensor::_transpose() {
@@ -129,7 +135,7 @@ void Tensor::_transpose() {
 		}
 		it += mat;
 	}
-	num[num.size()-1] = row;
+	num[num.size()-2] = row;
 
 	shape[shape.size()-2] = line;
 	shape[shape.size()-1] = row;
@@ -187,6 +193,16 @@ void Node::transpose() {
 	value._transpose();
 }
 
+float& Tensor::at(const std::initializer_list<int>& dims)
+{
+	int s=0;
+	int i,j,k;
+	auto it=dims.begin();
+	for(i=1;it!=dims.end()&&i<shape.size();it++,i++)s+=num[i]*(*it);
+	s+=*it;
+	return data[s];
+}
+		
 Tensor Tensor::operator+(const Tensor& tr){
     if (this->shape == tr.shape) {
         auto r_iter=tr.data.begin();
@@ -253,12 +269,13 @@ void Node::setvalue(const Tensor& v) {
     value = v;
 }
 void Node::setvalue(const float& v) {
-   value.size=0;
+   /*value.size=0;
    value.data.clear();
    value.shape.clear();
    value.num.clear();
    value.data.push_back(v);
-   value.shape.push_back(0);
+   value.shape.push_back(0);*/
+   value=Tensor(v);
 }
 
 

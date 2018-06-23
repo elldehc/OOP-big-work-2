@@ -9,6 +9,10 @@ Constant::Constant(const float& value) {
     setvalue(Tensor(value));
 }
 
+Constant::Constant(const Tensor& value) {
+    setvalue(value);
+}
+
 Tensor Constant::calc(set<Node*>& calced) {
     return getvalue();
 }
@@ -138,7 +142,7 @@ Node* Assign::eval(set<Node*>& calced) {
 
 map<Parameter*,Tensor> assign_map;
     
-Constant* constant(float a){return new Constant(a);}
+Constant* constant(const Tensor &a){return new Constant(a);}
 Placeholder* placeholder(string name){return new Placeholder(name);}
 Print* print(Node *a){return new Print(a);}
 Parameter* parameter(float a){return new Parameter(a);}

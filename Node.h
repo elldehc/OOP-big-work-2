@@ -32,7 +32,7 @@ public:
 	Tensor _concat(const Tensor& r,int dim=0);
 	Tensor _matmul(const Tensor& r);
 	void _transpose();
-
+	float& at(const std::initializer_list<int>& dims);
     Tensor operator+(const Tensor& tr);
     Tensor operator-(const Tensor& tr);
     Tensor operator*(const Tensor& tr);

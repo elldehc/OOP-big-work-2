@@ -94,4 +94,8 @@ Minus* minus(Node *a,Node *b);
 Multiply* mul(Node *a,Node *b);
 Divide* div(Node *a,Node *b);
 Power* power(Node *a,Node *b);
+Transpose* transpose(Node *a);
+Concat* concat(Node *a,Node *b,int c);
+Reshape* reshape(Node *a,const std::initializer_list<int>& b);
+Matmul* matmul(Node *a,Node *b);
 #endif /* Ops_h */
