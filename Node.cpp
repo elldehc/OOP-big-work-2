@@ -64,7 +64,7 @@ Tensor Tensor::_matmul(const Tensor& r){
 	t.size=2;
 	t.shape.push_back(m);t.shape.push_back(h); 
 	t.num.push_back(m*h); t.num.push_back(h);
-	int num;
+	float num;
 	for (int i=0;i<m;i++){
 		for (int j=0;j<h;j++){
 			num=0;
