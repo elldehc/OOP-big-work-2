@@ -1,9 +1,9 @@
 #include "stdops.h"
 #include<cmath>
 
-Tensor::Tensor() {
+/*Tensor::Tensor() {
 	size=0;
-}
+}*/
 Tensor::Tensor(const float& list) { //0-dimension tensor
     	size=0;
     	data.push_back(list);
@@ -59,26 +59,64 @@ void Tensor::_reshape(const std::initializer_list<int>& list){
 }
 
 Tensor Tensor::_matmul(const Tensor& r){
-	if (size!=2||r.size!=2||shape[1]!=r.shape[0]) { std::cout<<"matmul:input invalid!"<<std::endl; return Tensor(); }
-	int m=shape[0];
-	int n=shape[1];
-	int h=r.shape[1]; //m*n n*h;
+	if(size==2&&r.size==2)
+	{
+		if (shape[1]!=r.shape[0]) { std::cout<<"matmul:input invalid!"<<std::endl; return Tensor(); }
+		int m=shape[0];
+		int n=shape[1];
+		int h=r.shape[1]; //m*n n*h;
 
-	Tensor t=Tensor();
-	t.size=2;
-	t.shape.push_back(m);t.shape.push_back(h); 
-	t.num.push_back(m*h); t.num.push_back(h);t.num.push_back(1);
-	float num;
-	for (int i=0;i<m;i++){
-		for (int j=0;j<h;j++){
-			num=0;
-			for (int k=0;k<n;k++){
-				num+=data[i*n+k]*r.data[k*h+j];
+		Tensor t=Tensor();
+		t.size=2;
+		t.shape.push_back(m);t.shape.push_back(h); 
+		t.num.push_back(m*h); t.num.push_back(h);t.num.push_back(1);
+		float num;
+		for (int i=0;i<m;i++){
+			for (int j=0;j<h;j++){
+				num=0;
+				for (int k=0;k<n;k++){
+					num+=data[i*n+k]*r.data[k*h+j];
+				}
+				t.data.push_back(num);
 			}
-			t.data.push_back(num);
 		}
+		return t;
 	}
-	return t;
+	else if(size==0&&r.size==2)
+	{
+		Tensor t=r;
+		for(int i=0;i<t.num[0];i++)t.data[i]*=data[0];
+		return t;
+	}
+	else if(size==2&&r.size==0)
+	{
+		Tensor t=*this;
+		for(int i=0;i<t.num[0];i++)t.data[i]*=r.data[0];
+		return t;
+	}
+	else if(size==1&&r.size==2)
+	{
+		if(shape[0]!=r.shape[0]){ std::cout<<"matmul:input invalid!"<<std::endl; return Tensor(); }
+		Tensor t=*this;
+		for(int i=0;i<shape[0];i++)
+		{
+			t.data[i]=0;
+			for(int j=0;j<r.shape[1];j++)t.data[i]+=data[i]*r.data[i*r.num[1]+j];
+		}
+		return t;
+	}
+	else if(size==2&&r.size==1)
+	{
+		if(shape[1]!=r.shape[0]){ std::cout<<"matmul:input invalid!"<<std::endl; return Tensor(); }
+		Tensor t=r;
+		for(int i=0;i<r.shape[0];i++)
+		{
+			t.data[i]=0;
+			for(int j=0;j<shape[0];j++)t.data[i]+=data[j*num[1]+i]*r.data[i];
+		}
+		return t;
+	}
+	else { std::cout<<"matmul:input invalid!"<<std::endl; return Tensor(); }
 }
 Tensor Tensor::_concat(const Tensor& r, int dim){
  	if (dim>size||dim>r.size||size!=r.size) {std::cout<<"concat:input invalid!"<<std::endl; return Tensor();}
@@ -204,7 +242,7 @@ float& Tensor::at(const std::initializer_list<int>& dims)
 }
 		
 Tensor Tensor::operator+(const Tensor& tr){
-    if (this->shape == tr.shape) {
+    /*if (this->shape == tr.shape) {
         auto r_iter=tr.data.begin();
         for (auto iter=this->data.begin(); iter!=this->data.end(); iter++)
         {
@@ -217,10 +255,48 @@ Tensor Tensor::operator+(const Tensor& tr){
       else {
               std::cout<<"Warning)  (Add) Mismatch"<<std::endl;
               return Tensor();
-      }
+      }*/
+    int i,j,k;
+	Tensor ans;
+	ans.size=size>tr.size?size:tr.size;
+	ans.shape.resize(ans.size);
+	for(i=0;i<ans.size;i++)
+	{
+		if(i>=size)ans.shape[ans.size-i-1]=tr.shape[tr.size-i-1];
+		else if(i>=tr.size)ans.shape[ans.size-i-1]=shape[size-i-1];
+		else if(tr.shape[tr.size-i-1]==shape[size-i-1])ans.shape[ans.size-i-1]=shape[size-i-1];
+		else if(tr.shape[tr.size-i-1]==1)ans.shape[ans.size-i-1]=shape[size-i-1];
+		else if(shape[size-i-1]==1)ans.shape[ans.size-i-1]=tr.shape[tr.size-i-1];
+		else{std::cerr<<"Error in +:sizes don't match.\n";return ans;}
+	}
+	ans.num.resize(ans.size+1);
+	ans.num[ans.size]=1;
+	for(i=ans.size-1;i>=0;i--)ans.num[i]=ans.num[i+1]*ans.shape[i];
+	ans.data.resize(ans.num[0]);
+	std::vector<int> ind(ans.size);
+	int w1=0,w2=0;
+	for(i=0;i<ans.num[0];i++)
+	{
+		ans.data[i]=data[w1]+tr.data[w2];
+		for(j=0;j<ans.size;j++)
+		{
+			ind[ans.size-1-j]++;
+			if(shape[size-1-j]>1)w1+=num[size-j];
+			if(tr.shape[tr.size-1-j]>1)w2+=num[tr.size-j];
+			if(ind[ans.size-1-j]>=ans.num[ans.size-1-j])
+			{
+				ind[ans.size-1-j]-=ans.num[ans.size-1-j];
+				if(shape[size-1-j]>1)w1-=ans.num[ans.size-1-j]*num[size-j];
+				if(tr.shape[tr.size-1-j]>1)w2-=ans.num[ans.size-1-j]*num[tr.size-j];
+			}
+			else break;
+		}
+	}
+	return ans;
 }
+			
 Tensor Tensor::operator-(const Tensor& tr){
-    if (this->shape == tr.shape) {
+    /*if (this->shape == tr.shape) {
         auto r_iter=tr.data.begin();
         for (auto iter=this->data.begin(); iter!=this->data.end(); iter++)
         {
@@ -232,10 +308,48 @@ Tensor Tensor::operator-(const Tensor& tr){
       else {
               std::cout<<"Warning)  (Minus) Mismatch"<<std::endl;
               return Tensor();
-      }
+      }*/
+	int i,j,k;
+	Tensor ans;
+	ans.size=size>tr.size?size:tr.size;
+	ans.shape.resize(ans.size);
+	for(i=0;i<ans.size;i++)
+	{
+		if(i>=size)ans.shape[ans.size-i-1]=tr.shape[tr.size-i-1];
+		else if(i>=tr.size)ans.shape[ans.size-i-1]=shape[size-i-1];
+		else if(tr.shape[tr.size-i-1]==shape[size-i-1])ans.shape[ans.size-i-1]=shape[size-i-1];
+		else if(tr.shape[tr.size-i-1]==1)ans.shape[ans.size-i-1]=shape[size-i-1];
+		else if(shape[size-i-1]==1)ans.shape[ans.size-i-1]=tr.shape[tr.size-i-1];
+		else{std::cerr<<"Error in -:sizes don't match.\n";return ans;}
+	}
+	ans.num.resize(ans.size+1);
+	ans.num[ans.size]=1;
+	for(i=ans.size-1;i>=0;i--)ans.num[i]=ans.num[i+1]*ans.shape[i];
+	ans.data.resize(ans.num[0]);
+	std::vector<int> ind(ans.size);
+	int w1=0,w2=0;
+	for(i=0;i<ans.num[0];i++)
+	{
+		ans.data[i]=data[w1]-tr.data[w2];
+		for(j=0;j<ans.size;j++)
+		{
+			ind[ans.size-1-j]++;
+			if(shape[size-1-j]>1)w1+=num[size-j];
+			if(tr.shape[tr.size-1-j]>1)w2+=num[tr.size-j];
+			if(ind[ans.size-1-j]>=ans.num[ans.size-1-j])
+			{
+				ind[ans.size-1-j]-=ans.num[ans.size-1-j];
+				if(shape[size-1-j]>1)w1-=ans.num[ans.size-1-j]*num[size-j];
+				if(tr.shape[tr.size-1-j]>1)w2-=ans.num[ans.size-1-j]*num[tr.size-j];
+			}
+			else break;
+		}
+	}
+	return ans;
 }
 Tensor Tensor::operator*(const Tensor& tr){ //假的乘法
-        if (this->shape == tr.shape) {
+
+        /*if (this->shape == tr.shape) {
         auto r_iter=tr.data.begin();
         for (auto iter=this->data.begin(); iter!=this->data.end(); iter++)
         {
@@ -247,10 +361,47 @@ Tensor Tensor::operator*(const Tensor& tr){ //假的乘法
       else {
                 std::cout<<"Warning)  (Multiply) Mismatch"<<std::endl;
                 return Tensor();
-      }
+      }*/
+	int i,j,k;
+	Tensor ans;
+	ans.size=size>tr.size?size:tr.size;
+	ans.shape.resize(ans.size);
+	for(i=0;i<ans.size;i++)
+	{
+		if(i>=size)ans.shape[ans.size-i-1]=tr.shape[tr.size-i-1];
+		else if(i>=tr.size)ans.shape[ans.size-i-1]=shape[size-i-1];
+		else if(tr.shape[tr.size-i-1]==shape[size-i-1])ans.shape[ans.size-i-1]=shape[size-i-1];
+		else if(tr.shape[tr.size-i-1]==1)ans.shape[ans.size-i-1]=shape[size-i-1];
+		else if(shape[size-i-1]==1)ans.shape[ans.size-i-1]=tr.shape[tr.size-i-1];
+		else{std::cerr<<"Error in *:sizes don't match.\n";return ans;}
+	}
+	ans.num.resize(ans.size+1);
+	ans.num[ans.size]=1;
+	for(i=ans.size-1;i>=0;i--)ans.num[i]=ans.num[i+1]*ans.shape[i];
+	ans.data.resize(ans.num[0]);
+	std::vector<int> ind(ans.size);
+	int w1=0,w2=0;
+	for(i=0;i<ans.num[0];i++)
+	{
+		ans.data[i]=data[w1]*tr.data[w2];
+		for(j=0;j<ans.size;j++)
+		{
+			ind[ans.size-1-j]++;
+			if(shape[size-1-j]>1)w1+=num[size-j];
+			if(tr.shape[tr.size-1-j]>1)w2+=num[tr.size-j];
+			if(ind[ans.size-1-j]>=ans.num[ans.size-1-j])
+			{
+				ind[ans.size-1-j]-=ans.num[ans.size-1-j];
+				if(shape[size-1-j]>1)w1-=ans.num[ans.size-1-j]*num[size-j];
+				if(tr.shape[tr.size-1-j]>1)w2-=ans.num[ans.size-1-j]*num[tr.size-j];
+			}
+			else break;
+		}
+	}
+	return ans;
 }
 Tensor Tensor::operator/(const Tensor& tr){ //假的除法
-        if (this->shape == tr.shape) {
+        /*if (this->shape == tr.shape) {
         auto r_iter=tr.data.begin();
         for (auto iter=this->data.begin(); iter!=this->data.end(); iter++)
         {
@@ -262,7 +413,44 @@ Tensor Tensor::operator/(const Tensor& tr){ //假的除法
       else {
               std::cout<<"Warning)  (Divide) Mismatch"<<std::endl;
               return Tensor();
-      }
+      }*/
+	int i,j,k;
+	Tensor ans;
+	ans.size=size>tr.size?size:tr.size;
+	ans.shape.resize(ans.size);
+	for(i=0;i<ans.size;i++)
+	{
+		if(i>=size)ans.shape[ans.size-i-1]=tr.shape[tr.size-i-1];
+		else if(i>=tr.size)ans.shape[ans.size-i-1]=shape[size-i-1];
+		else if(tr.shape[tr.size-i-1]==shape[size-i-1])ans.shape[ans.size-i-1]=shape[size-i-1];
+		else if(tr.shape[tr.size-i-1]==1)ans.shape[ans.size-i-1]=shape[size-i-1];
+		else if(shape[size-i-1]==1)ans.shape[ans.size-i-1]=tr.shape[tr.size-i-1];
+		else{std::cerr<<"Error in /:sizes don't match.\n";return ans;}
+	}
+	ans.num.resize(ans.size+1);
+	ans.num[ans.size]=1;
+	for(i=ans.size-1;i>=0;i--)ans.num[i]=ans.num[i+1]*ans.shape[i];
+	ans.data.resize(ans.num[0]);
+	std::vector<int> ind(ans.size);
+	int w1=0,w2=0;
+	for(i=0;i<ans.num[0];i++)
+	{
+		ans.data[i]=data[w1]/tr.data[w2];
+		for(j=0;j<ans.size;j++)
+		{
+			ind[ans.size-1-j]++;
+			if(shape[size-1-j]>1)w1+=num[size-j];
+			if(tr.shape[tr.size-1-j]>1)w2+=num[tr.size-j];
+			if(ind[ans.size-1-j]>=ans.num[ans.size-1-j])
+			{
+				ind[ans.size-1-j]-=ans.num[ans.size-1-j];
+				if(shape[size-1-j]>1)w1-=ans.num[ans.size-1-j]*num[size-j];
+				if(tr.shape[tr.size-1-j]>1)w2-=ans.num[ans.size-1-j]*num[tr.size-j];
+			}
+			else break;
+		}
+	}
+	return ans;
 }
 
 void Node::setvalue(const Tensor& v) {

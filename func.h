@@ -9,8 +9,10 @@
 
 
 Node* Run(Node& des);
-Node* Run(const map <Node*, std::pair<std::initializer_list<float>, std::initializer_list<int>> >& initmap, Node& des);
-Node* Run(const map <Node*,float>& initmap, Node& des);
+//Node* Run(const map <Node*, std::pair<std::initializer_list<float>, std::initializer_list<int>> >& initmap, Node& des);
+//Node* Run(const map <Node*,float>& initmap, Node& des);
+Node* Run(const map <Node*,Tensor>& initmap, Node& des);
+
 ostream& operator<< (ostream& out, const Tensor& tensor);
 ostream& operator<< (ostream& out, Node* const nodeptr);
 

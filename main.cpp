@@ -237,10 +237,24 @@ int main()
 	//sample 15:gradients on Tensor
 	auto x=placeholder();
 	Node *a11=sin(x),*a12=cos(x),*a21=exp(x),*a22=log(x);
-	auto a=concat(concat(a11,a12,0),concat(a21,a22,0),1);
+	auto a=concat(concat(a11,a21,0),concat(a12,a22,0),1);
 	auto b=constant({{1,1,-1,1},{2,2}});
 	auto ans=matmul(a,b);
+	cout<<Run({{x,1}},*ans)<<'\n';
 	cout<<Run({{x,1}},*ans->grad(x))<<'\n';
+	auto y=placeholder();
+	auto ly=matmul(y,transpose(y));
+	cout<<Run({{y,{{1,1,1,1},{1,4}}}},*ly->grad(y))<<'\n';
+	//sample 16:broadcast of +-*/
+	/*Tensor a({1,1,1,1},{2,1,2,1}),b({3,3,3,3,3,3},{3,1,2});
+	//Tensor c=a+b;
+	auto t=sigmoid(constant(a));
+	cout<<Run(*t)<<'\n';
+	cout<<a+b<<'\n';
+	cout<<a-b<<'\n';
+	cout<<a*b<<'\n';
+	cout<<a/b<<'\n';*/
+	
 	//system("pause");
     return 0;
 }

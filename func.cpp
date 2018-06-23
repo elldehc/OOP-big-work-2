@@ -8,7 +8,7 @@ Node* Run(Node& des) {
 	return t;
 }
 
-Node* Run(const map <Node*, std::pair<std::initializer_list<float>, std::initializer_list<int>> >& initmap, Node& des) {
+/*Node* Run(const map <Node*, std::pair<std::initializer_list<float>, std::initializer_list<int>> >& initmap, Node& des) {
 	set<Node*> calced;
 
 	//placeholder赋值：迭代器遍历map中所有元素
@@ -22,9 +22,24 @@ Node* Run(const map <Node*, std::pair<std::initializer_list<float>, std::initial
 	for (auto it : assign_map)it.first->set(it.second);
 	assign_map.clear();
 	return t;
-}
+}*/
 
-Node* Run(const map <Node*, float>& initmap, Node& des) {
+/*Node* Run(const map <Node*, float>& initmap, Node& des) {
+	set<Node*> calced;
+
+	//placeholder赋值：迭代器遍历map中所有元素
+	for (auto iter = initmap.begin(); iter != initmap.end(); iter++) {
+		iter->first->setvalue(iter->second);
+		calced.insert(iter->first); //赋值过的结点加入集合calced
+	}
+
+	//initmap.clear(); //清除用于初始化的map，下次调用run前在主函数重新赋值
+	Node *t = des.eval(calced);
+	for (auto it : assign_map)it.first->set(it.second);
+	assign_map.clear();
+	return t;
+}*/
+Node* Run(const map <Node*, Tensor>& initmap, Node& des) {
 	set<Node*> calced;
 
 	//placeholder赋值：迭代器遍历map中所有元素

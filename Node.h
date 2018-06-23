@@ -22,10 +22,12 @@ class Tensor{
 	std::vector<int> num; //存储到达这一维度的张量分量的元素个数 num[0]=size
 	int size;
 	friend class Node;
+	friend class Sgn;
+	friend class Relu;
 	friend Tensor tensor_calc(Tensor ts, const string& str);
 public:
-    Tensor();
-	Tensor(const float& list);
+    //Tensor();
+	Tensor(const float& list=0);
     Tensor(const std::initializer_list<float>& list, const std::initializer_list<int>& dims);
 	~Tensor();
 	void _reshape(const std::initializer_list<int>& list);

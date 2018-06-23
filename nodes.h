@@ -57,7 +57,6 @@ class Parameter: public Node {
     void multiply(const Tensor& number);
     void divide(const Tensor& number);
     void minus(const Tensor& number);
-    
     Node* eval(::set<Node*>& calced) override;
 };
 
@@ -78,6 +77,6 @@ Constant* constant(const Tensor &a);
 //Constant* constant(const std::initializer_list<float>& list, const std::initializer_list<int>& dims);
 Placeholder* placeholder(string name="");
 Print* print(Node *a);
-Parameter* parameter(float a);
+Parameter* parameter(const Tensor &a);
 Assign* assign(Parameter *para,Node *node);
 #endif /* numbers_h */

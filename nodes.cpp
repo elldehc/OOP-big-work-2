@@ -109,6 +109,7 @@ void Parameter::divide(/*float*/const Tensor& number) {
     setvalue(getvalue() / number);
 }
 
+
 Node* Parameter::eval(::set<Node*>& calced) {
     return this;
 }
@@ -145,6 +146,6 @@ map<Parameter*,Tensor> assign_map;
 Constant* constant(const Tensor &a){return new Constant(a);}
 Placeholder* placeholder(string name){return new Placeholder(name);}
 Print* print(Node *a){return new Print(a);}
-Parameter* parameter(float a){return new Parameter(a);}
+Parameter* parameter(const Tensor &a){return new Parameter(a);}
 Assign* assign(Parameter *para,Node *node){return new Assign(para,node);}
 

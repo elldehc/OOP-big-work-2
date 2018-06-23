@@ -34,7 +34,7 @@ Node* Tan::eval(set<Node*>& calced) {
         
         //possible errors
         if(fabs(floor(x+0.5)-x)<1e-9&&((int)(x+0.5)&1)){
-            cout << "Error: cannot calculate tan(" << getop()->getfloat() << "), since it equals to ("<<(int)(x+0.5)<<"+0.5)pi\n";
+            cout << "Error: cannot calculate tan(" << getop()->getfloat(i) << "), since it equals to ("<<(int)(x+0.5)<<"+0.5)pi\n";
             return nullptr;
         }
     }
@@ -69,7 +69,7 @@ Node* Acos::eval(set<Node*>& calced) {
         
         //possible errors
         if(x>1||x<-1){
-            cout << "Error: cannot calculate acos(" << getop()->getfloat() << "), since it's not in [-1,1]\n";
+            cout << "Error: cannot calculate acos(" << getop()->getfloat(i) << "), since it's not in [-1,1]\n";
             return nullptr;
         }
     }
@@ -104,7 +104,7 @@ Node* Asin::eval(set<Node*>& calced) {
         
         //possible errors
         if(x>1||x<-1){
-            cout << "Error: cannot calculate asin(" << getop()->getfloat() << "), since it's not in [-1,1]\n";
+            cout << "Error: cannot calculate asin(" << getop()->getfloat(i) << "), since it's not in [-1,1]\n";
             return nullptr;
         }
     }
@@ -183,7 +183,7 @@ Node* Acosh::eval(set<Node*>& calced) {
         
         //possible errors
         if(x<1){
-            cout << "Error: cannot calculate acosh(" << getop()->getfloat() << "), since it's less than 1\n";
+            cout << "Error: cannot calculate acosh(" << getop()->getfloat(i) << "), since it's less than 1\n";
             return nullptr;
         }
     }
@@ -229,7 +229,7 @@ Node* Atanh::eval(set<Node*>& calced) {
         
         //possible errors
         if(x>=1||x<=-1){
-            cout << "Error: cannot calculate atanh(" << getop()->getfloat() << "), since it's not in (-1,1)\n";
+            cout << "Error: cannot calculate atanh(" << getop()->getfloat(i) << "), since it's not in (-1,1)\n";
             return nullptr;
         }
     }
@@ -275,7 +275,7 @@ Node* Log::eval(set<Node*>& calced) {
         
         //possible errors
         if(x<=0){
-            cout << "Error: cannot calculate log(" << getop()->getfloat() << "), since it's not greater than 0.\n";
+            cout << "Error: cannot calculate log(" << getop()->getfloat(i) << "), since it's not greater than 0.\n";
             return nullptr;
         }
     }
@@ -310,7 +310,7 @@ Node* Log10::eval(set<Node*>& calced) {
         
         //possible errors
         if(x<=0){
-            cout << "Error: cannot calculate log10(" << getop()->getfloat() << "), since it's not greater than 0.\n";
+            cout << "Error: cannot calculate log10(" << getop()->getfloat(i) << "), since it's not greater than 0.\n";
             return nullptr;
         }
     }
@@ -367,7 +367,7 @@ Node* Log1p::eval(set<Node*>& calced) {
         
         //possible errors
         if(x<=1){
-            cout << "Error: cannot calculate log1p(" << getop()->getfloat() << "), since it's not greater than -1.\n";
+            cout << "Error: cannot calculate log1p(" << getop()->getfloat(i) << "), since it's not greater than -1.\n";
             return nullptr;
         }
     }
@@ -402,7 +402,7 @@ Node* Log2::eval(set<Node*>& calced) {
         
         //possible errors
         if(x<=0){
-            cout << "Error: cannot calculate log2(" << getop()->getfloat() << "), since it's not greater than 0.\n";
+            cout << "Error: cannot calculate log2(" << getop()->getfloat(i) << "), since it's not greater than 0.\n";
             return nullptr;
         }
     }
@@ -437,7 +437,7 @@ Node* Sqrt::eval(set<Node*>& calced) {
         
         //possible errors
         if(x<0){
-            cout << "Error: cannot calculate sqrt(" << getop()->getfloat() << "), since it's less than 0.\n";
+            cout << "Error: cannot calculate sqrt(" << getop()->getfloat(i) << "), since it's less than 0.\n";
             return nullptr;
         }
     }
@@ -526,8 +526,11 @@ void Abs::getgrad()
 Abs* abs(Node *a){return new Abs(a);}
 
 Tensor Sgn::calc(set<Node*>& calced) {
-	float t=getop()->getfloat();
-	if(t>0)return 1;else if(t<0)return -1;else return 0;
+	//float t=getop()->getfloat();
+	//if(t>0)return 1;else if(t<0)return -1;else return 0;
+	Tensor t=getop()->getvalue();
+	for(int i=0;i<t.num[0];i++)if(t.data[i]>0)t.data[i]=1;else if(t.data[i]<0)t.data[i]=-1;else t.data[i]=0;
+	return t;
 }
 void Sgn::getgrad()
 {
@@ -536,7 +539,7 @@ void Sgn::getgrad()
 Sgn* sgn(Node *a){return new Sgn(a);}
 
 Tensor Sigmoid::calc(set<Node*>& calced) {
-	return 1/(1+exp(-getop()->getvalue()));
+	return Tensor(1)/(Tensor(1)+tensor_calc(Tensor(0)-getop()->getvalue(),"exp"));
 }
 void Sigmoid::getgrad()
 {
@@ -546,8 +549,11 @@ void Sigmoid::getgrad()
 Sigmoid* sigmoid(Node *a){return new Sigmoid(a);}
 
 Tensor Relu::calc(set<Node*>& calced) {
-	float t=getop()->getfloat();
-	return t>0?t:0;
+	/*float t=getop()->getfloat();
+	return t>0?t:0;*/
+	Tensor t=getop()->getvalue();
+	for(int i=0;i<t.num[0];i++)if(t.data[i]<0)t.data[i]=0;
+	return t;
 }
 void Relu::getgrad()
 {
