@@ -283,13 +283,13 @@ Tensor Tensor::operator+(const Tensor& tr){
 		for(j=0;j<ans.size;j++)
 		{
 			ind[ans.size-1-j]++;
-			if(shape[size-1-j]>1)w1+=num[size-j];
-			if(tr.shape[tr.size-1-j]>1)w2+=num[tr.size-j];
+			if(size>0&&shape[size-1-j]>1)w1+=num[size-j];
+			if(tr.size>0&&tr.shape[tr.size-1-j]>1)w2+=tr.num[tr.size-j];
 			if(ind[ans.size-1-j]>=ans.num[ans.size-1-j])
 			{
 				ind[ans.size-1-j]-=ans.num[ans.size-1-j];
-				if(shape[size-1-j]>1)w1-=ans.num[ans.size-1-j]*num[size-j];
-				if(tr.shape[tr.size-1-j]>1)w2-=ans.num[ans.size-1-j]*num[tr.size-j];
+				if(size>0&&shape[size-1-j]>1)w1-=ans.num[ans.size-1-j]*num[size-j];
+				if(tr.size>0&&tr.shape[tr.size-1-j]>1)w2-=ans.num[ans.size-1-j]*tr.num[tr.size-j];
 			}
 			else break;
 		}
@@ -336,13 +336,13 @@ Tensor Tensor::operator-(const Tensor& tr){
 		for(j=0;j<ans.size;j++)
 		{
 			ind[ans.size-1-j]++;
-			if(shape[size-1-j]>1)w1+=num[size-j];
-			if(tr.shape[tr.size-1-j]>1)w2+=num[tr.size-j];
+			if(size>0&&shape[size-1-j]>1)w1+=num[size-j];
+			if(tr.size>0&&tr.shape[tr.size-1-j]>1)w2+=tr.num[tr.size-j];
 			if(ind[ans.size-1-j]>=ans.num[ans.size-1-j])
 			{
 				ind[ans.size-1-j]-=ans.num[ans.size-1-j];
-				if(shape[size-1-j]>1)w1-=ans.num[ans.size-1-j]*num[size-j];
-				if(tr.shape[tr.size-1-j]>1)w2-=ans.num[ans.size-1-j]*num[tr.size-j];
+				if(size>0&&shape[size-1-j]>1)w1-=ans.num[ans.size-1-j]*num[size-j];
+				if(tr.size>0&&tr.shape[tr.size-1-j]>1)w2-=ans.num[ans.size-1-j]*tr.num[tr.size-j];
 			}
 			else break;
 		}
@@ -389,13 +389,13 @@ Tensor Tensor::operator*(const Tensor& tr){ //假的乘法
 		for(j=0;j<ans.size;j++)
 		{
 			ind[ans.size-1-j]++;
-			if(shape[size-1-j]>1)w1+=num[size-j];
-			if(tr.shape[tr.size-1-j]>1)w2+=num[tr.size-j];
+			if(size>0&&shape[size-1-j]>1)w1+=num[size-j];
+			if(tr.size>0&&tr.shape[tr.size-1-j]>1)w2+=tr.num[tr.size-j];
 			if(ind[ans.size-1-j]>=ans.num[ans.size-1-j])
 			{
 				ind[ans.size-1-j]-=ans.num[ans.size-1-j];
-				if(shape[size-1-j]>1)w1-=ans.num[ans.size-1-j]*num[size-j];
-				if(tr.shape[tr.size-1-j]>1)w2-=ans.num[ans.size-1-j]*num[tr.size-j];
+				if(size>0&&shape[size-1-j]>1)w1-=ans.num[ans.size-1-j]*num[size-j];
+				if(tr.size>0&&tr.shape[tr.size-1-j]>1)w2-=ans.num[ans.size-1-j]*tr.num[tr.size-j];
 			}
 			else break;
 		}
@@ -441,13 +441,13 @@ Tensor Tensor::operator/(const Tensor& tr){ //假的除法
 		for(j=0;j<ans.size;j++)
 		{
 			ind[ans.size-1-j]++;
-			if(shape[size-1-j]>1)w1+=num[size-j];
-			if(tr.shape[tr.size-1-j]>1)w2+=num[tr.size-j];
+			if(size>0&&shape[size-1-j]>1)w1+=num[size-j];
+			if(tr.size>0&&tr.shape[tr.size-1-j]>1)w2+=tr.num[tr.size-j];
 			if(ind[ans.size-1-j]>=ans.num[ans.size-1-j])
 			{
 				ind[ans.size-1-j]-=ans.num[ans.size-1-j];
-				if(shape[size-1-j]>1)w1-=ans.num[ans.size-1-j]*num[size-j];
-				if(tr.shape[tr.size-1-j]>1)w2-=ans.num[ans.size-1-j]*num[tr.size-j];
+				if(size>0&&shape[size-1-j]>1)w1-=ans.num[ans.size-1-j]*num[size-j];
+				if(tr.size>0&&tr.shape[tr.size-1-j]>1)w2-=ans.num[ans.size-1-j]*tr.num[tr.size-j];
 			}
 			else break;
 		}

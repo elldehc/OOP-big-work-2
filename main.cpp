@@ -235,7 +235,7 @@ int main()
 	a._reshape({2,4,4});
 	cout<<a<<'\n';*/
 	//sample 15:gradients on Tensor
-	auto x=placeholder();
+	/*auto x=placeholder();
 	Node *a11=sin(x),*a12=cos(x),*a21=exp(x),*a22=log(x);
 	auto a=concat(concat(a11,a21,0),concat(a12,a22,0),1);
 	auto b=constant({{1,1,-1,1},{2,2}});
@@ -244,7 +244,7 @@ int main()
 	cout<<Run({{x,1}},*ans->grad(x))<<'\n';
 	auto y=placeholder();
 	auto ly=matmul(y,transpose(y));
-	cout<<Run({{y,{{1,1,1,1},{1,4}}}},*ly->grad(y))<<'\n';
+	cout<<Run({{y,{{1,1,1,1},{1,4}}}},*ly->grad(y))<<'\n';*/
 	//sample 16:broadcast of +-*/
 	/*Tensor a({1,1,1,1},{2,1,2,1}),b({3,3,3,3,3,3},{3,1,2});
 	//Tensor c=a+b;
@@ -254,6 +254,11 @@ int main()
 	cout<<a-b<<'\n';
 	cout<<a*b<<'\n';
 	cout<<a/b<<'\n';*/
+	//not a sample
+	auto x=placeholder(),y=placeholder();
+	auto a=reshape(concat(x,y,0),{2,1});
+	auto b=matmul(transpose(a),a);
+	cout<<Run({{x,1},{y,2}},*b->grad(x))<<'\n';
 	
 	//system("pause");
     return 0;
