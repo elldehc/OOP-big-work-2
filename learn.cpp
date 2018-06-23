@@ -66,7 +66,7 @@ int main()
 	auto ch2=assign(p2,sub(p2,mul(pe,loss->grad(p2))));
 	//auto fin=bind(ch1,ch2);
 	i=0;
-	std::cout<<Run({{pi,input[i]},{po,ans[i]}},*out->getright()->grad(p2));
+	std::cout<<Run({{pi,input[i]},{po,ans[i]}},*out->grad(p2));
 	return 0;
 	int tmp_size=n;
 	while(pe->getfloat()>1e-5)

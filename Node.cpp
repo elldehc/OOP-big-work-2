@@ -7,10 +7,10 @@ Tensor::Tensor() {
 Tensor::Tensor(const float& list) { //0-dimension tensor
     	size=0;
     	data.push_back(list);
-    	shape.push_back(0);
+    	//shape.push_back(0);
     	num.push_back(1);
 }
-Tensor::Tensor(const std::initializer_list<float>& list, const std::initializer_list<int>& dims) { //size-dimension tensor
+Tensor::Tensor(const std::vector<float>& list, const std::vector<int>& dims) { //size-dimension tensor
   	  for (auto it=list.begin();it!=list.end();it++){
       	data.push_back(*it);
       }
@@ -33,7 +33,7 @@ Tensor::~Tensor() {
 		shape.clear();
 		num.clear();
 }
-void Tensor::_reshape(const std::initializer_list<int>& list){
+void Tensor::_reshape(const std::vector<int>& list){
 	int req_vol=1;
 	for (auto it=list.begin();it!=list.end();it++){
 		req_vol*=(*it);
@@ -224,7 +224,7 @@ Tensor Node::getvalue(){
   return value;
 }
 
-void Node::reshape(const std::initializer_list<int>& list){
+void Node::reshape(const std::vector<int>& list){
   value._reshape(list);
 }
 
@@ -233,7 +233,7 @@ void Node::transpose() {
 	value._transpose();
 }
 
-float& Tensor::at(const std::initializer_list<int>& dims)
+float& Tensor::at(const std::vector<int>& dims)
 {
 	int s=0;
 	int i,j,k;
@@ -242,7 +242,7 @@ float& Tensor::at(const std::initializer_list<int>& dims)
 	s+=*it;
 	return data[s];
 }
-		
+const std::vector<int>& Tensor::getshape()const{return shape;}	
 Tensor Tensor::operator+(const Tensor& tr){
     /*if (this->shape == tr.shape) {
         auto r_iter=tr.data.begin();
@@ -479,6 +479,6 @@ const map<Node *,Node *>& Node::grad()
 Node * Node::grad(Node *p)
 {
 	auto it=grad().find(p);
-	if(it==grad().end())return Zero;else return it->second;
+	if(it==grad().end())return reshape2(Zero,this);else return it->second;
 }
 Node::~Node() {std::cerr<<"Node destroyed.\n"; }

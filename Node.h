@@ -28,22 +28,24 @@ class Tensor{
 public:
     Tensor();
 	Tensor(const float& list);
-    Tensor(const std::initializer_list<float>& list, const std::initializer_list<int>& dims);
+    Tensor(const std::vector<float>& list, const std::vector<int>& dims);
 	~Tensor();
-	void _reshape(const std::initializer_list<int>& list);
+	void _reshape(const std::vector<int>& list);
 	Tensor _concat(const Tensor& r,int dim=0);
 	Tensor _matmul(const Tensor& r);
 	void _transpose();
-	float& at(const std::initializer_list<int>& dims);
+	float& at(const std::vector<int>& dims);
     Tensor operator+(const Tensor& tr);
     Tensor operator-(const Tensor& tr);
     Tensor operator*(const Tensor& tr);
     Tensor operator/ (const Tensor& tr);
+    const std::vector<int>& getshape()const;
   friend ostream& operator<< (ostream& out, Node* const nodeptr);
   friend ostream &operator<< (ostream& output, const Tensor& tensor);
 };
 
 Tensor tensor_calc(Tensor ts, const string& str);
+
 class Node {
   protected:
     Tensor value;
@@ -55,7 +57,7 @@ class Node {
 	Tensor getvalue();
     float getfloat(const int& seq=0);
 	int get_num();
-	void reshape(const std::initializer_list<int>& list);
+	void reshape(const std::vector<int>& list);
 	void transpose();
     virtual Tensor calc(set<Node*>& calced) = 0;
     virtual Node* eval(set<Node*>& calced) = 0;

@@ -71,11 +71,19 @@ class Concat: public Operator {
 class Reshape: public Operator_1 {
    private:
    Tensor calc(set<Node*>& calced) override;
-   std::initializer_list<int> list;
+   std::vector<int> list;
    public:
-     Reshape(Node* _op,const std::initializer_list<int>& _list):Operator_1(_op),list(_list){}
-     std::initializer_list<int> get_list() {return list;}
-     void set_list(const std::initializer_list<int>& _list) {list=_list;}
+     Reshape(Node* _op,const std::vector<int>& _list):Operator_1(_op),list(_list){}
+     std::vector<int> get_list() {return list;}
+     void set_list(const std::vector<int>& _list) {list=_list;}
+   void getgrad();
+};
+
+class Reshape2: public Operator {
+private:
+   Tensor calc(set<Node*>& calced) override;
+public:
+   using Operator::Operator;
    void getgrad();
 };
 
@@ -96,6 +104,7 @@ Divide* div(Node *a,Node *b);
 Power* power(Node *a,Node *b);
 Transpose* transpose(Node *a);
 Concat* concat(Node *a,Node *b,int c);
-Reshape* reshape(Node *a,const std::initializer_list<int>& b);
+Reshape* reshape(Node *a,const std::vector<int>& b);
+Reshape2* reshape2(Node *a,Node *b);
 Matmul* matmul(Node *a,Node *b);
 #endif /* Ops_h */

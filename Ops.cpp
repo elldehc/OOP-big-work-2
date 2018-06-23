@@ -144,6 +144,21 @@ void Reshape::getgrad()
 	grads[this]=One;
 }
 
+Tensor Reshape2::calc(set<Node*>& calced) {
+	Tensor t=getleft()->getvalue();
+	t._reshape(getright()->getvalue().getshape());
+    return t;//
+}
+void Reshape2::getgrad()
+{
+	for(auto it:left->grad())grads[it.first]=nullptr;
+	for(auto &it:grads)
+	{
+		it.second=new Reshape2(left->grad(it.first),right);
+	}
+	grads[this]=One;
+}
+
 Tensor Matmul::calc(set<Node*>& calced) {
     return getleft()->getvalue()._matmul(getright()->eval(calced)->getvalue());//
 }
@@ -166,5 +181,6 @@ Divide* div(Node *a,Node *b){return new Divide(a,b);}
 Power* power(Node *a,Node *b){return new Power(a,b);}
 Transpose* transpose(Node *a){return new Transpose(a);}
 Concat* concat(Node *a,Node *b,int c){return new Concat(a,b,c);}
-Reshape* reshape(Node *a,const std::initializer_list<int>& b){return new Reshape(a,b);}
+Reshape* reshape(Node *a,const std::vector<int>& b){return new Reshape(a,b);}
+Reshape2* reshape2(Node *a,Node *b){return new Reshape2(a,b);}
 Matmul* matmul(Node *a,Node *b){return new Matmul(a,b);}
