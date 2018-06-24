@@ -96,6 +96,27 @@ void Bind::getgrad()
 	grads[this]=One;
 }
 
+Node* Bindn::eval(set<Node*>& calced) {
+	for(auto it:getop())it->eval(calced);
+    if (getop()[0]->eval(calced) == nullptr)
+        return nullptr;
+    else if (calced.insert(this).second) {
+        setvalue(calc(calced));
+        return this;
+    } 
+    else {
+        return this;
+    }
+}
+Tensor Bindn::calc(set<Node*>& calced) {
+    return getop()[0]->getvalue();
+}
+void Bindn::getgrad()
+{
+	grads=getop()[0]->grad();
+	grads[this]=One;
+}
+
 Cond::Cond(Node* node1, Node* node2,Node* node3):co(node1),ans1(node2),ans2(node3){}
 Node* Cond::eval(set<Node*>& calced) {
 	
@@ -141,4 +162,5 @@ Equal* equal(Node *a,Node *b){return new Equal(a,b);}
 Ineq* ineq(Node *a,Node *b){return new Ineq(a,b);}
 Assert* assert(Node *a){return new Assert(a);}
 Bind* bind(Node *a,Node *b){return new Bind(a,b);}
+Bindn* bindn(const std::vector<Node*>&a){return new Bindn(a);}
 Cond* cond(Node *a,Node *b,Node *c){return new Cond(a,b,c);}

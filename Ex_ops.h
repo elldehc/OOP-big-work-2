@@ -77,6 +77,16 @@ class Bind: public Operator {
     void getgrad();
 };
 
+class Bindn: public Operator_n {
+  private:
+    Tensor calc(set<Node*>& calced) override;
+
+  public:
+    using Operator_n::Operator_n;
+    Node* eval(set<Node*>& calced) override;
+    void getgrad();
+};
+
 class Cond: public Node {
   protected:
 	 Tensor calc(set<Node*>& calced) override;
@@ -94,6 +104,7 @@ Equal* equal(Node *a,Node *b);
 Ineq* ineq(Node *a,Node *b);
 Assert* assert(Node *a);
 Bind* bind(Node *a,Node *b);
+Bindn* bindn(const std::vector<Node*>&a);
 Cond* cond(Node *a,Node *b,Node *c);
 
 #endif /* Ex_ops_h */

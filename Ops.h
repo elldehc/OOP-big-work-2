@@ -96,6 +96,15 @@ class Matmul: public Operator {
     void getgrad();
 };
 
+class Addn: public Operator_n {
+  private:
+    Tensor calc(set<Node*>& calced) override;
+
+  public:
+    using Operator_n::Operator_n;
+    void getgrad();
+};
+
 Add* add(Node *a,Node *b);
 Minus* sub(Node *a,Node *b);
 Minus* minus(Node *a,Node *b);
@@ -107,4 +116,5 @@ Concat* concat(Node *a,Node *b,int c);
 Reshape* reshape(Node *a,const std::vector<int>& b);
 Reshape2* reshape2(Node *a,Node *b);
 Matmul* matmul(Node *a,Node *b);
+Addn* addn(const std::vector<Node*> &a);
 #endif /* Ops_h */

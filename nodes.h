@@ -36,9 +36,9 @@ class Placeholder: public Node {
 class Print: public Node {
   private:
     Node* dest;
-    
+    string info;
   public:
-    Print(Node* node);
+    Print(Node* node,const string & _info="Print Operator: ");
     void getgrad();
     Tensor calc(set<Node*>& calced) override;
     Node* eval(set<Node*>& calced) override;
@@ -76,7 +76,7 @@ class Assign: public Node {
 Constant* constant(const Tensor &a);
 //Constant* constant(const std::initializer_list<float>& list, const std::initializer_list<int>& dims);
 Placeholder* placeholder(string name="");
-Print* print(Node *a);
+Print* print(Node *a,const string &b="Print Operator: ");
 Parameter* parameter(const Tensor &a);
 Assign* assign(Parameter *para,Node *node);
 #endif /* numbers_h */

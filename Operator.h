@@ -25,4 +25,16 @@ public:
 	Node* getop();
 	Node* eval(set<Node*>& calced) override;
 };
+
+class Operator_n: public Node
+{
+protected:
+	std::vector<Node *>op;
+public:
+	Operator_n(const std::vector<Node*> &_op);
+	const std::vector<Node*> & getop();
+	Node* eval(set<Node*>& calced) override;
+};
+
+
 #endif /* Operator_h */

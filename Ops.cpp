@@ -173,6 +173,31 @@ void Matmul::getgrad()
 	grads[this]=One;
 }
 
+Tensor Addn::calc(set<Node*>& calced) {
+	Tensor s=0;
+	for(auto it:getop())s=s+it->getvalue();
+    return s;
+}
+void Addn::getgrad()
+{
+	for(auto it:getop())
+	for(auto jt:it->grad())grads[jt.first]=nullptr;
+	for(auto &it:grads)
+	{
+		std::vector<Node*> v;
+		for(auto jt:getop())v.push_back(jt->grad(it.first));
+		it.second=addn(v);
+	}
+	
+	/*for(auto it:left->grad())grads[it.first]=nullptr;
+	for(auto it:right->grad())grads[it.first]=nullptr;
+	for(auto &it:grads)
+	{
+		it.second=new Add(left->grad(it.first),right->grad(it.first));
+	}*/
+	grads[this]=One;
+}
+
 Add* add(Node *a,Node *b){return new Add(a,b);}
 Minus* sub(Node *a,Node *b){return new Minus(a,b);}
 Minus* minus(Node *a,Node *b){return new Minus(a,b);}
@@ -184,3 +209,4 @@ Concat* concat(Node *a,Node *b,int c){return new Concat(a,b,c);}
 Reshape* reshape(Node *a,const std::vector<int>& b){return new Reshape(a,b);}
 Reshape2* reshape2(Node *a,Node *b){return new Reshape2(a,b);}
 Matmul* matmul(Node *a,Node *b){return new Matmul(a,b);}
+Addn* addn(const std::vector<Node*> &a){return new Addn(a);}
