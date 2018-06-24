@@ -526,11 +526,14 @@ void Abs::getgrad()
 Abs* abs(Node *a){return new Abs(a);}
 
 Tensor Sgn::calc(set<Node*>& calced) {
-	//float t=getop()->getfloat();
-	//if(t>0)return 1;else if(t<0)return -1;else return 0;
+#ifdef notensor
+	float t=getop()->getfloat();
+	if(t>0)return 1;else if(t<0)return -1;else return 0;
+#else
 	Tensor t=getop()->getvalue();
 	for(int i=0;i<t.num[0];i++)if(t.data[i]>0)t.data[i]=1;else if(t.data[i]<0)t.data[i]=-1;else t.data[i]=0;
 	return t;
+#endif
 }
 void Sgn::getgrad()
 {
@@ -549,11 +552,14 @@ void Sigmoid::getgrad()
 Sigmoid* sigmoid(Node *a){return new Sigmoid(a);}
 
 Tensor Relu::calc(set<Node*>& calced) {
-	/*float t=getop()->getfloat();
-	return t>0?t:0;*/
+#ifdef notensor
+	float t=getop()->getfloat();
+	return t>0?t:0;
+#else
 	Tensor t=getop()->getvalue();
 	for(int i=0;i<t.num[0];i++)if(t.data[i]<0)t.data[i]=0;
 	return t;
+#endif
 }
 void Relu::getgrad()
 {

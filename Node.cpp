@@ -1,6 +1,7 @@
 #include "stdops.h"
 #include<cmath>
 
+#ifndef notensor
 Tensor::Tensor() {
 	size=0;
 }
@@ -220,10 +221,53 @@ float Node::getfloat(const int& seq){
     return value.data[seq];
 }
 
+#else
+float Node::getfloat(const int& seq){
+    return value;
+}
+
+int Node::get_num(){
+	return 0;
+}
+
+Tensor tensor_calc(Tensor ts, const string& str){
+	
+		if (str=="cos") return cos(ts);
+		else if (str=="sin") return sin(ts);
+		else if (str=="tan") return tan(ts);
+		else if (str=="atan") return atan(ts);
+		else if (str=="acos") return acos(ts);
+		else if (str=="asin") return asin(ts);
+		else if (str=="cosh") return cosh(ts);
+		else if (str=="sinh") return sinh(ts);
+		else if (str=="tanh") return tanh(ts);
+		else if (str=="acosh") return acosh(ts);
+		else if (str=="asinh") return asinh(ts);
+		else if (str=="atanh") return atanh(ts);
+		else if (str=="exp") return exp(ts);
+		else if (str=="log") return log(ts);
+		else if (str=="log10") return log10(ts);
+		else if (str=="exp2") return exp2(ts);
+		else if (str=="expm1") return expm1(ts);
+		else if (str=="log1p") return log1p(ts);
+		else if (str=="log2") return log2(ts);
+		else if (str=="sqrt") return sqrt(ts);
+		else if (str=="erf") return erf(ts);
+		else if (str=="erfc") return erfc(ts);
+		else if (str=="ceil") return ceil(ts);
+		else if (str=="floor") return floor(ts);
+		else if (str=="abs") return abs(ts);
+	
+	return ts;
+}
+#endif
+
+
 Tensor Node::getvalue(){
   return value;
 }
 
+#ifndef notensor
 void Node::reshape(const std::vector<int>& list){
   value._reshape(list);
 }
@@ -455,17 +499,21 @@ Tensor Tensor::operator/(const Tensor& tr){ //¼ÙµÄ³ý·¨
 	return ans;
 }
 
-void Node::setvalue(const Tensor& v) {
-    value = v;
-}
 void Node::setvalue(const float& v) {
    /*value.size=0;
    value.data.clear();
    value.shape.clear();
    value.num.clear();
+
    value.data.push_back(v);
    value.shape.push_back(0);*/
    value=Tensor(v);
+}
+
+#endif
+
+void Node::setvalue(const Tensor& v) {
+    value = v;
 }
 
 

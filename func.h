@@ -13,7 +13,9 @@ Node* Run(Node& des);
 //Node* Run(const map <Node*,float>& initmap, Node& des);
 Node* Run(const map <Node*,Tensor>& initmap, Node& des);
 
+#ifndef notensor
 ostream& operator<< (ostream& out, const Tensor& tensor);
+#endif
 ostream& operator<< (ostream& out, Node* const nodeptr);
 
 float solve(Node *y,Node *x,float x0=0,float eps=1e-12);

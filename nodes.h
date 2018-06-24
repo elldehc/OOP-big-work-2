@@ -50,7 +50,7 @@ class Parameter: public Node {
     
   public:
     Parameter(const Tensor& number);
-	Parameter(const float& number);
+	//Parameter(const float& number);
     void getgrad();
     void set(const Tensor& number);
     void add(const Tensor& number);

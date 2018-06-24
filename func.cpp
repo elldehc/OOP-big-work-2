@@ -54,6 +54,7 @@ Node* Run(const map <Node*, Tensor>& initmap, Node& des) {
 	assign_map.clear();
 	return t;
 }
+#ifndef notensor
 ostream &operator<< (ostream& out, const Tensor& tensor) {
 	int dim = tensor.size;
 	if (dim == 0) {
@@ -81,6 +82,7 @@ ostream &operator<< (ostream& out, const Tensor& tensor) {
 	cout << endl;
 	return out;
 }
+#endif
 
 ostream& operator<< (ostream& out, Node* const nodeptr) {
 	if (nodeptr == nullptr)

@@ -15,7 +15,7 @@ using std::endl;
 class Maths;
 class Node;
 
-
+#ifndef notensor
 class Tensor{
 	std::vector<float> data;
 	std::vector<int> shape;
@@ -44,6 +44,10 @@ public:
   friend ostream &operator<< (ostream& output, const Tensor& tensor);
 };
 
+#else
+//typedef float Tensor;
+#define Tensor float
+#endif
 Tensor tensor_calc(Tensor ts, const string& str);
 
 class Node {
@@ -52,21 +56,23 @@ class Node {
   	map<Node *,Node *> grads;
   public:
     void setvalue(const Tensor& v); 
-    void setvalue(const float& v);
+    //void setvalue(const float& v);
     
 	Tensor getvalue();
-    float getfloat(const int& seq=0);
-	int get_num();
-	void reshape(const std::vector<int>& list);
+#ifndef notensor
+    void reshape(const std::vector<int>& list);
 	void transpose();
-    virtual Tensor calc(set<Node*>& calced) = 0;
+	friend ostream& operator>> (ostream& out, const Tensor& tensor);
+#endif
+    int get_num();
+	float getfloat(const int& seq=0);
+	virtual Tensor calc(set<Node*>& calced) = 0;
     virtual Node* eval(set<Node*>& calced) = 0;
     virtual void getgrad()=0;
     const map<Node *,Node *>& grad();
     Node * grad(Node *p);
     
     friend ostream& operator>> (ostream& out, const Node*  nodeptr);
-    friend ostream& operator>> (ostream& out, const Tensor& tensor);
     virtual ~Node();
 };
 

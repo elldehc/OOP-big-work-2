@@ -1,4 +1,4 @@
-FLAG=-std=c++11 -Wall -Wextra -O2 -ffast-math
+FLAG=-std=c++11 -Wall -Wextra -O2 -ffast-math -Dnotensor
 .PHONY: all clean
 all: main learn
 

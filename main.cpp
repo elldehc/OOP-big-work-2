@@ -255,10 +255,14 @@ int main()
 	cout<<a*b<<'\n';
 	cout<<a/b<<'\n';*/
 	//not a sample
-	auto x=placeholder(),y=placeholder();
+	/*auto x=placeholder(),y=placeholder();
 	auto a=reshape(concat(x,y,0),{2,1});
 	auto b=matmul(transpose(a),a);
-	cout<<Run({{x,1},{y,2}},*b->grad(x))<<'\n';
+	cout<<Run({{x,1},{y,2}},*b->grad(x))<<'\n';*/
+	auto x=placeholder();
+	auto ans=sigmoid(print(x,"x="));
+	for(int i=-100;i<100;i++)
+	cout<<Run({{x,i*0.1}},*ans->grad(x))<<'\n';
 	
 	//system("pause");
     return 0;

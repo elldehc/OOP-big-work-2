@@ -98,6 +98,8 @@ void Power::getgrad()
 	}
 	grads[this]=One;
 }
+
+#ifndef notensor
 Tensor Transpose::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
     t._transpose();
@@ -172,6 +174,7 @@ void Matmul::getgrad()
 	}
 	grads[this]=One;
 }
+#endif
 
 Tensor Addn::calc(set<Node*>& calced) {
 	Tensor s=0;
@@ -204,9 +207,11 @@ Minus* minus(Node *a,Node *b){return new Minus(a,b);}
 Multiply* mul(Node *a,Node *b){return new Multiply(a,b);}
 Divide* div(Node *a,Node *b){return new Divide(a,b);}
 Power* power(Node *a,Node *b){return new Power(a,b);}
+#ifndef notensor
 Transpose* transpose(Node *a){return new Transpose(a);}
 Concat* concat(Node *a,Node *b,int c){return new Concat(a,b,c);}
 Reshape* reshape(Node *a,const std::vector<int>& b){return new Reshape(a,b);}
 Reshape2* reshape2(Node *a,Node *b){return new Reshape2(a,b);}
 Matmul* matmul(Node *a,Node *b){return new Matmul(a,b);}
+#endif
 Addn* addn(const std::vector<Node*> &a){return new Addn(a);}

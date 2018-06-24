@@ -49,6 +49,7 @@ class Power: public Operator {
     void getgrad();
 };
 
+#ifndef notensor
 class Transpose: public Operator_1 {
    private:
 	 Tensor calc(set<Node*>& calced) override;
@@ -95,6 +96,7 @@ class Matmul: public Operator {
     using Operator::Operator;
     void getgrad();
 };
+#endif
 
 class Addn: public Operator_n {
   private:
@@ -111,10 +113,12 @@ Minus* minus(Node *a,Node *b);
 Multiply* mul(Node *a,Node *b);
 Divide* div(Node *a,Node *b);
 Power* power(Node *a,Node *b);
+#ifndef notensor
 Transpose* transpose(Node *a);
 Concat* concat(Node *a,Node *b,int c);
 Reshape* reshape(Node *a,const std::vector<int>& b);
 Reshape2* reshape2(Node *a,Node *b);
 Matmul* matmul(Node *a,Node *b);
+#endif
 Addn* addn(const std::vector<Node*> &a);
 #endif /* Ops_h */

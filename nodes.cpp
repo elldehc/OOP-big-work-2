@@ -85,9 +85,9 @@ Tensor Parameter::calc(::set<Node*>& calced) {
 Parameter::Parameter(/*float*/const Tensor& number) {
     setvalue(number);
 }
-Parameter::Parameter(const float& number) {
+/*Parameter::Parameter(const float& number) {
     setvalue(Tensor(number));
-}
+}*/
 
 void Parameter::set(/*float*/const Tensor& number) {
     setvalue(number);
