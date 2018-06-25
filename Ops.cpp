@@ -14,7 +14,7 @@ void Add::getgrad()
 	grads[this]=One;
 }
 Tensor Multiply::calc(set<Node*>& calced) {
-    return getleft()->getvalue() * getright()->eval(calced)->getvalue();
+    return getleft()->getvalue() * getright()/*->eval(calced)*/->getvalue();
 }
 void Multiply::getgrad()
 {
@@ -27,7 +27,7 @@ void Multiply::getgrad()
 	grads[this]=One;
 }
 Tensor Minus::calc(set<Node*>& calced) {
-    return getleft()->getvalue() - getright()->eval(calced)->getvalue();
+    return getleft()->getvalue() - getright()/*->eval(calced)*/->getvalue();
 }
 void Minus::getgrad()
 {
@@ -40,7 +40,7 @@ void Minus::getgrad()
 	grads[this]=One;
 }
 Tensor Divide::calc(set<Node*>& calced) {
-    return getleft()->getvalue() / getright()->eval(calced)->getvalue();
+    return getleft()->getvalue() / getright()/*->eval(calced)*/->getvalue();
 }
 void Divide::getgrad()
 {

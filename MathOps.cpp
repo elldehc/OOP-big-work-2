@@ -4,6 +4,9 @@
 Tensor Cos::calc(set<Node*>& calced) {
 
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return cos(t);
+#endif
     return tensor_calc(t,"cos");
 }
 void Cos::getgrad()
@@ -15,6 +18,9 @@ Cos* cos(Node *a){return new Cos(a);}
 
 Tensor Sin::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return sin(t);
+#endif
     return tensor_calc(t,"sin");
 }
 void Sin::getgrad()
@@ -50,6 +56,9 @@ Node* Tan::eval(set<Node*>& calced) {
 }
 Tensor Tan::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return tan(t);
+#endif
     return tensor_calc(t,"tan");
 }
 void Tan::getgrad()
@@ -85,6 +94,9 @@ Node* Acos::eval(set<Node*>& calced) {
 }
 Tensor Acos::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return acos(t);
+#endif
     return tensor_calc(t,"acos");
 }
 void Acos::getgrad()
@@ -120,6 +132,9 @@ Node* Asin::eval(set<Node*>& calced) {
 }
 Tensor Asin::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return asin(t);
+#endif
     return tensor_calc(t,"asin");
 }
 void Asin::getgrad()
@@ -131,6 +146,9 @@ Asin* asin(Node *a){return new Asin(a);}
 
 Tensor Atan::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return atan(t);
+#endif
     return tensor_calc(t,"atan");
 }
 void Atan::getgrad()
@@ -142,6 +160,9 @@ Atan* atan(Node *a){return new Atan(a);}
 
 Tensor Cosh::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return cosh(t);
+#endif
     return tensor_calc(t,"cosh");
 }
 void Cosh::getgrad()
@@ -153,6 +174,9 @@ Cosh* cosh(Node *a){return new Cosh(a);}
 
 Tensor Sinh::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return sinh(t);
+#endif
     return tensor_calc(t,"sinh");
 }
 void Sinh::getgrad()
@@ -164,6 +188,9 @@ Sinh* sinh(Node *a){return new Sinh(a);}
 
 Tensor Tanh::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return tanh(t);
+#endif
     return tensor_calc(t,"tanh");
 }
 void Tanh::getgrad()
@@ -199,6 +226,9 @@ Node* Acosh::eval(set<Node*>& calced) {
 }
 Tensor Acosh::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return acosh(t);
+#endif
     return tensor_calc(t,"acosh");
 }
 void Acosh::getgrad()
@@ -210,6 +240,9 @@ Acosh* acosh(Node *a){return new Acosh(a);}
 
 Tensor Asinh::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return asinh(t);
+#endif
     return tensor_calc(t,"asinh");
 }
 void Asinh::getgrad()
@@ -245,6 +278,9 @@ Node* Atanh::eval(set<Node*>& calced) {
 }
 Tensor Atanh::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return atanh(t);
+#endif
     return tensor_calc(t,"atanh");
 }
 void Atanh::getgrad()
@@ -256,6 +292,9 @@ Atanh* atanh(Node *a){return new Atanh(a);}
 
 Tensor Exp::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return exp(t);
+#endif
     return tensor_calc(t,"exp");
 }
 void Exp::getgrad()
@@ -291,6 +330,9 @@ Node* Log::eval(set<Node*>& calced) {
 }
 Tensor Log::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return log(t);
+#endif
     return tensor_calc(t,"log");
 }
 void Log::getgrad()
@@ -326,6 +368,9 @@ Node* Log10::eval(set<Node*>& calced) {
 }
 Tensor Log10::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return log10(t);
+#endif
     return tensor_calc(t,"log10");
 }
 void Log10::getgrad()
@@ -337,6 +382,9 @@ Log10* log10(Node *a){return new Log10(a);}
 
 Tensor Exp2::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return exp2(t);
+#endif
     return tensor_calc(t,"exp2");
 }
 void Exp2::getgrad()
@@ -348,6 +396,9 @@ Exp2* exp2(Node *a){return new Exp2(a);}
 
 Tensor Expm1::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return expm1(t);
+#endif
     return tensor_calc(t,"expm1");
 }
 void Expm1::getgrad()
@@ -383,6 +434,9 @@ Node* Log1p::eval(set<Node*>& calced) {
 }
 Tensor Log1p::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return log1p(t);
+#endif
     return tensor_calc(t,"log1p");
 }
 void Log1p::getgrad()
@@ -418,6 +472,9 @@ Node* Log2::eval(set<Node*>& calced) {
 }
 Tensor Log2::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return log2(t);
+#endif
     return tensor_calc(t,"log2");
 }
 void Log2::getgrad()
@@ -453,6 +510,9 @@ Node* Sqrt::eval(set<Node*>& calced) {
 }
 Tensor Sqrt::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return sqrt(t);
+#endif
     return tensor_calc(t,"sqrt");
 }
 void Sqrt::getgrad()
@@ -474,6 +534,9 @@ Sqr* sqr(Node *a){return new Sqr(a);}
 
 Tensor Erf::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return erf(t);
+#endif
     return tensor_calc(t,"erf");
 }
 void Erf::getgrad()
@@ -485,6 +548,9 @@ Erf* erf(Node *a){return new Erf(a);}
 
 Tensor Erfc::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return erfc(t);
+#endif
     return tensor_calc(t,"erfc");
 }
 void Erfc::getgrad()
@@ -496,6 +562,9 @@ Erfc* erfc(Node *a){return new Erfc(a);}
 
 Tensor Ceil::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return ceil(t);
+#endif
     return tensor_calc(t,"ceil");
 }
 void Ceil::getgrad()
@@ -506,6 +575,9 @@ Ceil* ceil(Node *a){return new Ceil(a);}
 
 Tensor Floor::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return floor(t);
+#endif
     return tensor_calc(t,"floor");
 }
 void Floor::getgrad()
@@ -516,6 +588,9 @@ Floor* floor(Node *a){return new Floor(a);}
 
 Tensor Abs::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
+#ifdef notensor
+	return abs(t);
+#endif
     return tensor_calc(t,"abs");
 }
 void Abs::getgrad()

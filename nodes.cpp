@@ -1,4 +1,5 @@
 #include "stdops.h"
+#include<ctime>
 
 //Constant
 /*Constant::Constant(const std::initializer_list<float>& list, const std::initializer_list<int>& dims) {
@@ -65,6 +66,8 @@ Node* Print::eval(set<Node*>& calced) {
         return nullptr;
     else if (calced.insert(this).second) {
         setvalue(dest->eval(calced)->getvalue());
+        extern int tttt;
+        cout<<"time="<<clock()-tttt<<'\n';
         cout << info << dest->getvalue() << '\n';
         return this;
     }

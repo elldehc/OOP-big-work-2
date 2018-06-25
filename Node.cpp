@@ -523,17 +523,17 @@ const map<Node *,Node *>& Node::grad()
 {
 	if(grads.empty())
 	{
-		static int s=0;
-		s++;
-		std::cerr<<s<<"getgrad "<<"\n";
+		//static int s=0;
+		//s++;
+		//std::cerr<<s<<"getgrad "<<"\n";
 		getgrad();
 	}
 	return grads;
 }
 Node * Node::grad(Node *p)
 {
-	static int s=0;
-	s++;
+	//static int s=0;
+	//s++;
 	auto it=grad().find(p);
 	//if(s%10000==0)std::cerr<<s<<"grad "<<"\n";
 	if(it==grad().end())return Zero;else return it->second;
