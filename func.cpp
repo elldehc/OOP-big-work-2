@@ -57,28 +57,28 @@ Node* Run(const map <Node*, Tensor>& initmap, Node& des) {
 ostream &operator<< (ostream& out, const Tensor& tensor) {
 	int dim = tensor.size;
 	if (dim == 0) {
-		cout << tensor.data[0] << endl;
+		out << tensor.data[0] << endl;
 		return out;
 	}
 	int stack = dim - 1;
-	for (int i = 0; i <= stack; i++) cout << "{";
+	for (int i = 0; i <= stack; i++) out << "{";
 	int count = 0;
 	for (auto iter = tensor.data.begin();iter != tensor.data.end();iter++)
 	{
-		cout << *iter;
+		out << *iter;
 		count++;
-		if (count%tensor.num[stack] != 0) cout << ',';
+		if (count%tensor.num[stack] != 0) out << ',';
 		while (stack>=0&&count%tensor.num[stack] == 0) {
-			cout << '}';
+			out << '}';
 			stack--;
 		}
 		if (count != tensor.num[0])
 			while (stack < dim - 1) {
 				stack++;
-				cout << '{';
+				out << '{';
 			}
 	}
-	cout << endl;
+	out << endl;
 	return out;
 }
 
@@ -86,7 +86,7 @@ ostream& operator<< (ostream& out, Node* const nodeptr) {
 	if (nodeptr == nullptr)
 		return out;
 	else {
-		cout << nodeptr->getvalue();
+		out << nodeptr->getvalue();
 		return out;
 	}
 }
