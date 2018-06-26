@@ -160,7 +160,7 @@ void Tensor::_transpose() {
 
 	row=shape[row]; line=shape[line]; //row and line
 	int it=0;
-	int* temp= new int [row*line+5];
+	float* temp= new float [row*line+5];
 	while (it<data.size()) {
 		for (int i=it; i<it+mat; i++) {
 			temp[i-it]=data[i];
