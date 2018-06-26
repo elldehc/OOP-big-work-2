@@ -211,6 +211,31 @@ Tensor tensor_calc(Tensor ts, const string& str){
 	
 	return ts;
 }
+Tensor cos(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=cos(*it);return ts;} 
+Tensor sin(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=sin(*it);return ts;} 
+Tensor tan(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=tan(*it);return ts;} 
+Tensor atan(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=atan(*it);return ts;} 
+Tensor acos(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=acos(*it);return ts;}
+Tensor asin(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=asin(*it);return ts;} 
+Tensor cosh(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=cosh(*it);return ts;} 
+Tensor sinh(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=sinh(*it);return ts;} 
+Tensor tanh(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=tanh(*it);return ts;} 
+Tensor acosh(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=acosh(*it);return ts;} 
+Tensor asinh(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=asinh(*it);return ts;} 
+Tensor atanh(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=atanh(*it);return ts;} 
+Tensor exp(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=exp(*it);return ts;} 
+Tensor log(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=log(*it);return ts;}
+Tensor log10(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=log10(*it);return ts;} 
+Tensor exp2(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=exp2(*it);return ts;} 
+Tensor expm1(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=expm1(*it);return ts;} 
+Tensor log1p(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=log1p(*it);return ts;}
+Tensor log2(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=log2(*it);return ts;} 
+Tensor sqrt(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=sqrt(*it);return ts;}
+Tensor erf(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=erf(*it);return ts;} 
+Tensor erfc(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=erfc(*it);return ts;} 
+Tensor ceil(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=ceil(*it);return ts;} 
+Tensor floor(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=floor(*it);return ts;} 
+Tensor abs(Tensor ts){for (auto it=ts.data.begin(); it!=ts.data.end();it++) (*it)=abs(*it);return ts;}
 int Node::get_num(){
 	return value.num[0];
 }
@@ -241,6 +266,10 @@ float& Tensor::at(const std::vector<int>& dims)
 	for(i=1;it!=dims.end()&&i<shape.size();it++,i++)s+=num[i]*(*it);
 	s+=*it;
 	return data[s];
+}
+void Tensor::fill(float x)
+{
+	for(auto &it:data)it=x;
 }
 const std::vector<int>& Tensor::getshape()const{return shape;}	
 Tensor Tensor::operator+(const Tensor& tr){

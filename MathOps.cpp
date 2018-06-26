@@ -4,7 +4,7 @@
 Tensor Cos::calc(set<Node*>& calced) {
 
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"cos");
+    return cos(t);
 }
 void Cos::getgrad()
 {
@@ -15,7 +15,7 @@ Cos* cos(Node *a){return new Cos(a);}
 
 Tensor Sin::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"sin");
+    return sin(t);
 }
 void Sin::getgrad()
 {
@@ -50,7 +50,7 @@ Node* Tan::eval(set<Node*>& calced) {
 }
 Tensor Tan::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"tan");
+    return tan(t);
 }
 void Tan::getgrad()
 {
@@ -85,7 +85,7 @@ Node* Acos::eval(set<Node*>& calced) {
 }
 Tensor Acos::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"acos");
+    return acos(t);
 }
 void Acos::getgrad()
 {
@@ -120,7 +120,7 @@ Node* Asin::eval(set<Node*>& calced) {
 }
 Tensor Asin::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"asin");
+    return asin(t);
 }
 void Asin::getgrad()
 {
@@ -131,7 +131,7 @@ Asin* asin(Node *a){return new Asin(a);}
 
 Tensor Atan::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"atan");
+    return atan(t);
 }
 void Atan::getgrad()
 {
@@ -142,7 +142,7 @@ Atan* atan(Node *a){return new Atan(a);}
 
 Tensor Cosh::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"cosh");
+    return cosh(t);
 }
 void Cosh::getgrad()
 {
@@ -153,7 +153,7 @@ Cosh* cosh(Node *a){return new Cosh(a);}
 
 Tensor Sinh::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"sinh");
+    return sinh(t);
 }
 void Sinh::getgrad()
 {
@@ -164,7 +164,7 @@ Sinh* sinh(Node *a){return new Sinh(a);}
 
 Tensor Tanh::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"tanh");
+    return tanh(t);
 }
 void Tanh::getgrad()
 {
@@ -199,7 +199,7 @@ Node* Acosh::eval(set<Node*>& calced) {
 }
 Tensor Acosh::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"acosh");
+    return acosh(t);
 }
 void Acosh::getgrad()
 {
@@ -210,7 +210,7 @@ Acosh* acosh(Node *a){return new Acosh(a);}
 
 Tensor Asinh::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"asinh");
+    return asinh(t);
 }
 void Asinh::getgrad()
 {
@@ -245,7 +245,7 @@ Node* Atanh::eval(set<Node*>& calced) {
 }
 Tensor Atanh::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"atanh");
+    return atanh(t);
 }
 void Atanh::getgrad()
 {
@@ -256,7 +256,7 @@ Atanh* atanh(Node *a){return new Atanh(a);}
 
 Tensor Exp::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"exp");
+    return exp(t);
 }
 void Exp::getgrad()
 {
@@ -291,7 +291,7 @@ Node* Log::eval(set<Node*>& calced) {
 }
 Tensor Log::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"log");
+    return log(t);
 }
 void Log::getgrad()
 {
@@ -326,7 +326,7 @@ Node* Log10::eval(set<Node*>& calced) {
 }
 Tensor Log10::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"log10");
+    return log10(t);
 }
 void Log10::getgrad()
 {
@@ -337,7 +337,7 @@ Log10* log10(Node *a){return new Log10(a);}
 
 Tensor Exp2::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"exp2");
+    return exp2(t);
 }
 void Exp2::getgrad()
 {
@@ -348,7 +348,7 @@ Exp2* exp2(Node *a){return new Exp2(a);}
 
 Tensor Expm1::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"expm1");
+    return expm1(t);
 }
 void Expm1::getgrad()
 {
@@ -383,7 +383,7 @@ Node* Log1p::eval(set<Node*>& calced) {
 }
 Tensor Log1p::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"log1p");
+    return log1p(t);
 }
 void Log1p::getgrad()
 {
@@ -418,7 +418,7 @@ Node* Log2::eval(set<Node*>& calced) {
 }
 Tensor Log2::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"log2");
+    return log2(t);
 }
 void Log2::getgrad()
 {
@@ -453,7 +453,7 @@ Node* Sqrt::eval(set<Node*>& calced) {
 }
 Tensor Sqrt::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"sqrt");
+    return sqrt(t);
 }
 void Sqrt::getgrad()
 {
@@ -474,7 +474,7 @@ Sqr* sqr(Node *a){return new Sqr(a);}
 
 Tensor Erf::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"erf");
+    return erf(t);
 }
 void Erf::getgrad()
 {
@@ -485,7 +485,7 @@ Erf* erf(Node *a){return new Erf(a);}
 
 Tensor Erfc::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"erfc");
+    return erfc(t);
 }
 void Erfc::getgrad()
 {
@@ -496,7 +496,7 @@ Erfc* erfc(Node *a){return new Erfc(a);}
 
 Tensor Ceil::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"ceil");
+    return ceil(t);
 }
 void Ceil::getgrad()
 {
@@ -506,7 +506,7 @@ Ceil* ceil(Node *a){return new Ceil(a);}
 
 Tensor Floor::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"floor");
+    return floor(t);
 }
 void Floor::getgrad()
 {
@@ -516,7 +516,7 @@ Floor* floor(Node *a){return new Floor(a);}
 
 Tensor Abs::calc(set<Node*>& calced) {
 	Tensor t=getop()->getvalue();
-    return tensor_calc(t,"abs");
+    return abs(t);
 }
 void Abs::getgrad()
 {
@@ -562,14 +562,17 @@ void Relu::getgrad()
 }
 Relu* relu(Node *a){return new Relu(a);}
 
-/*Tensor Length::calc(set<Node*>& calced) {
-	float t=getop()->getfloat();
-	return t>0?t:0;
+Tensor Softmax::calc(set<Node*>& calced) {
+	Tensor one({},getop()->getvalue().getshape()),ex=exp(getop()->getvalue());
+	one.fill(1);
+	one._transpose();
+	return ex/one._matmul(ex);
 }
-void Length::getgrad()
+void Softmax::getgrad()
 {
-	for(auto it:getop()->grad()){grads[it.first]=cond(greater(getop(),Zero),it.second,Zero);}
+	//No! There is no gradient method for a Tensor.
+	//for(auto it:getop()->grad()){grads[it.first]=cond(greater(getop(),Zero),it.second,Zero);}
 	grads[this]=One;
 }
-Length* length(Node *a){return new Length(a);}*/
+Softmax* softmax(Node *a){return new Softmax(a);}
 

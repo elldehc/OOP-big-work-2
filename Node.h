@@ -25,6 +25,31 @@ class Tensor{
 	friend class Sgn;
 	friend class Relu;
 	friend Tensor tensor_calc(Tensor ts, const string& str);
+	friend Tensor cos(Tensor ts);
+	friend Tensor sin(Tensor ts);
+	friend Tensor tan(Tensor ts);
+	friend Tensor atan(Tensor ts);
+	friend Tensor acos(Tensor ts);
+	friend Tensor asin(Tensor ts);
+	friend Tensor cosh(Tensor ts);
+	friend Tensor sinh(Tensor ts);
+	friend Tensor tanh(Tensor ts);
+	friend Tensor acosh(Tensor ts);
+	friend Tensor asinh(Tensor ts);
+	friend Tensor atanh(Tensor ts);
+	friend Tensor exp(Tensor ts);
+	friend Tensor log(Tensor ts);
+	friend Tensor log10(Tensor ts);
+	friend Tensor exp2(Tensor ts);
+	friend Tensor expm1(Tensor ts);
+	friend Tensor log1p(Tensor ts);
+	friend Tensor log2(Tensor ts);
+	friend Tensor sqrt(Tensor ts);
+	friend Tensor erf(Tensor ts);
+	friend Tensor erfc(Tensor ts);
+	friend Tensor ceil(Tensor ts);
+	friend Tensor floor(Tensor ts);
+	friend Tensor abs(Tensor ts);
 public:
     Tensor();
 	Tensor(const float& list);
@@ -40,12 +65,37 @@ public:
     Tensor operator*(const Tensor& tr);
     Tensor operator/ (const Tensor& tr);
     const std::vector<int>& getshape()const;
+    void fill(float x);
   friend ostream& operator<< (ostream& out, Node* const nodeptr);
   friend ostream &operator<< (ostream& output, const Tensor& tensor);
 };
 
 Tensor tensor_calc(Tensor ts, const string& str);
-
+Tensor cos(Tensor ts);
+Tensor sin(Tensor ts);
+Tensor tan(Tensor ts);
+Tensor atan(Tensor ts);
+Tensor acos(Tensor ts);
+Tensor asin(Tensor ts);
+Tensor cosh(Tensor ts);
+Tensor sinh(Tensor ts);
+Tensor tanh(Tensor ts);
+Tensor acosh(Tensor ts);
+Tensor asinh(Tensor ts);
+Tensor atanh(Tensor ts);
+Tensor exp(Tensor ts);
+Tensor log(Tensor ts);
+Tensor log10(Tensor ts);
+Tensor exp2(Tensor ts);
+Tensor expm1(Tensor ts);
+Tensor log1p(Tensor ts);
+Tensor log2(Tensor ts);
+Tensor sqrt(Tensor ts);
+Tensor erf(Tensor ts);
+Tensor erfc(Tensor ts);
+Tensor ceil(Tensor ts);
+Tensor floor(Tensor ts);
+Tensor abs(Tensor ts);
 class Node {
   protected:
     Tensor value;

@@ -276,14 +276,15 @@ public:
 };
 Relu* relu(Node *a);
 
-class Length: public Operator_1 {
-private:
-	Tensor calc(set<Node*>& calced) override;
-public:
-	using Operator_1::Operator_1;
-	void getgrad();
+class Softmax: public Operator_1 {
+  private:
+    Tensor calc(set<Node*>& calced) override;
+
+  public:
+    using Operator_1::Operator_1;
+    void getgrad();
 };
-Length* length(Node *a);
+Softmax* softmax(Node *a);
 
 #endif 
 

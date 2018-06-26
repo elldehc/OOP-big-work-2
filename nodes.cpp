@@ -53,7 +53,7 @@ void Placeholder::getgrad()
 
 
 //Print
-Print::Print(Node* node): dest(node) { }
+Print::Print(Node* node,const string &_info): dest(node),info(_info) { }
 
 Tensor Print::calc(set<Node*>& calced) {
     setvalue(dest->eval(calced)->getvalue());
@@ -65,7 +65,7 @@ Node* Print::eval(set<Node*>& calced) {
         return nullptr;
     else if (calced.insert(this).second) {
         setvalue(dest->eval(calced)->getvalue());
-        cout << "Print Operator: " << dest->getvalue() << '\n';
+        cout << info << dest->getvalue() << '\n';
         return this;
     }
     else
@@ -145,7 +145,7 @@ map<Parameter*,Tensor> assign_map;
     
 Constant* constant(const Tensor &a){return new Constant(a);}
 Placeholder* placeholder(string name){return new Placeholder(name);}
-Print* print(Node *a){return new Print(a);}
+Print* print(Node *a,const string &b){return new Print(a,b);}
 Parameter* parameter(const Tensor &a){return new Parameter(a);}
 Assign* assign(Parameter *para,Node *node){return new Assign(para,node);}
 

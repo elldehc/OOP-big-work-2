@@ -96,6 +96,8 @@ class Matmul: public Operator {
     void getgrad();
 };
 
+
+
 Add* add(Node *a,Node *b);
 Minus* sub(Node *a,Node *b);
 Minus* minus(Node *a,Node *b);
