@@ -59,6 +59,7 @@ void Tensor::_reshape(const std::vector<int>& list){
 }
 
 Tensor Tensor::_matmul(const Tensor& r){
+	//std::cerr<<"matmul:"<<shape[0]<<' '<<shape[1]<<' '<<r.shape[0]<<' '<<r.shape[1]<<'\n';
 	if(size==2&&r.size==2)
 	{
 		if (shape[1]!=r.shape[0]) { std::cout<<"matmul:input invalid!"<<std::endl; return Tensor(); }
