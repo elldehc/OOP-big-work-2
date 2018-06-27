@@ -1,10 +1,13 @@
 #ifndef Node_h
 #define Node_h
+#pragma GCC optimize("O2")
+#pragma GCC optimize("fast-math")
 
 #include <iostream>
 #include <set>
 #include <map>
 #include <vector>
+#define float double
 
 using std::map;
 using std::set;

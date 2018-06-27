@@ -255,11 +255,12 @@ int main()
 	cout<<a*b<<'\n';
 	cout<<a/b<<'\n';*/
 	//not a sample
-	auto x=placeholder(),y=placeholder();
+	/*auto x=placeholder(),y=placeholder();
 	auto a=reshape(concat(x,y,0),{2,1});
 	auto b=matmul(transpose(a),a);
-	cout<<Run({{x,1},{y,2}},*b->grad(x))<<'\n';
-	
+	cout<<Run({{x,1},{y,2}},*b->grad(x))<<'\n';*/
+	Tensor a(0),b({1,2,3,4,5,6,7,8},{2,4});
+	cout<<a+b<<'\n';
 	//system("pause");
     return 0;
 }

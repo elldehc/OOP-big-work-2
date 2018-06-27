@@ -29,10 +29,17 @@ void getdata()
 	fpar=fopen("train.tmp","r");
 	if(fpar!=nullptr)
 	{
+#ifndef float
 		for(i=0;i<sz1;i++)
 		for(j=0;j<28*28+1;j++)fscanf(fpar,"%f",&w1.at({i,j}));
 		for(i=0;i<10;i++)
 		for(j=0;j<sz1;j++)fscanf(fpar,"%f",&w2.at({i,j}));
+#else
+		for(i=0;i<sz1;i++)
+		for(j=0;j<28*28+1;j++)fscanf(fpar,"%lf",&w1.at({i,j}));
+		for(i=0;i<10;i++)
+		for(j=0;j<sz1;j++)fscanf(fpar,"%lf",&w2.at({i,j}));
+#endif
 		//fscanf(fpar,"%f%f",&eps1,&eps2);
 		fclose(fpar);
 	}
@@ -80,6 +87,7 @@ int main()
 		if(i==b[T])okgs++;
 	}
 	std::cout<<"correct:"<<okgs<<"/"<<n<<'\n';
+	std::cerr<<"correct:"<<okgs<<"/"<<n<<'\n';
 	return 0;
 }
 	
