@@ -5,10 +5,10 @@
 int main()
 {
 	//sample 1:assert and bind
-    /*auto x = new Placeholder();
-	auto y = new Placeholder();
+    /*auto x = placeholder();
+	auto y = placeholder();
 	auto t = add(x,y);
-	auto t1 = new Bind(t, new Assert(new Greater(y,x)));
+	auto t1 = bind(t, assert(greater(y,x)));
 	auto res = bind(t, assert(less(y,add(x,constant(2)))));
 	cout << Run({{x,1},{y,2}}, *res) << endl;//3
 	cout << Run({{x,1},{y,4}}, *res) << endl;//fail
@@ -112,7 +112,7 @@ int main()
 	delete res;*/
 	
 	//sample 7:Relu and sigmoid
-    /*auto x = new Placeholder();
+    /*auto x = placeholder();
 	auto y=relu(x);
 	cout<<Run({{x,2}},*y)<<'\n';//2
 	cout<<Run({{x,-2}},*y)<<'\n';//0
@@ -136,9 +136,9 @@ int main()
 	*/
 	
     //sample 9:Matmul
-	/*Node* x=new Constant({{1,1,1,1,1,1,1,1},{2,4}});
-	Node* y=new Constant({{1,1,1,1,1,1,1,1},{4,2}});
-	Node* z=new Matmul(x,y);
+	/*Node* x=constant({{1,1,1,1,1,1,1,1},{2,4}});
+	Node* y=constant({{1,1,1,1,1,1,1,1},{4,2}});
+	Node* z=matmul(x,y);
 	cout<<Run(*z)<<endl;//{{4,4}{4,4}}*/
 	
 	//sample 10:broadcast of +-*/

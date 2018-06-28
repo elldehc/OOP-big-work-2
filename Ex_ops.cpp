@@ -133,12 +133,12 @@ void Cond::getgrad()
 	for(auto &it:grads)it.second=cond(co,ans1->grad(it.first),ans2->grad(it.first));
 	grads[this]=One;
 }
-Less* less(Node *a,Node *b){return new Less(a,b);}
-Greater* greater(Node *a,Node *b){return new Greater(a,b);}
-Leq* leq(Node *a,Node *b){return new Leq(a,b);}
-Geq* geq(Node *a,Node *b){return new Geq(a,b);}
-Equal* equal(Node *a,Node *b){return new Equal(a,b);}
-Ineq* ineq(Node *a,Node *b){return new Ineq(a,b);}
-Assert* assert(Node *a){return new Assert(a);}
-Bind* bind(Node *a,Node *b){return new Bind(a,b);}
-Cond* cond(Node *a,Node *b,Node *c){return new Cond(a,b,c);}
+Less* less(Node *a,Node *b){auto t=new Less(a,b);ptrs.add(t);return t;}
+Greater* greater(Node *a,Node *b){auto t=new Greater(a,b);ptrs.add(t);return t;}
+Leq* leq(Node *a,Node *b){auto t=new Leq(a,b);ptrs.add(t);return t;}
+Geq* geq(Node *a,Node *b){auto t=new Geq(a,b);ptrs.add(t);return t;}
+Equal* equal(Node *a,Node *b){auto t=new Equal(a,b);ptrs.add(t);return t;}
+Ineq* ineq(Node *a,Node *b){auto t=new Ineq(a,b);ptrs.add(t);return t;}
+Assert* assert(Node *a){auto t=new Assert(a);ptrs.add(t);return t;}
+Bind* bind(Node *a,Node *b){auto t=new Bind(a,b);ptrs.add(t);return t;}
+Cond* cond(Node *a,Node *b,Node *c){auto t=new Cond(a,b,c);ptrs.add(t);return t;}

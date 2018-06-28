@@ -173,14 +173,14 @@ void Matmul::getgrad()
 	grads[this]=One;
 }
 
-Add* add(Node *a,Node *b){return new Add(a,b);}
-Minus* sub(Node *a,Node *b){return new Minus(a,b);}
-Minus* minus(Node *a,Node *b){return new Minus(a,b);}
-Multiply* mul(Node *a,Node *b){return new Multiply(a,b);}
-Divide* div(Node *a,Node *b){return new Divide(a,b);}
-Power* power(Node *a,Node *b){return new Power(a,b);}
-Transpose* transpose(Node *a){return new Transpose(a);}
-Concat* concat(Node *a,Node *b,int c){return new Concat(a,b,c);}
-Reshape* reshape(Node *a,const std::vector<int>& b){return new Reshape(a,b);}
-Reshape2* reshape2(Node *a,Node *b){return new Reshape2(a,b);}
-Matmul* matmul(Node *a,Node *b){return new Matmul(a,b);}
+Add* add(Node *a,Node *b){auto t=new Add(a,b);ptrs.add(t);return t;}
+Minus* sub(Node *a,Node *b){auto t=new Minus(a,b);ptrs.add(t);return t;}
+Minus* minus(Node *a,Node *b){auto t=new Minus(a,b);ptrs.add(t);return t;}
+Multiply* mul(Node *a,Node *b){auto t=new Multiply(a,b);ptrs.add(t);return t;}
+Divide* div(Node *a,Node *b){auto t=new Divide(a,b);ptrs.add(t);return t;}
+Power* power(Node *a,Node *b){auto t=new Power(a,b);ptrs.add(t);return t;}
+Transpose* transpose(Node *a){auto t=new Transpose(a);ptrs.add(t);return t;}
+Concat* concat(Node *a,Node *b,int c){auto t=new Concat(a,b,c);ptrs.add(t);return t;}
+Reshape* reshape(Node *a,const std::vector<int>& b){auto t=new Reshape(a,b);ptrs.add(t);return t;}
+Reshape2* reshape2(Node *a,Node *b){auto t=new Reshape2(a,b);ptrs.add(t);return t;}
+Matmul* matmul(Node *a,Node *b){auto t=new Matmul(a,b);ptrs.add(t);return t;}

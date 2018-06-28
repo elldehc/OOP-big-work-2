@@ -512,3 +512,7 @@ Node * Node::grad(Node *p)
 	if(it==grad().end())return Zero;else return it->second;
 }
 Node::~Node() {std::cerr<<"Node destroyed.\n"; }
+
+void Nodeptr::add(Node *p){s.insert(p);}
+Nodeptr::~Nodeptr(){for(auto &it:s)delete it;}
+Nodeptr ptrs;

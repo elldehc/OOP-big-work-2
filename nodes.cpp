@@ -143,9 +143,9 @@ Node* Assign::eval(set<Node*>& calced) {
 
 map<Parameter*,Tensor> assign_map;
     
-Constant* constant(const Tensor &a){return new Constant(a);}
-Placeholder* placeholder(string name){return new Placeholder(name);}
-Print* print(Node *a,const string &b){return new Print(a,b);}
-Parameter* parameter(const Tensor &a){return new Parameter(a);}
-Assign* assign(Parameter *para,Node *node){return new Assign(para,node);}
+Constant* constant(const Tensor &a){auto t=new Constant(a);ptrs.add(t);return t;}
+Placeholder* placeholder(string name){auto t=new Placeholder(name);ptrs.add(t);return t;}
+Print* print(Node *a,const string &b){auto t=new Print(a,b);ptrs.add(t);return t;}
+Parameter* parameter(const Tensor &a){auto t=new Parameter(a);ptrs.add(t);return t;}
+Assign* assign(Parameter *para,Node *node){auto t=new Assign(para,node);ptrs.add(t);return t;}
 

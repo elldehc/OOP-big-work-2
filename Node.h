@@ -128,4 +128,13 @@ class Constant;
 extern Constant* const Zero;
 extern Constant* const One;
 extern Constant* const MinusOne;
+class Nodeptr
+{
+	set<Node*> s;
+public:
+	void add(Node *p);
+	~Nodeptr();
+};
+extern Nodeptr ptrs;
+
 #endif /* Node_h */
