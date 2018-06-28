@@ -5,7 +5,7 @@
 #include<algorithm>
 #include "stdops.h"
 const int sz1=28;
-const float eps1=10,eps2=10;
+const float eps1=5,eps2=5;
 FILE *flab,*fimg,*fpar;
 unsigned char a[100001][28][28],b[100001];
 int ran[100001];
@@ -102,7 +102,7 @@ int main()
 	auto dw2=/*print(*/matmul(sub(soft,po),transpose(out1))/*,"dw2")*/;
 	auto dw1=/*print(*/matmul(mul(matmul(transpose(p2),sub(soft,po)),mul(out1,sub(One,out1))),transpose(pi))/*,"dw1")*/;
 	auto fin=bind(loss,bind(dw1,dw2));
-	int tmp_size=10000,bat_size=1,rep_size=100;
+	int tmp_size=20000,bat_size=1,rep_size=100;
 	std::cerr<<"ok\n";
 	//std::cout<<"p2="<<p2<<'\n';
 	int tttt=clock();
