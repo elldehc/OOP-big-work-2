@@ -24,7 +24,8 @@ Node* Run(Node& des) {
 	return t;
 }*/
 
-/*Node* Run(const map <Node*, float>& initmap, Node& des) {
+
+Node* Run(map <Node*, float>& initmap, Node& des) {
 	set<Node*> calced;
 
 	//placeholder赋值：迭代器遍历map中所有元素
@@ -38,7 +39,8 @@ Node* Run(Node& des) {
 	for (auto it : assign_map)it.first->set(it.second);
 	assign_map.clear();
 	return t;
-}*/
+}
+
 Node* Run(const map <Node*, Tensor>& initmap, Node& des) {
 	set<Node*> calced;
 
@@ -54,6 +56,7 @@ Node* Run(const map <Node*, Tensor>& initmap, Node& des) {
 	assign_map.clear();
 	return t;
 }
+
 ostream &operator<< (ostream& out, const Tensor& tensor) {
 	int dim = tensor.size;
 	if (dim == 0) {
