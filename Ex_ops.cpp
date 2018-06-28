@@ -76,8 +76,8 @@ void Assert::getgrad()
 }
 
 Node* Bind::eval(set<Node*>& calced) {
-	getright()->eval(calced);
-    if (getleft()->eval(calced) == nullptr)
+	//getright()->eval(calced);
+    if (getleft()->eval(calced) == nullptr||getright()->eval(calced)==nullptr)
         return nullptr;
     else if (calced.insert(this).second) {
         setvalue(calc(calced));

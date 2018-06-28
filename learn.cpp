@@ -81,7 +81,8 @@ void getdata()
 	for(i=0;i<n;i++)
 	{
 		ans[i]=Tensor({},{10,1});
-		for(j=0;j<10;j++)if(b[i]==j)ans[i].at({j,0})=1;else ans[i].at({j,0})=0;
+		ans[i].at({b[i],0})=1;
+		//for(j=0;j<10;j++)if(b[i]==j)ans[i].at({j,0})=1;else ans[i].at({j,0})=0;
 	}
 	std::cerr<<"ok\n";
 	fclose(flab);fclose(fimg);

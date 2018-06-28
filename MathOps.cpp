@@ -539,7 +539,7 @@ void Sgn::getgrad()
 Sgn* sgn(Node *a){return new Sgn(a);}
 
 Tensor Sigmoid::calc(set<Node*>& calced) {
-	return Tensor(1)/(Tensor(1)+tensor_calc(Tensor(0)-getop()->getvalue(),"exp"));
+	return Tensor(1)/(Tensor(1)+exp(Tensor(0)-getop()->getvalue()));
 }
 void Sigmoid::getgrad()
 {

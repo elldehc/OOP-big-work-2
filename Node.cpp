@@ -509,6 +509,6 @@ const map<Node *,Node *>& Node::grad()
 Node * Node::grad(Node *p)
 {
 	auto it=grad().find(p);
-	if(it==grad().end())return reshape2(Zero,this);else return it->second;
+	if(it==grad().end())return Zero;else return it->second;
 }
 Node::~Node() {std::cerr<<"Node destroyed.\n"; }

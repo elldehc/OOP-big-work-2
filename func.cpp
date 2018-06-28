@@ -57,7 +57,7 @@ Node* Run(const map <Node*, Tensor>& initmap, Node& des) {
 ostream &operator<< (ostream& out, const Tensor& tensor) {
 	int dim = tensor.size;
 	if (dim == 0) {
-		out << tensor.data[0] << endl;
+		out << tensor.data[0];
 		return out;
 	}
 	int stack = dim - 1;
@@ -78,7 +78,7 @@ ostream &operator<< (ostream& out, const Tensor& tensor) {
 				out << '{';
 			}
 	}
-	out << endl;
+	//out << endl;
 	return out;
 }
 

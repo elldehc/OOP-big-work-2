@@ -4,263 +4,154 @@
 
 int main()
 {
-    //样例1
-
-   /*  Node* x = new Placeholder("hhh");
-     Node* y = new Placeholder("hahaha");
-     Node* z= new Constant(3);
-     Node* t = sub(x,y);
-     Node* res =less(z,t);
-     //map<No[x] = 1;
-     //initmap[y] = 2;
-     cout << Run({{x,1},{y,2}}, *res) << endl;
-     cout << Run({{x,1},{y,3}}, *(res->grad(x))) << endl;
-     cout << Run({{x,1},{y,3}}, *(res->grad(y))) << endl;
-     cout << Run({{x,1},{y,3}}, *(res->grad(z))) << endl;
-     cout << Run( *(res->grad(t))) << endl;
-     //initmap[x] = 1;
-     //cout << Run({{x,1}}, *res) << endl;
-     delete x;
-     delete y;
-     delete z;
-     delete t;
-     delete res;*/
-
-	//sample for matrix    -dy
-/*	Node* x=new Placeholder("hhh");
-	Node* y =new Placeholder("hahaha");
-	Node* t=add(x,y);
-    cout << Run({{x,{{1,1,1,1},{2,2}}},{y,{{2,2,2,2},{2,2}}}}, *t) << endl; //每次输入张量就在大括号里改就行
-    delete x;
-    delete y;
-    delete t;*/
-
-	//sample for matrix for reshape&concat  -dy
-/* Node* x=new Constant({{1,1,1,1,1,1,1,1},{2,2,2}});
-	cout<<x<<endl;
-	x->reshape({2,4});
-	cout<<x<<endl;
-	x->concat();
-	cout<<x<<endl;
-	delete x;*/
-
-
-     
-     //Sample 1.5
-     
-     
-     /*Node* x = placeholder("hhh");
-     Node* y = placeholder("hahaha");
-     Node* z= constant(3);
-     Node* t = add(x, mul(y,constant(0.5)));
-     Node* res =cond(sin(x),tan(mul(t,z)),cos(mul(t,z)));
-     cout << Run({{x,pi/2},{y,pi}}, *res) << endl;
-     cout << Run({{x,pi/2},{y,pi}}, *(res->grad(x))) << endl;
-     cout << Run({{x,pi/2},{y,pi}}, *(res->grad(y))) << endl;
-     cout << Run({{x,pi/2},{y,pi}}, *(res->grad(x)->grad(x))) << endl;
-     cout << Run({{x,pi/2},{y,pi}}, *(res->grad(x)->grad(y))) << endl;
-     cout << Run({{x,pi/2},{y,pi}}, *(res->grad(y)->grad(x))) << endl;
-     cout << Run({{x,pi/2},{y,pi}}, *(res->grad(y)->grad(y))) << endl;
-     cout << Run({{x,-pi/2},{y,pi}}, *res) << endl;
-     cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(x))) << endl;
-     cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(y))) << endl;
-     cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(x)->grad(x))) << endl;
-     cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(x)->grad(y))) << endl;
-     cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(y)->grad(x))) << endl;
-     cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(y)->grad(y))) << endl;
-     //initmap[x] = 1;
-     //cout << Run({{x,1}}, *res) << endl;
-     delete x;
-     delete y;
-     delete z;
-     delete t;
-     delete res;*/
-    
-    //样例2
-    
-     /*Node* x = new Placeholder("hhh");
-     Node* y = new Placeholder("hahaha");
-     Node* z = new Placeholder("hohoho");
-     Node* t = new Print((Node*)(new Add(x, y)));
-     Node* res = new Add(t,z);
-     map<Node*, float> initmap;
-     initmap[x] = 1;
-     initmap[y] = 2;
-     initmap[z] = 3;
-     cout << Run(initmap, *res) << endl;
-     delete x;
-     delete y;
-     delete z;
-     delete t;
-     delete res;*/
-    
-    //样例3
-    /*
-     Node* x = new Placeholder("hhh");
-     Node* t = new Print(x);
-     Node* y = new Constant(1);
-     Node* a0 = new Add(t,y);
-     Node* a1 = new Add(t,a0);
-     Node* a2 = new Add(t,a1);
-     map<Node*,float> initmap;
-     initmap[x] = 1;
-     cout << Run(initmap,*a2) << endl;
-     delete x;
-     delete y;
-     delete a0;
-     delete a1;
-     delete a2;
-    */
-    //样例4
-    /*
-     Node* x = new Placeholder("11");
-     Parameter* y = new Parameter(1);
-     Node* res = new Add(x, y);
-     y->set(2);
-     map<Node*, float>initmap;
-     initmap[x] = 1;
-     cout << Run(initmap, *res) << endl;
-     y->add(1);
-     initmap[x] = 1;
-     cout << Run(initmap, *res) << endl;
-     delete x;
-     delete y;
-     delete res;
-    */
-    //样例5:Power
-    
-  /*  Parameter* a = new Parameter(3);
-    Node* b = new Constant(5);
-    Node* c = new Minus(a,b);
-    Node* d = new Divide(b,(Node*)(new Minus(b,a)));
-    Node* t1 = new Power(a,b);
-    cout << Run(*t1) << endl;
-    Node* t2 = new Power(c,d);
-    cout << Run(*t2) << endl;
-    a->set(0);
-    Node* t3 = new Power(a,c);
-    cout << Run(*t3) << endl;
-     delete a;
-     delete b;
-     delete c;
-     delete d;
-     delete t1;
-     delete t2;
-     delete t3;
-    */
-    
-    //样例6:assert and bind
+	//sample 1:assert and bind
     /*auto x = new Placeholder();
 	auto y = new Placeholder();
 	auto t = add(x,y);
 	auto t1 = new Bind(t, new Assert(new Greater(y,x)));
-	auto res = new Bind(t, new Assert(new Less(y,add(x,new Constant(2)))));//这么长！！！需要想办法精简
-	cout << Run({{x,1},{y,2}}, *res) << endl;//0
+	auto res = bind(t, assert(less(y,add(x,constant(2)))));
+	cout << Run({{x,1},{y,2}}, *res) << endl;//3
 	cout << Run({{x,1},{y,4}}, *res) << endl;//fail
-	cout << Run({{x,1},{y,-1}}, *t1) << endl;//fail
-	delete x;delete y;delete t;delete t1;delete res;*/
+	cout << Run({{x,1},{y,-1}}, *t1) << endl;//fail*/
 	
-	//样例7:Relu
-    /*auto x = new Placeholder();
-	auto y=relu(x);
-	cout<<Run({{x,2}},*y)<<'\n';
-	cout<<Run({{x,-2}},*y)<<'\n';
-	cout<<Run({{x,2}},*(y->grad(x)))<<'\n';
-	cout<<Run({{x,-2}},*(y->grad(x)))<<'\n';
+	//sample 2.1:gradients (for scalar only)
+	/*auto x = placeholder();
+	auto y = mul(x,constant(3));
+	auto z = mul(x,constant(2));
+	auto L = add(y,z);
+	std::cout<<Run({{x,3}},*L->grad(y))<<'\n';//1
+	std::cout<<Run({{x,3}},*L->grad(x))<<'\n';//5
+	auto t = add(L->grad(x),L->grad(y));
+	std::cout<<Run({{x,3}},*t)<<'\n';//6*/
 	
-	delete x;delete y;*/
-	
-	//样例8:Newton solve
+	//sample 2.2:gradients (for scalar only)
+	/*auto x = placeholder();
+	auto y = placeholder();
+	auto t=mul(x,x);
+	auto L=mul(t,y);
+	std::cout<<Run({{x,3},{y,2}},*L->grad(y))<<'\n';//9
+	std::cout<<Run({{x,3},{y,2}},*L->grad(t))<<'\n';//2
+	std::cout<<Run({{x,3},{y,2}},*L->grad(x))<<'\n';//12*/
+
+	//sample 2.3:gradients (for scalar only)
+	/*auto x = placeholder();
+	auto y = placeholder();
+	auto t1=mul(x,y);
+	auto t2=add(mul(x,t1),y);
+	auto t3=add(mul(y,t2),x);
+	auto L=add(mul(t1,t2),t3);
+	auto res=add(L->grad(x),L->grad(y));
+	std::cout<<Run({{x,2},{y,3}},*res)<<'\n';//244*/
+
+	//sample 3:Newton solve
 	/*int n;
 	int a[101];
 	int i,j,k;
-	std::cin>>n;
+	std::cin>>n;//5
 	auto x = placeholder();
 	Node *y=Zero;
-	for(i=0;i<=n;i++)std::cin>>a[i];
+	for(i=0;i<=n;i++)std::cin>>a[i];//1 1 2 3 0 1
 	for(i=n;i>=0;i--)y=add(mul(y,x),constant(a[i]));
 	float ans=solve(y,x,-1);
-	cout<<ans<<'\n';
-    
-	delete x;delete y;*/
+	cout<<ans<<'\n';//-0.720862*/
+
+	//sample 4:sin exp log
+	/*auto x = placeholder();
+	auto y = placeholder();
+	auto z = constant(3);
+	auto t = add(sin(z),log(y));
+	auto res = mul(t,exp(x));
+	std::cout<<Run({{x,1},{y,2}},*res)<<'\n';//2.267773339
+	std::cout<<Run({{x,1},{y,-1}},*res)<<'\n';//error
+	std::cout<<Run({{y,1}},*t)<<'\n';//0.1411200081*/
 	
-	//样例9:Assign
+	//sample 5:Assign
 	/*auto x = parameter(1);
 	auto y = parameter(2);
 	auto t1 = assign(x, y);
 	auto t2 = assign(y, mul(t1,y));
 	auto res = mul(mul(t2,x),y);
-	cout<<Run(*res)<<'\n';
-	//<< 8
-	cout<<Run(*x)<<'\n';
-	//<< 2
-	cout<<Run(*y)<<'\n';
-	//<< 4*/
+	cout<<Run(*res)<<'\n';//8
+	cout<<Run(*x)<<'\n';//2
+	cout<<Run(*y)<<'\n';//4*/
 
-	//sample 10:Transpose
-	/*Node* x=new Constant({{1,1,1,1,1,1,1,2},{2,4}});
-	Node* y=new Transpose(x);	
-	cout<<Run(*y)<<endl;*/
-
-	//sample 11:Concat
-	/*Node* x=new Constant({{1,1,1,1,1,1,1,1},{2,4}});
-	Node* y=new Constant({{2,2,2,2,2,2,2,2},{2,4}});
-	Node* z=new Concat(x,y,2);
-	cout<<Run(*z)<<endl;*/
-	//sample 11.5:Concat
-	/*Node* x=new Constant(1);
-	Node* y=new Constant(2);
-	Node* z=new Concat(x,y,0);
-	cout<<Run(*z)<<endl;*/
+	//sample 6:gradients (for scalar only)
+	/*auto x=placeholder();
+	auto y=placeholder();
+	auto t=print(exp(div(sub(log(x),y),add(sin(x),cos(y)))),"t=");
+	std::cout<<Run({{x,pi/2},{y,-pi/2}},*t->grad(x))<<'\n';//4.810477381
+	std::cout<<Run({{x,pi/2},{y,-pi/2}},*t->grad(y))<<'\n';//-22.83794284
+	std::cout<<Run({{x,pi/2},{y,-pi/2}},*assert(t)->grad(x))<<'\n';//0
+	std::cout<<Run({{x,pi/2},{y,-pi/2}},*bind(t,assert(t))->grad(x))<<'\n';//4.810477381
+	return 0;*/
 	
-	//sample 12:Class Reshape
-	/*Node* x=new Constant({{1,1,1,1,1,1,1,1},{2,4}});
-	Node* y=new Reshape(x, {1,2,1,1,2,1,1,2});
-	cout<<Run(*y)<<endl;*/
-    //sample 13:Class Matmul
+	//sample 6.5:double gradients and condition operator
+    /*Node* x = placeholder();
+	Node* y = placeholder();
+	Node* z= constant(3);
+	Node* t = add(x, mul(y,constant(0.5)));
+	Node* res =cond(sin(x),tan(mul(t,z)),cos(mul(t,z)));//cond(a,b,c):return a>0?b:c
+	cout << Run({{x,pi/2},{y,pi}}, *res) << endl;//0
+	cout << Run({{x,pi/2},{y,pi}}, *(res->grad(x))) << endl;//3
+	cout << Run({{x,pi/2},{y,pi}}, *(res->grad(y))) << endl;//1.5
+	cout << Run({{x,pi/2},{y,pi}}, *(res->grad(x)->grad(x))) << endl;//0
+	cout << Run({{x,pi/2},{y,pi}}, *(res->grad(x)->grad(y))) << endl;//0
+	cout << Run({{x,pi/2},{y,pi}}, *(res->grad(y)->grad(x))) << endl;//0
+	cout << Run({{x,pi/2},{y,pi}}, *(res->grad(y)->grad(y))) << endl;//0
+	cout << Run({{x,-pi/2},{y,pi}}, *res) << endl;//1
+	cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(x))) << endl;//0
+	cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(y))) << endl;//0
+	cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(x)->grad(x))) << endl;//-9
+	cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(x)->grad(y))) << endl;//-4.5
+	cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(y)->grad(x))) << endl;//-4.5
+	cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(y)->grad(y))) << endl;//-2.25
+	delete x;
+	delete y;
+	delete z;
+	delete t;
+	delete res;*/
+	
+	//sample 7:Relu and sigmoid
+    /*auto x = new Placeholder();
+	auto y=relu(x);
+	cout<<Run({{x,2}},*y)<<'\n';//2
+	cout<<Run({{x,-2}},*y)<<'\n';//0
+	cout<<Run({{x,2}},*(y->grad(x)))<<'\n';//1
+	cout<<Run({{x,-2}},*(y->grad(x)))<<'\n';//0
+	auto z=sigmoid(x);
+	cout<<Run({{x,2}},*z)<<'\n';//0.880797078
+	cout<<Run({{x,-2}},*z)<<'\n';//0.119202922
+	cout<<Run({{x,2}},*(z->grad(x)))<<'\n';//0.1049935854
+	cout<<Run({{x,-2}},*(z->grad(x)))<<'\n';//0.1049935854*/
+	
+	//sample 8:Tensor operators
+	/*Node* x=constant({{1,1,1,1,1,1,1,2},{2,4}});
+	Node* y=constant({{2,2,2,2,2,2,2,2},{2,4}});
+	cout<<Run(*transpose(x))<<endl;//{{1,1}{1,1}{1,1}{1,2}}
+	cout<<Run(*concat(x,y,0))<<endl;//{{1,1,1,1}{1,1,1,2}{2,2,2,2}{2,2,2,2}}
+	cout<<Run(*concat(x,y,1))<<endl;//{{1,1,1,1,2,2,2,2}{1,1,1,2,2,2,2,2}}
+	cout<<Run(*concat(x,y,2))<<endl;//{{{1,2}{1,2}{1,2}{1,2}}{{1,2}{1,2}{1,2}{2,2}}}
+	cout<<Run(*reshape(x, {1,2,1,2,1,1,2}))<<endl;//{{{{{{{1,1}}}{{{1,1}}}}}{{{{{1,1}}}{{{1,2}}}}}}}
+	cout<<Run(*sigmoid(x))<<'\n';//{{0.731059,0.731059,0.731059,0.731059}{0.731059,0.731059,0.731059,0.880797}}
+	*/
+	
+    //sample 9:Matmul
 	/*Node* x=new Constant({{1,1,1,1,1,1,1,1},{2,4}});
 	Node* y=new Constant({{1,1,1,1,1,1,1,1},{4,2}});
 	Node* z=new Matmul(x,y);
-	cout<<Run(*z)<<endl;*/
-	//sample 14:modifying Tensor
-	/*Tensor a({},{3,3,3});
-	int i,j,k,l=0;
-	for(i=0;i<3;i++)
-	for(j=0;j<3;j++)
-	for(k=0;k<3;k++)
-	{
-	   a.at({i,j,k})=++l;
-	   cout<<a<<'\n';
-	}
-	a._reshape({2,4,4});
-	cout<<a<<'\n';*/
-	//sample 15:gradients on Tensor
-	/*auto x=placeholder();
-	Node *a11=sin(x),*a12=cos(x),*a21=exp(x),*a22=log(x);
-	auto a=concat(concat(a11,a21,0),concat(a12,a22,0),1);
-	auto b=constant({{1,1,-1,1},{2,2}});
-	auto ans=matmul(a,b);
-	cout<<Run({{x,1}},*ans)<<'\n';
-	cout<<Run({{x,1}},*ans->grad(x))<<'\n';
-	auto y=placeholder();
-	auto ly=matmul(y,transpose(y));
-	cout<<Run({{y,{{1,1,1,1},{1,4}}}},*ly->grad(y))<<'\n';*/
-	//sample 16:broadcast of +-*/
+	cout<<Run(*z)<<endl;//{{4,4}{4,4}}*/
+	
+	//sample 10:broadcast of +-*/
 	/*Tensor a({1,1,1,1},{2,1,2,1}),b({3,3,3,3,3,3},{3,1,2});
-	//Tensor c=a+b;
-	auto t=sigmoid(constant(a));
-	cout<<Run(*t)<<'\n';
-	cout<<a+b<<'\n';
-	cout<<a-b<<'\n';
-	cout<<a*b<<'\n';
-	cout<<a/b<<'\n';*/
-	//not a sample
-	/*auto x=placeholder(),y=placeholder();
-	auto a=reshape(concat(x,y,0),{2,1});
-	auto b=matmul(transpose(a),a);
-	cout<<Run({{x,1},{y,2}},*b->grad(x))<<'\n';*/
-	Tensor a(0),b({1,2,3,4,5,6,7,8},{2,4});
-	cout<<a+b<<'\n';
-	//system("pause");
+	auto x=constant(a),y=constant(b);
+	cout<<a+b<<'\n';//{{{{4,4}{4,4}}{{4,4}{4,4}}{{4,4}{4,4}}}{{{4,4}{4,4}}{{4,4}{4,4}}{{4,4}{4,4}}}}
+	cout<<a-b<<'\n';//{{{{-2,-2}{-2,-2}}{{-2,-2}{-2,-2}}{{-2,-2}{-2,-2}}}{{{-2,-2}{-2,-2}}{{-2,-2}{-2,-2}}{{-2,-2}{-2,-2}}}}
+	cout<<a*b<<'\n';//{{{{3,3}{3,3}}{{3,3}{3,3}}{{3,3}{3,3}}}{{{3,3}{3,3}}{{3,3}{3,3}}{{3,3}{3,3}}}}
+	cout<<a/b<<'\n';//{{{{0.333333,0.333333}{0.333333,0.333333}}{{0.333333,0.333333}{0.333333,0.333333}}{{0.333333,0.333333}{0.333333,0.333333}}}{{{0.333333,0.333333}{0.333333,0.333333}}{{0.333333,0.333333}{0.333333,0.333333}}{{0.333333,0.333333}{0.333333,0.333333}}}}
+	cout<<Run(*add(x,y))<<'\n';//the same as above
+	cout<<Run(*sub(x,y))<<'\n';
+	cout<<Run(*mul(x,y))<<'\n';
+	cout<<Run(*div(x,y))<<'\n';*/
+	
     return 0;
 }
