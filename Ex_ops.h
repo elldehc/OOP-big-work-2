@@ -79,8 +79,8 @@ class Bind: public Operator {
 
 class Cond: public Node {
   protected:
-	 Tensor calc(set<Node*>& calced) override;
-    Node *co,*ans1,*ans2;
+	Tensor calc(set<Node*>& calced) override;
+    Node *const co,*const ans1,*const ans2;
   public:
     Cond(Node* node1, Node* node2,Node* node3);
     Node* eval(set<Node*>& calced) override;

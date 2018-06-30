@@ -282,6 +282,7 @@ class Softmax: public Operator_1 {
 
   public:
     using Operator_1::Operator_1;
+    Node* eval(set<Node*>& calced) override;
     void getgrad();
 };
 Softmax* softmax(Node *a);

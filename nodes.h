@@ -7,13 +7,12 @@
 
 class Constant: public Node {
   private:
-    
+  	Tensor calc(set<Node*>& calced);
   public:
     //Constant(const std::initializer_list<float>& list, const std::initializer_list<int>& dims);
     //Constant(const float& value);
     Constant(const Tensor& value);
     void getgrad();
-    Tensor calc(set<Node*>& calced);
     Node* eval(set<Node*>& calced);
 };
 
@@ -24,33 +23,32 @@ extern Constant* const MinusOne;
 
 class Placeholder: public Node {
   private:
-    string name;
-    
+    const string name;
+    Tensor calc(set<Node*>& calced);
   public:
     Placeholder(string myname="");
     void getgrad();
-    Tensor calc(set<Node*>& calced);
+    
     Node* eval(set<Node*>& calced);
 };
 
 class Print: public Node {
   private:
-    Node* dest;
-    string info;
+    Node* const dest;
+    const string info;
+    Tensor calc(set<Node*>& calced) override;
   public:
     Print(Node* node,const string &_info="");
     void getgrad();
-    Tensor calc(set<Node*>& calced) override;
     Node* eval(set<Node*>& calced) override;
 };
 
 class Parameter: public Node {
-  private:
     Tensor calc(set<Node*>& calced) override;
     
   public:
     Parameter(const Tensor& number);
-	Parameter(const float& number);
+	//Parameter(const float& number);
     void getgrad();
     void set(const Tensor& number);
     void add(const Tensor& number);
@@ -63,12 +61,13 @@ class Parameter: public Node {
 extern map<Parameter*,Tensor> assign_map;
 class Assign: public Node {
   private:
-    Node* src;
-    Parameter *tar;
+    Node* const src;
+    Parameter* const tar;
+    Tensor calc(set<Node*>& calced) override;
+    
   public:
     Assign(Parameter* para,Node* node);
     void getgrad();
-    Tensor calc(set<Node*>& calced) override;
     Node* eval(set<Node*>& calced) override;
 };
 

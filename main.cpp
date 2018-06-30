@@ -82,8 +82,7 @@ int main()
 	std::cout<<Run({{x,pi/2},{y,-pi/2}},*t->grad(x))<<'\n';//4.810477381
 	std::cout<<Run({{x,pi/2},{y,-pi/2}},*t->grad(y))<<'\n';//-22.83794284
 	std::cout<<Run({{x,pi/2},{y,-pi/2}},*assert(t)->grad(x))<<'\n';//0
-	std::cout<<Run({{x,pi/2},{y,-pi/2}},*bind(t,assert(t))->grad(x))<<'\n';//4.810477381
-	return 0;*/
+	std::cout<<Run({{x,pi/2},{y,-pi/2}},*bind(t,assert(t))->grad(x))<<'\n';//4.810477381*/
 	
 	//sample 6.5:double gradients and condition operator
     /*Node* x = placeholder();
@@ -104,12 +103,8 @@ int main()
 	cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(x)->grad(x))) << endl;//-9
 	cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(x)->grad(y))) << endl;//-4.5
 	cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(y)->grad(x))) << endl;//-4.5
-	cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(y)->grad(y))) << endl;//-2.25
-	delete x;
-	delete y;
-	delete z;
-	delete t;
-	delete res;*/
+	cout << Run({{x,-pi/2},{y,pi}}, *(res->grad(y)->grad(y))) << endl;//-2.25*/
+	
 	
 	//sample 7:Relu and sigmoid
     /*auto x = placeholder();
@@ -152,6 +147,7 @@ int main()
 	cout<<Run(*sub(x,y))<<'\n';
 	cout<<Run(*mul(x,y))<<'\n';
 	cout<<Run(*div(x,y))<<'\n';
+	
 	
     return 0;
 }

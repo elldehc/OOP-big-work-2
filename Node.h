@@ -22,7 +22,7 @@ class Node;
 class Tensor{
 	std::vector<float> data;
 	std::vector<int> shape;
-	std::vector<int> num; //存储到达这一维度的张量分量的元素个数 num[0]=size
+	std::vector<int> num; //存储到达这一维度的张量分量的元素个数
 	int size;
 	friend class Node;
 	friend class Sgn;
@@ -103,23 +103,23 @@ class Node {
   protected:
     Tensor value;
   	map<Node *,Node *> grads;
+  	virtual Tensor calc(set<Node*>& calced) = 0;
   public:
     void setvalue(const Tensor& v); 
-    void setvalue(const float& v);
+    //void setvalue(const float& v);
     
 	Tensor getvalue();
     float getfloat(const int& seq=0);
 	int get_num();
 	void reshape(const std::vector<int>& list);
 	void transpose();
-    virtual Tensor calc(set<Node*>& calced) = 0;
     virtual Node* eval(set<Node*>& calced) = 0;
     virtual void getgrad()=0;
     const map<Node *,Node *>& grad();
     Node * grad(Node *p);
     
-    friend ostream& operator>> (ostream& out, const Node*  nodeptr);
-    friend ostream& operator>> (ostream& out, const Tensor& tensor);
+    friend ostream& operator<< (ostream& out, const Node*  nodeptr);
+    friend ostream& operator<< (ostream& out, const Tensor& tensor);
     virtual ~Node();
 };
 
@@ -131,10 +131,14 @@ extern Constant* const MinusOne;
 class Nodeptr
 {
 	set<Node*> s;
+	~Nodeptr();
+	Nodeptr(const Nodeptr&)=delete;
+	Nodeptr& operator =(const Nodeptr&)=delete;
+	Nodeptr()=default;
 public:
 	void add(Node *p);
-	~Nodeptr();
+	static Nodeptr _ins;
 };
-extern Nodeptr ptrs;
+extern Nodeptr &ptrs;
 
 #endif /* Node_h */

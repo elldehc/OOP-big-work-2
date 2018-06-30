@@ -568,6 +568,28 @@ Tensor Softmax::calc(set<Node*>& calced) {
 	one._transpose();
 	return ex/one._matmul(ex);
 }
+Node* Softmax::eval(set<Node*>& calced)
+{
+	if (getop()->eval(calced) == nullptr)return nullptr;
+    else 
+    {
+    	auto v=getop()->getvalue().getshape();
+		if(v.size()!=2||v[1]!=1)
+		{
+			std::cerr<<"can't softmax because it's not an n*1 Tensor.\n";
+			return nullptr;
+		}	
+    	
+        //no errors
+       if (calced.insert(this).second) {
+            setvalue(calc(calced));
+            return this;
+        }
+        else {
+            return this;
+        }
+    }
+}
 void Softmax::getgrad()
 {
 	//No! There is no gradient method for a Tensor.

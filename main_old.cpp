@@ -16,7 +16,7 @@ int main()
 {
     //样例1
     
-     Node* x = new Placeholder("hhh");
+     /*Node* x = new Placeholder("hhh");
      Node* y = new Placeholder("hahaha");
      Node* z= new Constant(3);
      Node* t = new Add(x, y);
@@ -31,7 +31,7 @@ int main()
      delete y;
      delete z;
      delete t;
-     delete res;
+     delete res;*/
     
     //样例2
     /*
@@ -69,7 +69,7 @@ int main()
      delete a2;
     */
     //样例4
-    /*
+    
      Node* x = new Placeholder("11");
      Parameter* y = new Parameter(1);
      Node* res = new Add(x, y);
@@ -83,7 +83,7 @@ int main()
      delete x;
      delete y;
      delete res;
-    */
+    
     //样例5:Power
     /*
     Parameter* a = new Parameter(3);

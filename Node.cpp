@@ -488,15 +488,9 @@ Tensor Tensor::operator/(const Tensor& tr){ //¼ÙµÄ³ý·¨
 void Node::setvalue(const Tensor& v) {
     value = v;
 }
-void Node::setvalue(const float& v) {
-   /*value.size=0;
-   value.data.clear();
-   value.shape.clear();
-   value.num.clear();
-   value.data.push_back(v);
-   value.shape.push_back(0);*/
+/*void Node::setvalue(const float& v) {
    value=Tensor(v);
-}
+}*/
 
 
 
@@ -511,8 +505,9 @@ Node * Node::grad(Node *p)
 	auto it=grad().find(p);
 	if(it==grad().end())return Zero;else return it->second;
 }
-Node::~Node() {std::cerr<<"Node destroyed.\n"; }
+Node::~Node() {/*std::cerr<<"Node destroyed.\n";*/ }
 
+Nodeptr Nodeptr::_ins;
 void Nodeptr::add(Node *p){s.insert(p);}
 Nodeptr::~Nodeptr(){for(auto &it:s)delete it;}
-Nodeptr ptrs;
+Nodeptr &ptrs=Nodeptr::_ins;

@@ -6,8 +6,8 @@
 
 class Operator: public Node {
   protected:
-    Node* left;
-    Node* right;
+    Node* const left;
+    Node* const right;
   public:
     Operator(Node* node1, Node* node2);
     Node* getleft();
@@ -19,7 +19,7 @@ class Operator: public Node {
 class Operator_1: public Node
 {
 protected:
-	Node *op;
+	Node* const op;
 public:
 	Operator_1(Node* _op);
 	Node* getop();
