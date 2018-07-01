@@ -103,7 +103,7 @@ int main()
 	auto dw2=/*print(*/matmul(sub(soft,po),transpose(out1))/*,"dw2")*/;
 	auto dw1=/*print(*/matmul(mul(matmul(transpose(p2),sub(soft,po)),mul(out1,sub(One,out1))),transpose(pi))/*,"dw1")*/;
 	auto fin=bind(loss,bind(dw1,dw2));
-	int tmp_size=1,bat_size=1,rep_size=1;
+	int tmp_size=1000,bat_size=1,rep_size=100;//tmp_size:使用的数据组数;bat_size:用多少组数据的结果一起更新数据;rep_size:重复多少次;tmp_size*rep_size=100000时约要跑5min
 	std::cerr<<"ok\n";
 	//std::cout<<"p2="<<p2<<'\n';
 	int tttt=clock();
